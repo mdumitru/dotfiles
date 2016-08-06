@@ -1,0 +1,9 @@
+[submodule ".zsh/antigen-repo"]
+	path = .zsh/antigen-repo
+	url = https://github.com/zsh-users/antigen.git
+[submodule ".vim/bundle/Vundle.vim"]
+	path = .vim/bundle/Vundle.vim
+	url = https://github.com/VundleVim/Vundle.vim.git
+[submodule "gits/peda"]
+	path = gits/peda
+	url = https://github.com/longld/peda.git
