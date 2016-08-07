@@ -122,7 +122,11 @@ endif
 
 
 "------ Encoding settings ------
-set encoding=utf-8
+" encoding in nvim is utf-8 by default and throws an error when resourcing
+if !has('nvim')
+    set encoding=utf-8
+endif
+
 set fileformats=unix,dos
 set fileformat=unix
 
@@ -159,28 +163,25 @@ let g:windowswap_map_keys = 0 "prevent default bindings
 nnoremap <silent> <leader>m :call WindowSwap#EasyWindowSwap()<CR>
 
 " bufexplorer
-map <A-b> :ToggleBufExplorer<cr>
+noremap <A-b> :ToggleBufExplorer<cr>
 if has ('nvim')
-    tmap <A-b> <C-\><C-n>:ToggleBufExplorer<cr>
+    tnoremap <A-b> <C-\><C-n>:ToggleBufExplorer<cr>
 endif
 
 " nerdtree
-map <leader>nn :NERDTreeToggle<cr>
-map <leader>nb :NERDTreeFromBookmark
-map <leader>nf :NERDTreeFind<cr>
+noremap <leader>nn :NERDTreeToggle<cr>
+noremap <leader>nb :NERDTreeFromBookmark
+noremap <leader>nf :NERDTreeFind<cr>
 
 " tagbar
-nmap <F8> :TagbarToggle<CR>
+nnoremap <F8> :TagbarToggle<CR>
 
 " :W sudo saves the file
 " (useful for handling the permission-denied error)
-command W w !sudo tee % > /dev/null
+command! W !sudo tee % > /dev/null
 
-nmap <leader>w :w!<cr>
-nmap <leader>s :%s/\s\+$//g<cr>
-map <silent> <leader><cr> :noh<cr>
-map <space> /
-map <c-space> ?
+nnoremap <leader>w :w!<cr>
+noremap <silent> <leader><cr> :noh<cr>
 noremap <C-a> ggVG
 noremap <C-s> :w!<cr>
 
@@ -191,11 +192,11 @@ nnoremap <space> za
 nnoremap <F2> :set invpaste paste?<cr>
 set pastetoggle=<F2>
 
-command Ev tabedit $MYVIMRC
-command Sv source $MYVIMRC
+command! Ev tabedit $MYVIMRC
+command! Sv source $MYVIMRC
 
-command ToggleColorColumn if &colorcolumn == "" | setlocal colorcolumn=81 | else | setlocal colorcolumn= | endif
-map <A-c> :ToggleColorColumn<CR>
+command! ToggleColorColumn if &colorcolumn == "" | setlocal colorcolumn=81 | else | setlocal colorcolumn= | endif
+noremap <A-c> :ToggleColorColumn<CR>
 
 
 " Visual mode pressing * or # searches for the current selection
@@ -205,49 +206,58 @@ vnoremap <silent> # :call VisualSelection('b', '')<CR>
 silent! tmap <Esc> <C-\><C-n>
 silent! tnoremap <C-A-e> <Esc>
 
+" Delete trailing white spaces (this takes out register z)
+func! DeleteTrailingWS()
+exe "normal mz"
+%s/\s\+$//ge
+exe "normal `z"
+endfunc
+nnoremap <leader>s :call DeleteTrailingWS()<cr>
+
 if has('nvim')
     autocmd BufEnter * if &buftype == "terminal" | startinsert | endif
-    command Tsplit split term://$SHELL
-    command Tvsplit vsplit term://$SHELL
-    command Ttabedit tabedit term://$SHELL
+    command! Tsplit split term://$SHELL
+    command! Tvsplit vsplit term://$SHELL
+    command! Ttabedit tabedit term://$SHELL
 endif
 
 
 "------ Global shorcuts ------
-map <A-n> :tabedit<CR>
-map <A-q> :q<CR>
-map <A-Backspace> :Bd<CR>
+noremap <A-n> :tabedit<CR>
+noremap <A-q> :q<CR>
+noremap <A-Backspace> :Bd<CR>
 if has ('nvim')
-    map <A-r> cd:NERDTreeClose\|term<CR>
-    map <A-t> :Ttabedit<CR>
-    tmap <A-n> <C-\><C-n>:tabedit<CR>
-    tmap <A-t> <C-\><C-n>:Ttabedit<CR>
-    tmap <A-q> <C-\><C-n>:q<CR>
+    noremap <A-r> cd:NERDTreeClose\|term<CR>
+    noremap <A-t> :Ttabedit<CR>
+    tnoremap <A-n> <C-\><C-n>:tabedit<CR>
+    tnoremap <A-t> <C-\><C-n>:Ttabedit<CR>
+    tnoremap <A-q> <C-\><C-n>:q<CR>
 endif
+
 
 "------ Navigation shortcuts ------
 " treat long lines as multiple lines
-map j gj
-map k gk
+noremap j gj
+noremap k gk
 
-map <A-h> <C-w>h
-map <A-j> <C-w>j
-map <A-k> <C-w>k
-map <A-l> <C-w>l
-map <A-i> gT
-map <A-o> gt
-map <C-A-i> :execute "tabmove" tabpagenr() - 2 <CR>
-map <C-A-o> :execute "tabmove" tabpagenr() + 1 <CR>
+noremap <A-h> <C-w>h
+noremap <A-j> <C-w>j
+noremap <A-k> <C-w>k
+noremap <A-l> <C-w>l
+noremap <A-i> gT
+noremap <A-o> gt
+noremap <C-A-i> :execute "tabmove" tabpagenr() - 2 <CR>
+noremap <C-A-o> :execute "tabmove" tabpagenr() + 1 <CR>
 
 if has ('nvim')
-    tmap <A-h> <C-\><C-n><C-w>h
-    tmap <A-j> <C-\><C-n><C-w>j
-    tmap <A-k> <C-\><C-n><C-w>k
-    tmap <A-l> <C-\><C-n><C-w>l
-    tmap <A-i> <C-\><C-n>gT
-    tmap <A-o> <C-\><C-n>gt
-    tmap <C-A-i> <C-\><C-n>:execute "tabmove" tabpagenr() - 2 <CR>
-    tmap <C-A-o> <C-\><C-n>:execute "tabmove" tabpagenr() + 1 <CR>
+    tnoremap <A-h> <C-\><C-n><C-w>h
+    tnoremap <A-j> <C-\><C-n><C-w>j
+    tnoremap <A-k> <C-\><C-n><C-w>k
+    tnoremap <A-l> <C-\><C-n><C-w>l
+    tnoremap <A-i> <C-\><C-n>gT
+    tnoremap <A-o> <C-\><C-n>gt
+    tnoremap <C-A-i> <C-\><C-n>:execute "tabmove" tabpagenr() - 2 <CR>
+    tnoremap <C-A-o> <C-\><C-n>:execute "tabmove" tabpagenr() + 1 <CR>
 endif
 
 
