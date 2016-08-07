@@ -6,17 +6,25 @@ let $LD_LIBRARY_PATH=''
 set rtp^=~/.vim
 set rtp+=~/.vim/after
 
+
 "------ Vundle config ------
 set nocompatible    " be iMproved
 filetype off
 if isdirectory($HOME . '/.vim/bundle/Vundle.vim')
     set rtp+=~/.vim/bundle/Vundle.vim
     call vundle#begin()
+
+    " let Vundle manage Vundle, required
     Plugin 'VundleVim/Vundle.vim'
 
     "----- Plugins -----
     " Make gvim-only colorschemes work transparently in terminal vim
     Plugin 'godlygeek/csapprox'
+
+    " precision color scheme for multiple applications with both dark/light modes
+    Plugin 'altercation/solarized'
+    Plugin 'altercation/vim-colors-solarized'
+    let g:solarized_termcolors=256
 
     " lean & mean status/tabline for vim that's light as air
     Plugin 'vim-airline/vim-airline'
@@ -25,6 +33,7 @@ if isdirectory($HOME . '/.vim/bundle/Vundle.vim')
     " https://github.com/powerline/fonts/blob/master/Hack/Hack-Regular.ttf
     let g:airline_powerline_fonts = 1
     let g:airline#extensions#tabline#enabled = 1
+    let g:airline_theme = 'powerlineish'
 
     " Pasting in Vim with indentation adjusted to destination context
     Plugin 'sickill/vim-pasta'
@@ -48,7 +57,7 @@ if isdirectory($HOME . '/.vim/bundle/Vundle.vim')
     Plugin 'jistr/vim-nerdtree-tabs'
     " let g:nerdtree_tabs_open_on_console_startup = 1
 
-    " tagbar
+    " Vim plugin that displays tags in a window, ordered by scope
     Plugin 'majutsushi/tagbar'
 
     " a Git wrapper so awesome, it should be illegal
@@ -110,6 +119,7 @@ if isdirectory($HOME . '/.vim/bundle/Vundle.vim')
     "
     " see :h vundle for more details or wiki for FAQ
 endif
+
 
 "------ Encoding settings ------
 set encoding=utf-8
@@ -240,10 +250,12 @@ if has ('nvim')
     tmap <C-A-o> <C-\><C-n>:execute "tabmove" tabpagenr() + 1 <CR>
 endif
 
+
 "------ Console UI & Text display ------
 set t_Co=256
 syntax on
-colorscheme vandy
+set background=dark
+colorscheme solarized
 
 set ruler
 set showcmd
