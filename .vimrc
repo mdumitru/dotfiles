@@ -127,8 +127,10 @@ if !has('nvim')
     set encoding=utf-8
 endif
 
-set fileformats=unix,dos
-set fileformat=unix
+if !&modifiable
+    set fileformats=unix,dos
+    set fileformat=unix
+endif
 
 
 "------ General ------
