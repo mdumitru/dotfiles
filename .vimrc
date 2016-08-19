@@ -264,6 +264,12 @@ if has ('nvim')
 endif
 
 
+"------ Backups ------
+" no backups
+set noswapfile
+set nobackup
+set nowb
+
 "------ Console UI & Text display ------
 set t_Co=256
 syntax on
