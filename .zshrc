@@ -60,24 +60,6 @@ remake() {
     fi
 }
 
-unalias cp &> /dev/null
-cp() {
-    if [[ $# == 1 ]]; then
-        /bin/cp -i "$1" .
-    else
-        /bin/cp -i "$@"
-    fi
-}
-
-unalias mv &> /dev/null
-mv() {
-    if [[ $# == 1 ]]; then
-        /bin/mv -i "$1" .
-    else
-        /bin/mv -i "$@"
-    fi
-}
-
 # needed by the wd plugin
 wd() {
   . ~/bin/wd/wd.sh
