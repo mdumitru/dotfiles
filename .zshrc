@@ -18,6 +18,7 @@ antigen bundle zsh-users/zsh-syntax-highlighting
 antigen bundle zsh-users/zsh-completions
 #antigen bundle zsh-users/zsh-autosuggestions
 antigen bundle zsh-users/zsh-history-substring-search
+antigen bundle nilsonholger/osx-zsh-completions
 antigen apply
 
 # Vars, aliases
@@ -59,6 +60,16 @@ remake() {
         make $@
     fi
 }
+
+if command -v bpython > /dev/null; then
+    python() {
+        if [[ $# == 0 ]]; then
+            bpython
+        else
+            command python $@
+        fi
+    }
+fi
 
 # needed by the wd plugin
 wd() {
