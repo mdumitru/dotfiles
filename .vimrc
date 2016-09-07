@@ -21,6 +21,9 @@ if isdirectory($HOME . '/.vim/bundle/Vundle.vim')
     " Make gvim-only colorschemes work transparently in terminal vim
     Plugin 'godlygeek/csapprox'
 
+    " Vim motions on speed!
+    Plugin 'easymotion/vim-easymotion'
+
     " precision color scheme for multiple applications with both dark/light modes
     Plugin 'altercation/solarized'
     Plugin 'altercation/vim-colors-solarized'
@@ -149,11 +152,14 @@ set secure
 
 " persistent undo
 try
-    silent !mkdir -p ~/.vim/temp_dirs/undodir >/dev/null 2>&1
+    silent !mkdir -p ~/.vim/temp_dirs/undodir > /dev/null 2>&1
     set undodir=~/.vim/temp_dirs/undodir
     set undofile
 catch
 endtry
+
+" set clipboard to system clipboard
+set clipboard=unnamed
 
 
 "------ User shortcuts, commands ------
@@ -161,13 +167,13 @@ let mapleader=','
 let g:mapleader=','
 
 " window swapper bindings
-let g:windowswap_map_keys = 0 "prevent default bindings
+let g:windowswap_map_keys = 0 " prevent default bindings
 nnoremap <silent> <leader>m :call WindowSwap#EasyWindowSwap()<cr>
 
 " bufexplorer
-noremap <A-b> :ToggleBufExplorer<cr>
+noremap <leader>b :ToggleBufExplorer<cr>
 if has ('nvim')
-    tnoremap <A-b> <C-\><C-n>:ToggleBufExplorer<cr>
+    tnoremap <a-b> <c-\><c-n>:ToggleBufExplorer<cr>
 endif
 
 " nerdtree
@@ -176,44 +182,43 @@ noremap <leader>nb :NERDTreeFromBookmark
 noremap <leader>nf :NERDTreeFind<cr>
 
 " tagbar
-nnoremap <F8> :TagbarToggle<cr>
+nnoremap <f8> :TagbarToggle<cr>
 
 " :W sudo saves the file
 " (useful for handling the permission-denied error)
-command! W !sudo tee % > /dev/null
+command! Sw !sudo tee % > /dev/null
 
-nnoremap <leader>w :w!<cr>
 noremap <silent> <leader><cr> :noh<cr>
-noremap <C-a> ggVG
-noremap <C-s> :w!<cr>
+noremap <c-a> ggVG
+nnoremap <c-s> :w!<cr>
 
 " toggle folding
 nnoremap <space> za
 
 " paste mode
-nnoremap <F2> :set invpaste paste?<cr>
-set pastetoggle=<F2>
+nnoremap <f2> :set invpaste paste?<cr>
+set pastetoggle=<f2>
 
 " some stuff breaks if $MYVIMRC is a symlink, so follow it
 command! Ev execute 'tabedit ' . resolve(expand($MYVIMRC))
 command! Sv source $MYVIMRC
 
 command! ToggleColorColumn if &colorcolumn == '' | setlocal colorcolumn=81 | else | setlocal colorcolumn= | endif
-noremap <A-c> :ToggleColorColumn<cr>
+noremap <a-c> :ToggleColorColumn<cr>
 
 
 " Visual mode pressing * or # searches for the current selection
-vnoremap * y/<C-R>"<cr> " forwards search
-vnoremap # y?<C-R>"<cr> " backwards search
+vnoremap * y/<c-R>"<cr> " forwards search
+vnoremap # y?<c-R>"<cr> " backwards search
 
-silent! tmap <Esc> <C-\><C-n>
-silent! tnoremap <C-A-e> <Esc>
+silent! tmap <esc> <c-\><c-n>
+silent! tnoremap <c-a-e> <esc>
 
-" Delete trailing white spaces (this takes out register z)
+" Delete trailing white spaces (this takes out register y)
 function! DeleteTrailingWS()
-    exe "normal mz"
+    exe "normal my"
     %s/\s\+$//ge
-    exe "normal `z"
+    exe "normal `y"
 endfunction
 nnoremap <leader>s :call DeleteTrailingWS()<cr>
 
@@ -226,15 +231,16 @@ endif
 
 
 "------ Global shorcuts ------
-noremap <A-n> :tabedit<cr>
-noremap <A-q> :q<cr>
-noremap <A-Backspace> :Bd<cr>
+noremap <a-n> :tabedit<cr>
+noremap <a-q> :q<cr>
+noremap <a-backspace> :Bd<cr>
+
 if has ('nvim')
-    noremap <A-r> cd:NERDTreeClose\|term<cr>
-    noremap <A-t> :Ttabedit<cr>
-    tnoremap <A-n> <C-\><C-n>:tabedit<cr>
-    tnoremap <A-t> <C-\><C-n>:Ttabedit<cr>
-    tnoremap <A-q> <C-\><C-n>:q<cr>
+    noremap <a-r> cd:NERDTreeClose\|term<cr>
+    noremap <a-t> :Tsplit<cr>
+    tnoremap <a-n> <c-\><c-n>:tabedit<cr>
+    tnoremap <a-t> <c-\><c-n>:Ttabedit<cr>
+    tnoremap <a-q> <c-\><c-n>:q<cr>
 endif
 
 
@@ -243,24 +249,24 @@ endif
 noremap j gj
 noremap k gk
 
-noremap <A-h> <C-w>h
-noremap <A-j> <C-w>j
-noremap <A-k> <C-w>k
-noremap <A-l> <C-w>l
-noremap <A-i> gT
-noremap <A-o> gt
-noremap <C-A-i> :execute "tabmove" tabpagenr() - 2<cr>
-noremap <C-A-o> :execute "tabmove" tabpagenr() + 1<cr>
+noremap <a-h> <c-w>h
+noremap <a-j> <c-w>j
+noremap <a-k> <c-w>k
+noremap <a-l> <c-w>l
+noremap <a-i> gT
+noremap <a-o> gt
+noremap <c-a-i> :execute "tabmove" tabpagenr() - 2<cr>
+noremap <c-a-o> :execute "tabmove" tabpagenr() + 1<cr>
 
 if has ('nvim')
-    tnoremap <A-h> <C-\><C-n><C-w>h
-    tnoremap <A-j> <C-\><C-n><C-w>j
-    tnoremap <A-k> <C-\><C-n><C-w>k
-    tnoremap <A-l> <C-\><C-n><C-w>l
-    tnoremap <A-i> <C-\><C-n>gT
-    tnoremap <A-o> <C-\><C-n>gt
-    tnoremap <C-A-i> <C-\><C-n>:execute "tabmove" tabpagenr() - 2<cr>
-    tnoremap <C-A-o> <C-\><C-n>:execute "tabmove" tabpagenr() + 1<cr>
+    tnoremap <a-h> <c-\><c-n><c-w>h
+    tnoremap <a-j> <c-\><c-n><c-w>j
+    tnoremap <a-k> <c-\><c-n><c-w>k
+    tnoremap <a-l> <c-\><c-n><c-w>l
+    tnoremap <a-i> <c-\><c-n>gT
+    tnoremap <a-o> <c-\><c-n>gt
+    tnoremap <c-a-i> <c-\><c-n>:execute "tabmove" tabpagenr() - 2<cr>
+    tnoremap <c-a-o> <c-\><c-n>:execute "tabmove" tabpagenr() + 1<cr>
 endif
 
 
@@ -269,6 +275,7 @@ endif
 set noswapfile
 set nobackup
 set nowb
+
 
 "------ Console UI & Text display ------
 set t_Co=256
@@ -299,6 +306,7 @@ endif
 set incsearch
 set ignorecase
 set smartcase
+set nohlsearch
 set showmatch
 set matchtime=2
 set backspace=eol,start,indent
