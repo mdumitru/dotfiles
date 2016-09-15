@@ -171,9 +171,9 @@ let g:windowswap_map_keys = 0 " prevent default bindings
 nnoremap <silent> <leader>m :call WindowSwap#EasyWindowSwap()<cr>
 
 " bufexplorer
-noremap <leader>b :ToggleBufExplorer<cr>
+noremap <a-e> :ToggleBufExplorer<cr>
 if has ('nvim')
-    tnoremap <a-b> <c-\><c-n>:ToggleBufExplorer<cr>
+    tnoremap <a-e> <c-\><c-n>:ToggleBufExplorer<cr>
 endif
 
 " nerdtree
@@ -184,9 +184,8 @@ noremap <leader>nf :NERDTreeFind<cr>
 " tagbar
 nnoremap <f8> :TagbarToggle<cr>
 
-" :W sudo saves the file
-" (useful for handling the permission-denied error)
-command! Sw !sudo tee % > /dev/null
+" :Sw saves the file as root
+command! Sw w !sudo tee % > /dev/null
 
 noremap <silent> <leader><cr> :noh<cr>
 noremap <c-a> ggVG
@@ -237,7 +236,7 @@ noremap <a-backspace> :Bd<cr>
 
 if has ('nvim')
     noremap <a-r> cd:NERDTreeClose\|term<cr>
-    noremap <a-t> :Tsplit<cr>
+    noremap <a-t> :Ttabedit<cr>
     tnoremap <a-n> <c-\><c-n>:tabedit<cr>
     tnoremap <a-t> <c-\><c-n>:Ttabedit<cr>
     tnoremap <a-q> <c-\><c-n>:q<cr>
