@@ -8,119 +8,11 @@ set rtp+=~/.vim/after
 
 
 "------ Vundle config ------
-set nocompatible    " be iMproved
-filetype off
-if isdirectory($HOME . '/.vim/bundle/Vundle.vim')
-    set rtp+=~/.vim/bundle/Vundle.vim
-    call vundle#begin()
-
-    " let Vundle manage Vundle, required
-    Plugin 'VundleVim/Vundle.vim'
-
-    "----- Plugins -----
-    " Make gvim-only colorschemes work transparently in terminal vim
-    Plugin 'godlygeek/csapprox'
-
-    " Vim motions on speed!
-    Plugin 'easymotion/vim-easymotion'
-
-    " precision color scheme for multiple applications with both dark/light modes
-    Plugin 'altercation/solarized'
-    Plugin 'altercation/vim-colors-solarized'
-    let g:solarized_termcolors=256
-
-    " lean & mean status/tabline for vim that's light as air
-    Plugin 'vim-airline/vim-airline'
-    Plugin 'vim-airline/vim-airline-themes'
-    " install Hack for powerline:
-    " https://github.com/powerline/fonts/blob/master/Hack/Hack-Regular.ttf
-    let g:airline_powerline_fonts = 1
-    let g:airline#extensions#tabline#enabled = 1
-    let g:airline_theme = 'powerlineish'
-
-    " Pasting in Vim with indentation adjusted to destination context
-    Plugin 'sickill/vim-pasta'
-
-    " Rename a buffer within Vim and on disk
-    Plugin 'Rename'
-
-    " BufExplorer Plugin for Vim
-    Plugin 'jlanzarotta/bufexplorer'
-    let g:bufExplorerDefaultHelp = 0
-    let g:bufExplorerFindActive=0
-    let g:bufExplorerShowRelativePath = 1
-    let g:bufExplorerSortBy = 'name'
-
-    "  A tree file explorer plugin
-    Plugin 'scrooloose/nerdtree'
-    let NERDTreeIgnore=['\.pyc$', '\~$'] " ignore files in NERDTree
-    let NERDTreeMapOpenInTab='t'
-
-    " NERDTree and tabs together in Vim, painlessly
-    Plugin 'jistr/vim-nerdtree-tabs'
-    " let g:nerdtree_tabs_open_on_console_startup = 1
-
-    " Vim plugin that displays tags in a window, ordered by scope
-    Plugin 'majutsushi/tagbar'
-
-    " a Git wrapper so awesome, it should be illegal
-    Plugin 'tpope/vim-fugitive'
-
-    " Vim plugin for intensely orgasmic commenting
-    Plugin 'scrooloose/nerdcommenter'
-
-    " Vim-Improved eMACS: Emacs emulation for Vim
-    Plugin 'andrep/vimacs'
-    let g:VM_Enabled=1
-    " it breaks without this
-    let g:VM_UnixConsoleMetaSendsEsc = 0
-
-    " Delete buffers and close files in Vim without messing up your layout.
-    Plugin 'moll/vim-bbye'
-
-    " Swap your windows without ruining your layout
-    Plugin 'wesQ3/vim-windowswap'
-
-    " surround.vim: quoting/parenthesizing made simple
-    Plugin 'tpope/vim-surround'
-
-    " True Sublime Text style multiple selections for Vim
-    Plugin 'terryma/vim-multiple-cursors'
-
-    " Miscellaneous auto-load Vim scripts
-    Plugin 'xolox/vim-misc'
-
-    " Extended session management for Vim
-    Plugin 'xolox/vim-session'
-    let g:session_autosave='no'
-    let g:session_autoload='no'
-    let g:session_directory='~/.vimsessions'
-
-    " An alternative indentation script for python
-    Plugin 'vim-scripts/indentpython.vim'
-
-    " Syntax checking hacks for vim
-    Plugin 'scrooloose/syntastic'
-    let g:syntastic_cpp_compiler_options = '-std=c++14 -Wall -Wextra'
-
-    " Flake8 plugin for Vim (python syntax & style checker)
-    Plugin 'nvie/vim-flake8'
-
-    " AppleScript syntax highlighting
-    Plugin 'vim-scripts/applescript.vim'
-
-    call vundle#end()
-    filetype plugin indent on    " required
-    " To ignore plugin indent changes, instead use:
-    "filetype plugin on
-    "
-    " Brief help
-    " :PluginList       - lists configured plugins
-    " :PluginInstall    - installs plugins; append `!` to update or just :PluginUpdate
-    " :PluginSearch foo - searches for foo; append `!` to refresh local cache
-    " :PluginClean      - confirms removal of unused plugins; append `!` to auto-approve
-    "
-    " see :h vundle for more details or wiki for FAQ
+" Let Vundle load all the plugins from .vim/vundles.vim (if it exists)
+let vundle_dir = expand($HOME . "/.vim/bundle/Vundle.vim")
+let vundles_path = expand($HOME . "/.vim/vundles.vim")
+if isdirectory(vundle_dir) && filereadable(vundles_path)
+    exe 'source' vundles_path
 endif
 
 
@@ -166,30 +58,13 @@ set clipboard=unnamed
 let mapleader=','
 let g:mapleader=','
 
-" window swapper bindings
-let g:windowswap_map_keys = 0 " prevent default bindings
-nnoremap <silent> <leader>m :call WindowSwap#EasyWindowSwap()<cr>
-
-" bufexplorer
-noremap <a-e> :ToggleBufExplorer<cr>
-if has ('nvim')
-    tnoremap <a-e> <c-\><c-n>:ToggleBufExplorer<cr>
-endif
-
-" nerdtree
-noremap <leader>nn :NERDTreeToggle<cr>
-noremap <leader>nb :NERDTreeFromBookmark
-noremap <leader>nf :NERDTreeFind<cr>
-
-" tagbar
-nnoremap <f8> :TagbarToggle<cr>
-
 " :Sw saves the file as root
 command! Sw w !sudo tee % > /dev/null
 
 noremap <silent> <leader><cr> :noh<cr>
 noremap <c-a> ggVG
 nnoremap <c-s> :w!<cr>
+nnoremap <leader>w :w!<cr>
 
 " toggle folding
 nnoremap <space> za
@@ -279,8 +154,6 @@ set nowb
 "------ Console UI & Text display ------
 set t_Co=256
 syntax on
-set background=dark
-colorscheme solarized
 
 set showcmd
 set number
