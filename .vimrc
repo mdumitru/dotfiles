@@ -107,7 +107,6 @@ endif
 "------ Global shorcuts ------
 noremap <a-n> :tabedit<cr>
 noremap <a-q> :q<cr>
-noremap <a-backspace> :Bd<cr>
 
 if has ('nvim')
     noremap <a-r> cd:NERDTreeClose\|term<cr>
