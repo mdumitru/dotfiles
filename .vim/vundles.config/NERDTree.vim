@@ -9,6 +9,7 @@ autocmd bufenter * if (winnr('$') == 1 && exists('b:NERDTreeType') && b:NERDTree
 let NERDTreeAutoDeleteBuffer=1
 let NERDTreeMinimalUI=1
 let NERDTreeRespectWildIgnore=1
+let NERDTreeShowHidden=1
 
 
 noremap <silent> <leader>no :NERDTree<cr>
