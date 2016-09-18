@@ -45,6 +45,9 @@ Plugin 'majutsushi/tagbar'
 " Delete buffers and close files in Vim without messing up your layout.
 Plugin 'moll/vim-bbye'
 
+" Better whitespace highlighting for Vim
+Plugin 'ntpeters/vim-better-whitespace'
+
 " Flake8 plugin for Vim (python syntax & style checker)
 Plugin 'nvie/vim-flake8'
 

@@ -88,14 +88,6 @@ vnoremap # y?<c-R>"<cr> " backwards search
 silent! tmap <esc> <c-\><c-n>
 silent! tnoremap <c-a-e> <esc>
 
-" Delete trailing white spaces (this takes out register y)
-function! DeleteTrailingWS()
-    exe "normal my"
-    %s/\s\+$//ge
-    exe "normal `y"
-endfunction
-nnoremap <leader>s :call DeleteTrailingWS()<cr>
-
 if has('nvim')
     autocmd BufEnter * if &buftype == "terminal" | startinsert | endif
     command! Tsplit split term://$SHELL
