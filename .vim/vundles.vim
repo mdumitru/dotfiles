@@ -105,7 +105,7 @@ filetype plugin indent on    " required
 
 
 " load all plugin settings
-let settings = expand($HOME . "/.vim/settings/")
+let settings = expand($HOME . "/.vim/vundles.config/")
 for fpath in split(globpath(settings, '*.vim'), '\n')
     exe 'source' fpath
 endfor

@@ -1,10 +1,11 @@
-let g:bufExplorerDefaultHelp = 0
+" Don't display help at the top
+let g:bufExplorerDefaultHelp=0
+" Always open the buffer in the bufexplorer window
 let g:bufExplorerFindActive=0
-let g:bufExplorerShowRelativePath = 1
-let g:bufExplorerSortBy = 'name'
+let g:bufExplorerShowRelativePath=1
 
 " Alt+e opens buf explorer, so that it works from nvim terminal
-noremap <a-e> :ToggleBufExplorer<cr>
+noremap <silent> <a-e> :ToggleBufExplorer<cr>
 if has('nvim')
-    tnoremap <a-e> <c-\><c-n>:ToggleBufExplorer<cr>
+    tnoremap <silent> <a-e> <c-\><c-n>:ToggleBufExplorer<cr>
 endif

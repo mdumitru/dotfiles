@@ -1,3 +1,3 @@
 let g:VM_Enabled=1
-" it breaks without this
+" it seems to break on macOS without this
 let g:VM_UnixConsoleMetaSendsEsc = 0
