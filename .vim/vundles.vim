@@ -1,6 +1,13 @@
 " Vundle plugin configuration
+"
+" All plugins here are sorted alphabetically (for lack of a better order), case
+" insensitive ('Ab' comes before 'ac' but after 'aa'). Case-sorting should
+" occur only as a secondary critteria ('nAme' come before 'name').
+"
+" The description provided above the plugin is (usually) the short description
+" from github and it should hopefully indicate the usefulness of a plugin.
 
-filetype off                  " required
+filetype off                  " required by vundle
 
 set rtp+=~/.vim/bundle/Vundle.vim
 set rtp+=~/.vim/vundles/
@@ -19,6 +26,9 @@ Plugin 'altercation/vim-colors-solarized'
 
 " Vim-Improved eMACS: Emacs emulation for Vim
 Plugin 'andrep/vimacs'
+
+" Vim motions on speed!
+Plugin 'easymotion/vim-easymotion'
 
 " Make gvim-only colorschemes work transparently in terminal vim
 Plugin 'godlygeek/csapprox'
@@ -59,6 +69,9 @@ Plugin 'terryma/vim-multiple-cursors'
 " a Git wrapper so awesome, it should be illegal
 Plugin 'tpope/vim-fugitive'
 
+" repeat.vim: enable repeating supported plugin maps with "."
+Plugin 'tpope/vim-repeat'
+
 " surround.vim: quoting/parenthesizing made simple
 Plugin 'tpope/vim-surround'
 
@@ -70,6 +83,9 @@ Plugin 'vim-scripts/applescript.vim'
 
 " An alternative indentation script for python
 Plugin 'vim-scripts/indentpython.vim'
+
+" Allows one to edit a file with privileges from an unprivileged session.
+Plugin 'vim-scripts/sudo.vim'
 
 " Lean & mean status/tabline for vim that's light as air
 " install the font Hack to make it work properly:
@@ -88,10 +104,13 @@ Plugin 'xolox/vim-misc'
 " Extended session management for Vim
 Plugin 'xolox/vim-session'
 
+" A plugin of NERDTree showing git status
+Plugin 'Xuyuanp/nerdtree-git-plugin'
+
 call vundle#end()
 
 
-filetype plugin indent on    " required
+filetype plugin indent on    " required by vundle
 " To ignore plugin indent changes, instead use:
 " filetype plugin on
 "
