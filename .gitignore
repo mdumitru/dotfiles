@@ -4,10 +4,12 @@
 " Allow vim stuff (it's mostly plugins which should be installed with Vundle)
 !.gvimrc
 !.vimrc
-!.vim/colors/
-!.vim/ftplugin/
-!.vim/ftdetect/
+!.vim/
+!.vim/vundles.vim
 !.vim/vundles.config/
+!.vim/ftdetect/
+!.vim/ftplugin/
+!.vim/colors/
 
 " Allow zsh stuff (it's mostly plugins which should be installed with antigen)
 !.zshrc
