@@ -9,7 +9,7 @@ if !has('nvim')
     set encoding=utf-8
 endif
 
-" Avoid error when resourcing from unmodifiable buffer.
+" Avoid an error when resourcing from unmodifiable buffer.
 if &modifiable
     set fileformats=unix,dos
 endif
@@ -77,7 +77,7 @@ set scrolloff=8         " start scrolling when within these many lines of edge
 set report=0            " always report how many lines were changed
 set shortmess=filmnrxI  " make sure exactly these options are set
 set list                " display whitespaces
-set listchars=tab:»\ ,trail:·   " symbols for whitespace
+set listchars=tab:»\ ,trail:·   " symbols for whitespaces
 set wildmenu                    " enable cycling through tab completion options
 set wildmode=list:longest,full
 set wildignorecase              " ignore case when autocompleting

@@ -2,15 +2,15 @@
 "
 " All plugins here are sorted alphabetically (for lack of a better order), case
 " insensitive ('Ab' comes before 'ac' but after 'aa'). Case-sorting should
-" occur only as a secondary critteria ('nAme' come before 'name').
+" occur only as a secondary criteria ('nAme' comes before 'name').
 "
 " The description provided above the plugin is (usually) the short description
 " from github and it should hopefully indicate the usefulness of a plugin.
 
 filetype off                  " required by vundle
 
-set rtp+=~/.vim/bundle/Vundle.vim
-set rtp+=~/.vim/vundles/
+set runtimepath+=~/.vim/bundle/Vundle.vim
+set runtimepath+=~/.vim/vundles/
 
 
 call vundle#begin()
