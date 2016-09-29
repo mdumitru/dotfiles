@@ -159,7 +159,7 @@ vnoremap # y?<c-r>"<cr>
 " Make it easy to close stuff (remember that 'hidden' is set).
 noremap <a-q> :q<cr>
 noremap <a-backspace> :Bdelete<cr>
-noremap <c-a-backspace> :bdelete<cr>
+noremap <leader><backspace> :bdelete<cr>
 " Note that :Bdelete is provided by a plugin.
 
 noremap <a-n> :tabedit<cr>
