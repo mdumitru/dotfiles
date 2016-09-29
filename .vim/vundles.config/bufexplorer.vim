@@ -4,6 +4,7 @@ let g:bufExplorerDefaultHelp=0
 let g:bufExplorerFindActive=0
 let g:bufExplorerShowRelativePath=1
 
+
 " Alt+e opens buf explorer, so that it works from nvim terminal
 noremap <silent> <a-e> :ToggleBufExplorer<cr>
 if has('nvim')

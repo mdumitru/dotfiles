@@ -7,4 +7,3 @@ setlocal colorcolumn=80
 setlocal expandtab
 setlocal autoindent
 setlocal fileformat=unix
-

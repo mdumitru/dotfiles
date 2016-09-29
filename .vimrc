@@ -106,8 +106,8 @@ let mapleader=','
 
 
 " Let Vundle load all the plugins from .vim/vundles.vim (if it exists).
-let vundle_dir = expand($HOME . "/.vim/bundle/Vundle.vim")
-let vundles_path = expand($HOME . "/.vim/vundles.vim")
+let vundle_dir=expand($HOME . "/.vim/bundle/Vundle.vim")
+let vundles_path=expand($HOME . "/.vim/vundles.vim")
 if isdirectory(vundle_dir) && filereadable(vundles_path)
     exe 'source' vundles_path
 endif
@@ -201,7 +201,7 @@ noremap <a-o> gt
 noremap <c-a-i> :execute "tabmove" tabpagenr() - 2<cr>
 noremap <c-a-o> :execute "tabmove" tabpagenr() + 1<cr>
 
-if has ('nvim')
+if has('nvim')
     tnoremap <a-h> <c-\><c-n><c-w>h
     tnoremap <a-j> <c-\><c-n><c-w>j
     tnoremap <a-k> <c-\><c-n><c-w>k
