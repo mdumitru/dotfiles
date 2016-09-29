@@ -123,6 +123,22 @@ cnoremap w!! SudoWrite sudo:%<cr>
 noremap ; :
 noremap : ;
 
+" Quick replay 'q' macro and avoid Ex-mode.
+noremap Q <nop>
+nnoremap Q @q
+
+" Reuse x as a proper delete.
+noremap x "_d
+nnoremap xx "_dd
+noremap X "_D
+
+" Disable select mode.
+nnoremap gh <nop>
+
+" Don't cancel visual select when shifting.
+vnoremap < <gv
+vnoremap > >gv
+
 " Space toggles folds in normal mode (if any).
 nnoremap <silent> <space> @=(foldlevel('.')?'za':"\<space>")<cr>
 
