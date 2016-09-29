@@ -15,20 +15,6 @@ if &modifiable
 endif
 
 
-"------ Vundle config ------
-" We need to set the map leader before Vundle loads plugins & their settings.
-" Comment this line when using a decent layout (UK), so that the leader is '\'.
-let mapleader=','
-
-
-" Let Vundle load all the plugins from .vim/vundles.vim (if it exists).
-let vundle_dir = expand($HOME . "/.vim/bundle/Vundle.vim")
-let vundles_path = expand($HOME . "/.vim/vundles.vim")
-if isdirectory(vundle_dir) && filereadable(vundles_path)
-    exe 'source' vundles_path
-endif
-
-
 "------ General ------
 set nofoldenable        " unfold everything when opening a file
 set foldmethod=indent   " define folds by indentation
@@ -108,6 +94,20 @@ set backspace=indent,eol,start
 
 " Don't allow keys that move the cursor left right to move it between lines.
 set whichwrap=
+
+
+"------ Vundle config ------
+" We need to set the map leader before Vundle loads plugins & their settings.
+" Comment this line when using a decent layout (UK), so that the leader is '\'.
+let mapleader=','
+
+
+" Let Vundle load all the plugins from .vim/vundles.vim (if it exists).
+let vundle_dir = expand($HOME . "/.vim/bundle/Vundle.vim")
+let vundles_path = expand($HOME . "/.vim/vundles.vim")
+if isdirectory(vundle_dir) && filereadable(vundles_path)
+    exe 'source' vundles_path
+endif
 
 
 "------ User shortcuts, commands ------
