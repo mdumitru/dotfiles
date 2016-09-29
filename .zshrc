@@ -1,24 +1,24 @@
 # GRML upstream
 [[ -f ~/.zsh/grml-arch.zsh ]] && source ~/.zsh/grml-arch.zsh
 
-# Antigen et plugins
+# Antigen plugins
 export ADOTDIR=~/.zsh/.antigen-cache
 export ZSH_CACHE_DIR=~/.zsh/.antigen-cache
 [[ -f ~/.zsh/antigen-repo/antigen.zsh ]] && source ~/.zsh/antigen-repo/antigen.zsh
 
 antigen bundle common-aliases
 antigen bundle dirhistory
+antigen bundle fancy-ctrl-z
+antigen bundle git
+antigen bundle last-working-dir
+antigen bundle sudo
 antigen bundle wd
 antigen bundle z
-antigen bundle sudo
-antigen bundle git
-antigen bundle fancy-ctrl-z
-#antigen bundle last-working-dir
-antigen bundle zsh-users/zsh-syntax-highlighting
-antigen bundle zsh-users/zsh-completions
-#antigen bundle zsh-users/zsh-autosuggestions
-antigen bundle zsh-users/zsh-history-substring-search
 antigen bundle nilsonholger/osx-zsh-completions
+# antigen bundle zsh-users/zsh-autosuggestions
+antigen bundle zsh-users/zsh-completions
+antigen bundle zsh-users/zsh-history-substring-search
+antigen bundle zsh-users/zsh-syntax-highlighting
 antigen apply
 
 # Vars, aliases
@@ -44,14 +44,6 @@ if command -v nvim > /dev/null; then
     chpwd_functions+=( neovim_autocd )
 fi
 
-weather() {
-    if [[ $# == 0 ]]; then
-        curl -4 "http://wttr.in/bucharest"
-    else
-        curl -4 "http://wttr.in/$1"
-    fi
-}
-
 remake() {
     make clean || return $?
     if [[ $# == 0 ]]; then
@@ -59,6 +51,10 @@ remake() {
     else
         make $@
     fi
+}
+
+weather() {
+        curl -4 "http://wttr.in/$1"
 }
 
 if command -v bpython > /dev/null; then
@@ -76,31 +72,7 @@ wd() {
   . ~/bin/wd/wd.sh
 }
 
-# Zsh quick shorcut ref
-zsh_hotkeys() {
-cat << XXX
-^a Beginning of line
-^e End of line
-^f Forward one character
-^b Back one character
-^h Delete one character
-%f Forward one word
-%b Back one word
-^w Delete one word
-^u Clear to beginning of line
-^k Clear to end of line
-^y Paste from Kill Ring
-^t Swap cursor with previous character
-%t Swap cursor with previous word
-^p Previous line in history
-^n Next line in history
-^r Search backwards in history
-^l Clear screen
-^o Execute command but keep line
-XXX
-}
-
-# Nvim as terminal multiplexer
+# Nvim as a terminal multiplexer
 if command -v nvim > /dev/null && \
     [[ -z $NVIM_LISTEN_ADDRESS ]]; then
         nvim -c "terminal"
@@ -165,4 +137,3 @@ if command -v nvim-host-cmd > /dev/null; then
         nvim-host-cmd $arg
     }
 fi
-

@@ -15,20 +15,6 @@ if &modifiable
 endif
 
 
-"------ Vundle config ------
-" We need to set the map leader before Vundle loads plugins & their settings.
-" Comment this line when using a decent layout (UK), so that the leader is '\'.
-let mapleader=','
-
-
-" Let Vundle load all the plugins from .vim/vundles.vim (if it exists).
-let vundle_dir = expand($HOME . "/.vim/bundle/Vundle.vim")
-let vundles_path = expand($HOME . "/.vim/vundles.vim")
-if isdirectory(vundle_dir) && filereadable(vundles_path)
-    exe 'source' vundles_path
-endif
-
-
 "------ General ------
 set nofoldenable        " unfold everything when opening a file
 set foldmethod=indent   " define folds by indentation
@@ -92,7 +78,10 @@ set wildignore+=.git/*,.hg/*,.svn/*
 
 
 "------ Text editing and searching behavior ------
-syntax on   " turn on syntax highlighting
+" turn on syntax highlighting, keeping current settings
+if !exists("g:syntax_on")
+    syntax enable
+endif
 
 set incsearch       " search as we type
 set ignorecase      " make search case-insensitive
@@ -110,6 +99,20 @@ set backspace=indent,eol,start
 set whichwrap=
 
 
+"------ Vundle config ------
+" We need to set the map leader before Vundle loads plugins & their settings.
+" Comment this line when using a decent layout (UK), so that the leader is '\'.
+let mapleader=','
+
+
+" Let Vundle load all the plugins from .vim/vundles.vim (if it exists).
+let vundle_dir=expand($HOME . "/.vim/bundle/Vundle.vim")
+let vundles_path=expand($HOME . "/.vim/vundles.vim")
+if isdirectory(vundle_dir) && filereadable(vundles_path)
+    exe 'source' vundles_path
+endif
+
+
 "------ User shortcuts, commands ------
 nnoremap <c-s> :w!<cr>
 nnoremap <leader>w :w!<cr>
@@ -119,6 +122,22 @@ cnoremap w!! SudoWrite sudo:%<cr>
 " we still keep the functionality of the semicolon.
 noremap ; :
 noremap : ;
+
+" Quick replay 'q' macro and avoid Ex-mode.
+noremap Q <nop>
+nnoremap Q @q
+
+" Reuse x as a proper delete.
+noremap x "_d
+nnoremap xx "_dd
+noremap X "_D
+
+" Disable select mode.
+nnoremap gh <nop>
+
+" Don't cancel visual select when shifting.
+vnoremap < <gv
+vnoremap > >gv
 
 " Space toggles folds in normal mode (if any).
 nnoremap <silent> <space> @=(foldlevel('.')?'za':"\<space>")<cr>
@@ -140,7 +159,7 @@ vnoremap # y?<c-r>"<cr>
 " Make it easy to close stuff (remember that 'hidden' is set).
 noremap <a-q> :q<cr>
 noremap <a-backspace> :Bdelete<cr>
-noremap <c-a-backspace> :bdelete<cr>
+noremap <leader><backspace> :bdelete<cr>
 " Note that :Bdelete is provided by a plugin.
 
 noremap <a-n> :tabedit<cr>
@@ -182,7 +201,7 @@ noremap <a-o> gt
 noremap <c-a-i> :execute "tabmove" tabpagenr() - 2<cr>
 noremap <c-a-o> :execute "tabmove" tabpagenr() + 1<cr>
 
-if has ('nvim')
+if has('nvim')
     tnoremap <a-h> <c-\><c-n><c-w>h
     tnoremap <a-j> <c-\><c-n><c-w>j
     tnoremap <a-k> <c-\><c-n><c-w>k
