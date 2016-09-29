@@ -78,7 +78,10 @@ set wildignore+=.git/*,.hg/*,.svn/*
 
 
 "------ Text editing and searching behavior ------
-syntax on   " turn on syntax highlighting
+" turn on syntax highlighting, keeping current settings
+if !exists("g:syntax_on")
+    syntax enable
+endif
 
 set incsearch       " search as we type
 set ignorecase      " make search case-insensitive

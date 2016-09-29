@@ -18,9 +18,6 @@ call vundle#begin()
 " let Vundle manage Vundle, required
 Plugin 'VundleVim/Vundle.vim'
 
-" Precision color scheme for multiple applications with both dark/light modes
-Plugin 'altercation/solarized'
-
 " Precision colorscheme for the vim text editor
 Plugin 'altercation/vim-colors-solarized'
 
