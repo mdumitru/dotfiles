@@ -203,6 +203,10 @@ endif
 noremap j gj
 noremap k gk
 
+" Swap functionalities with above.
+noremap gj j
+noremap gk k
+
 " The following mappings help with moving between splits & tabs and moving tabs
 " with the same shortcuts for regular and terminal buffers (if using nvim).
 noremap <a-h> <c-w>h
