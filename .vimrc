@@ -152,6 +152,19 @@ command! Sv source $MYVIMRC
 vnoremap * y/<c-r>"<cr>
 vnoremap # y?<c-r>"<cr>
 
+" Sometimes the color column is annoying.
+command! ToggleColorColumn
+            \ if &colorcolumn == "" |
+            \   if exists('b:__old_colorcolumn') |
+            \       let &colorcolumn=b:__old_colorcolumn |
+            \   else |
+            \       let &colorcolumn=81 |
+            \   endif |
+            \ else |
+            \   let b:__old_colorcolumn=&colorcolumn |
+            \   let &colorcolumn="" |
+            \ endif
+nnoremap <silent> <f3> :ToggleColorColumn<cr>
 
 "------ Global shortcuts ------
 " Uniform mappings that can be used from neovim's terminal.
