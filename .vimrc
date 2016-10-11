@@ -215,8 +215,8 @@ noremap <a-k> <c-w>k
 noremap <a-l> <c-w>l
 noremap <a-i> gT
 noremap <a-o> gt
-noremap <c-a-i> :execute "tabmove" tabpagenr() - 2<cr>
-noremap <c-a-o> :execute "tabmove" tabpagenr() + 1<cr>
+noremap <silent> <c-a-i> :execute "tabmove" tabpagenr() - 2<cr>
+noremap <silent> <c-a-o> :execute "tabmove" tabpagenr() + 1<cr>
 
 if has('nvim')
     tnoremap <a-h> <c-\><c-n><c-w>h
@@ -225,6 +225,6 @@ if has('nvim')
     tnoremap <a-l> <c-\><c-n><c-w>l
     tnoremap <a-i> <c-\><c-n>gT
     tnoremap <a-o> <c-\><c-n>gt
-    tnoremap <c-a-i> <c-\><c-n>:execute "tabmove" tabpagenr() - 2<cr>
-    tnoremap <c-a-o> <c-\><c-n>:execute "tabmove" tabpagenr() + 1<cr>
+    tnoremap <silent> <c-a-i> <c-\><c-n>:execute "tabmove" tabpagenr() - 2<cr>
+    tnoremap <silent> <c-a-o> <c-\><c-n>:execute "tabmove" tabpagenr() + 1<cr>
 endif
