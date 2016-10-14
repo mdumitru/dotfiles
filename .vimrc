@@ -57,6 +57,7 @@ set shiftwidth=4
 
 
 "------ Console UI & Text display ------
+set cursorline          " highlight the currentline
 set showcmd             " show partial command in the bot-right
 set noshowmode          " the *line plugin should take care of this
 set scrolloff=8         " start scrolling when within these many lines of edge
