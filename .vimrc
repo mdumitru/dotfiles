@@ -9,7 +9,7 @@ if !has('nvim')
     set encoding=utf-8
 endif
 
-" Avoid an error when resourcing from unmodifiable buffer.
+" Avoid an error when resourcing from an unmodifiable buffer.
 if &modifiable
     set fileformats=unix,dos
 endif
@@ -57,7 +57,7 @@ set shiftwidth=4
 
 
 "------ Console UI & Text display ------
-set cursorline          " highlight the currentline
+set cursorline          " highlight the current line
 set showcmd             " show partial command in the bot-right
 set noshowmode          " the *line plugin should take care of this
 set scrolloff=8         " start scrolling when within these many lines of edge
@@ -79,7 +79,7 @@ set wildignore+=.git/*,.hg/*,.svn/*
 
 
 "------ Text editing and searching behavior ------
-" turn on syntax highlighting, keeping current settings
+" Turn on syntax highlighting, keeping current settings.
 if !exists("g:syntax_on")
     syntax enable
 endif
@@ -96,7 +96,7 @@ set formatoptions=tcroqnj
 " Allow backspace to delete indents, newlines and characters past insert-start.
 set backspace=indent,eol,start
 
-" Don't allow keys that move the cursor left right to move it between lines.
+" Don't allow keys that move the cursor left/right to move it between lines.
 set whichwrap=
 
 
@@ -115,8 +115,8 @@ endif
 
 
 "------ User shortcuts, commands ------
-nnoremap <c-s> :w!<cr>
-nnoremap <leader>w :w!<cr>
+nnoremap <silent> <c-s> :w!<cr>
+nnoremap <silent> <leader>w :w!<cr>
 cnoremap w!! SudoWrite sudo:%<cr>
 
 " Make typing commands easier. Easy-motion should be enough for navigation, but
@@ -167,21 +167,23 @@ command! ToggleColorColumn
             \ endif
 nnoremap <silent> <f3> :ToggleColorColumn<cr>
 
+
 "------ Global shortcuts ------
 " Uniform mappings that can be used from neovim's terminal.
 
 " Make it easy to close stuff (remember that 'hidden' is set).
-noremap <a-q> :q<cr>
-noremap <a-backspace> :Bdelete<cr>
-noremap <leader><backspace> :bdelete<cr>
+noremap <silent> <a-q> :q<cr>
+noremap <silent> <a-backspace> :Bdelete<cr>
+noremap <silent> <leader><backspace> :bdelete<cr>
 " Note that :Bdelete is provided by a plugin.
 
-noremap <a-n> :tabedit<cr>
+noremap <silent> <a-n> :tabedit<cr>
 
 " Both <f1> opening terminal help and highlighting are annoying.
 noremap <silent> <f1> <esc>:nohlsearch<cr>
 
 if has('nvim')
+    " Normal escape in terminal. Ctrl+Alt+e to send an Escape through.
     tnoremap <esc> <c-\><c-n>
     tnoremap <c-a-e> <esc>
 
