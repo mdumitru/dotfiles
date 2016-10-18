@@ -72,12 +72,6 @@ wd() {
   . ~/bin/wd/wd.sh
 }
 
-# Nvim as a terminal multiplexer
-if command -v nvim > /dev/null && \
-    [[ -z $NVIM_LISTEN_ADDRESS ]]; then
-        nvim -c "terminal"
-fi
-
 # Nvim host control
 export PATH="$PATH:$HOME/.scripts/nvim"
 if command -v nvim-host-cmd > /dev/null; then
