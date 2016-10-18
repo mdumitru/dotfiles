@@ -128,11 +128,6 @@ noremap : ;
 noremap Q <nop>
 nnoremap Q @q
 
-" Reuse x as a proper delete.
-noremap x "_d
-nnoremap xx "_dd
-noremap X "_D
-
 " Disable select mode.
 nnoremap gh <nop>
 
