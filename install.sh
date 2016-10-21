@@ -52,9 +52,11 @@ install_vim() {
 	ln -fs `realpath ./.gvimrc` ~
 
 	if command -v nvim &> /dev/null; then
-		mkdir -p ~/.scripts
-		rm -rf ~/.scripts/nvim
-		ln -fs `realpath ./.scripts/nvim` ~/.scripts/
+		mkdir -p ~/bin
+		rm -rf ~/bin/nvim
+		for file in `ls ./bin`; do
+			ln -fs `realpath ./bin/$file` ~/bin/
+		done
 
 		mkdir -p ~/.config/nvim
 		ln -fs ~/.vimrc ~/.config/nvim/init.vim

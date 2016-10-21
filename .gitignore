@@ -23,7 +23,7 @@
 
 !gits/
 !gits/*
-!.scripts/
-!.scripts/*
+!bin/
+!bin/*
 
 !.gitignore

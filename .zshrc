@@ -39,7 +39,7 @@ if command -v nvim > /dev/null; then
     alias vim='nvim'
 
     neovim_autocd() {
-        [[ $NVIM_LISTEN_ADDRESS ]] && ~/.scripts/nvim/neovim-autocd.py
+        [[ $NVIM_LISTEN_ADDRESS ]] && ~/bin/neovim-autocd.py
     }
     chpwd_functions+=( neovim_autocd )
 fi
@@ -72,8 +72,12 @@ wd() {
   . ~/bin/wd/wd.sh
 }
 
+export PAGER=/usr/local/bin/vimpager
+alias less=$PAGER
+alias zless=$PAGER
+
 # Nvim host control
-export PATH="$PATH:$HOME/.scripts/nvim"
+export PATH="$HOME/bin/:$PATH"
 if command -v nvim-host-cmd > /dev/null; then
     v() {
         if [[ $# == 0 ]]; then
