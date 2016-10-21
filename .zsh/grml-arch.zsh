@@ -403,6 +403,12 @@ setopt nohup
 # make cd push the old directory onto the directory stack.
 setopt auto_pushd
 
+# Invert the meaning of '-' and '+' when accessing directories in the stack.
+setopt pushd_minus
+
+# Do not print the directory stack after pushd or popd.
+setopt pushd_silent
+
 # avoid "beep"ing
 setopt nobeep
 
