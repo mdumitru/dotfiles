@@ -7,9 +7,13 @@
 !.vim/
 !.vim/vundles.vim
 !.vim/vundles.config/
+!.vim/vundles.config/*
 !.vim/ftdetect/
+!.vim/ftdetect/*
 !.vim/ftplugin/
+!.vim/ftplugin/*
 !.vim/colors/
+!.vim/colors/*
 
 " Allow zsh stuff (it's mostly plugins which should be installed with antigen)
 !.zshrc
@@ -18,6 +22,8 @@
 !.gdbinit
 
 !gits/
+!gits/*
 !.scripts/
+!.scripts/*
 
 !.gitignore
