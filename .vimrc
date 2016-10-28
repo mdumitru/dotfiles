@@ -177,6 +177,33 @@ noremap <silent> <a-n> :tabedit<cr>
 " Both <f1> opening terminal help and highlighting are annoying.
 noremap <silent> <f1> <esc>:nohlsearch<cr>
 
+" Like windo but restore the current window.
+function! _Windo(command)
+    let l:__current_window=winnr()
+    execute 'windo ' . a:command
+    execute l:__current_window . 'wincmd w'
+endfunction
+command! -nargs=+ -complete=command Windo call _Windo(<q-args>)
+
+" Toggle the line numbers of all windows in the current tab.
+" On first use, it will turn them on.
+" This is useful when debugging from a terminal split and you want to see line
+" numbers in all visible source files.
+function! ToggleTabLineNumbers()
+    if !exists('t:__old_linenumbers')
+      let t:__old_linenumbers=0
+    endif
+
+    " Toggle numbers in modifiable, non-terminal windows.
+    Windo if &modifiable && &buftype !~ "terminal" |
+        \   let &number=!t:__old_linenumbers |
+        \ endif
+
+    let t:__old_linenumbers=!t:__old_linenumbers
+endfunction
+nnoremap <silent> <f4> :call ToggleTabLineNumbers()<cr><esc>
+
+
 if has('nvim')
     " Normal escape in terminal. Ctrl+Alt+e to send an Escape through.
     tnoremap <esc> <c-\><c-n>
@@ -193,6 +220,9 @@ if has('nvim')
     tnoremap <a-n> <c-\><c-n>:tabedit<cr>
     tnoremap <a-q> <c-\><c-n>:q<cr>
     tnoremap <silent> <f1> <c-\><c-n>:nohlsearch<cr>gi
+
+    " The BufEnter event is triggered, no need to return to insert explicitly.
+    tnoremap <silent> <f4> <c-\><c-n>:call ToggleTabLineNumbers()<cr>
 endif
 
 
