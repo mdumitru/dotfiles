@@ -117,7 +117,7 @@ endif
 "------ User shortcuts, commands ------
 nnoremap <silent> <c-s> :w!<cr>
 nnoremap <silent> <leader>w :w!<cr>
-cnoremap w!! SudoWrite sudo:%<cr>
+cnoremap w!! SudoWrite sudo:%
 
 " Make typing commands easier. Easy-motion should be enough for navigation, but
 " we still keep the functionality of the semicolon.
