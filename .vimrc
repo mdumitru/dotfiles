@@ -192,7 +192,7 @@ if has('nvim')
     tnoremap <a-t> <c-\><c-n>:Ttabedit<cr>
     tnoremap <a-n> <c-\><c-n>:tabedit<cr>
     tnoremap <a-q> <c-\><c-n>:q<cr>
-    tnoremap <silent> <f1> <c-\><c-n>:nohlsearch<cr>
+    tnoremap <silent> <f1> <c-\><c-n>:nohlsearch<cr>gi
 endif
 
 
