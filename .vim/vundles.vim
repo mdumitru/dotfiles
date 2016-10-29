@@ -30,6 +30,9 @@ Plugin 'jistr/vim-nerdtree-tabs'
 " BufExplorer Plugin for Vim
 Plugin 'jlanzarotta/bufexplorer'
 
+" Vim syntax highlighting for c, bison, flex
+Plugin 'justinmk/vim-syntax-extra'
+
 " Vim plugin that displays tags in a window, ordered by scope
 Plugin 'majutsushi/tagbar'
 
