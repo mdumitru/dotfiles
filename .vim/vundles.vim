@@ -48,6 +48,9 @@ Plugin 'nvie/vim-flake8'
 " Rename a buffer within Vim and on disk
 Plugin 'Rename'
 
+" Use Vim as PAGER
+Plugin 'rkitover/vimpager'
+
 " Pasting in Vim with indentation adjusted to destination context
 Plugin 'sickill/vim-pasta'
 
