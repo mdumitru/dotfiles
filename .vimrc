@@ -168,8 +168,8 @@ nnoremap <silent> <f3> :ToggleColorColumn<cr>
 
 " Make it easy to close stuff (remember that 'hidden' is set).
 noremap <silent> <a-q> :q<cr>
-noremap <silent> <a-backspace> :Bdelete<cr>
-noremap <silent> <leader><backspace> :bdelete<cr>
+noremap <silent> <a-backspace> :lclose<cr>:Bdelete<cr>
+noremap <silent> <leader><backspace> :lclose<cr>:bdelete<cr>
 " Note that :Bdelete is provided by a plugin.
 
 noremap <silent> <a-n> :tabedit<cr>
