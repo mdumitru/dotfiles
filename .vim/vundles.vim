@@ -21,14 +21,8 @@ Plugin 'VundleVim/Vundle.vim'
 " Precision colorscheme for the vim text editor
 Plugin 'altercation/vim-colors-solarized'
 
-" Vim-Improved eMACS: Emacs emulation for Vim
-Plugin 'andrep/vimacs'
-
 " Vim motions on speed!
 Plugin 'easymotion/vim-easymotion'
-
-" Make gvim-only colorschemes work transparently in terminal vim
-Plugin 'godlygeek/csapprox'
 
 " NERDTree and tabs together in Vim, painlessly
 Plugin 'jistr/vim-nerdtree-tabs'
@@ -62,9 +56,6 @@ Plugin 'scrooloose/nerdtree'
 
 " Syntax checking hacks for vim
 Plugin 'scrooloose/syntastic'
-
-" True Sublime Text style multiple selections for Vim
-Plugin 'terryma/vim-multiple-cursors'
 
 " a Git wrapper so awesome, it should be illegal
 Plugin 'tpope/vim-fugitive'
