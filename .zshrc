@@ -30,13 +30,10 @@ export TERM=xterm-256color
 
 if command -v vim > /dev/null; then
     export EDITOR='vim'
-    alias vi='vim'
 fi
 
 if command -v nvim > /dev/null; then
     export EDITOR='nvim'
-    alias vi='nvim'
-    alias vim='nvim'
 
     neovim_autocd() {
         [[ $NVIM_LISTEN_ADDRESS ]] && ~/bin/neovim-autocd.py
