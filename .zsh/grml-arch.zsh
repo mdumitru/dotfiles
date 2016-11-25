@@ -390,6 +390,9 @@ setopt longlistjobs
 # report the status of backgrounds jobs immediately
 setopt notify
 
+# the behavior of "multios" is counterintuitive (e.g. for "echo hi 2>&1 1>/dev/null | cat")
+setopt nomultios
+
 # whenever a command completion is attempted, make sure the entire command path
 # is hashed first.
 setopt hash_list_all
