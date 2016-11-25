@@ -167,7 +167,7 @@ nnoremap <silent> <f3> :ToggleColorColumn<cr>
 " Uniform mappings that can be used from neovim's terminal.
 
 " Make it easy to close stuff (remember that 'hidden' is set).
-noremap <silent> <a-q> :q<cr>
+noremap <silent> <c-q> :q<cr>
 noremap <silent> <a-backspace> :lclose<cr>:Bdelete<cr>
 noremap <silent> <leader><backspace> :lclose<cr>:bdelete<cr>
 " Note that :Bdelete is provided by a plugin.
@@ -218,7 +218,7 @@ if has('nvim')
     noremap <a-t> :Ttabedit<cr>
     tnoremap <a-t> <c-\><c-n>:Ttabedit<cr>
     tnoremap <a-n> <c-\><c-n>:tabedit<cr>
-    tnoremap <a-q> <c-\><c-n>:q<cr>
+    tnoremap <silent> <c-a-q> <c-\><c-n>:q<cr>
     tnoremap <silent> <f1> <c-\><c-n>:nohlsearch<cr>gi
 
     " The BufEnter event is triggered, no need to return to insert explicitly.
