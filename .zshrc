@@ -35,12 +35,13 @@ if check_com -c nvim; then
     export EDITOR='nvim'
     export VIMPAGER_VIM='nvim'
 
-    neovim_autocd() {
-        [[ $NVIM_LISTEN_ADDRESS ]] && ~/bin/neovim-autocd.py
-    }
-    chpwd_functions+=( neovim_autocd )
-
     if [[ $NVIM_LISTEN_ADDRESS ]] && check_com -c nvim-host-cmd; then
+        # Change nvim host's cwd when cd-ing from within a terminal.
+        neovim_autocd() {
+            nvim-host-cmd "execute \"tcd\" fnameescape(\"`pwd`\")"
+        }
+        chpwd_functions+=( neovim_autocd )
+
         alias v=nvim-host-cmd
         alias e='nvim-host-cmd edit'
         alias tabe='nvim-host-cmd tabedit'
