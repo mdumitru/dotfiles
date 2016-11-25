@@ -1,18 +1,27 @@
 #!/usr/bin/env python
-# Takes exactly one argument which it forwards to neovim
-# Multiple arguments should be packed in a string
-# Example: nvim-host-cmd "edit ~/.vimrc"
+# Forwards its arguments to neovim. Allows control of neovim from within a
+# neovim terminal.
+import os
+import sys
 
-import neovim, os, sys, time
+import neovim
 
-if len(sys.argv) != 2:
-    raise Exception("Usage: nvim-host-cmd <nvim-command>")
+
+if len(sys.argv) == 1 or sys.argv[1] in ["--help", "-h"]:
+    print("Usage: %s <nvim-command>" % os.path.basename(sys.argv[0]))
+    sys.exit(1)
 
 try:
     nvim_socket = os.environ["NVIM_LISTEN_ADDRESS"]
 except KeyError:
-    raise Exception("Couldn't read variable $NVIM_LISTEN_ADDRESS")
+    print("Couldn't read variable $NVIM_LISTEN_ADDRESS")
+    sys.exit(1)
+
 nvim = neovim.attach('socket', path=nvim_socket)
 
-nvim.command(sys.argv[1])
-
+# Join all arguments into a single, space-separated string. This allows for
+# invocations like: nvim-host-cmd "map a" b.
+try:
+    nvim.command(" ".join(sys.argv[1:]))
+except neovim.api.nvim.NvimError as nve:
+    print(nve)
