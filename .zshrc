@@ -24,13 +24,9 @@ antigen apply
 # Vars, aliases
 export LC_ALL="en_US.UTF-8"
 export BROWSER='firefox'
-export EDITOR='vi'
 export XDG_CONFIG_HOME=$HOME/.config
 export TERM=xterm-256color
 
-if command -v vim > /dev/null; then
-    export EDITOR='vim'
-fi
 
 if command -v nvim > /dev/null; then
     export EDITOR='nvim'
