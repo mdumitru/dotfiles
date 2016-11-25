@@ -69,9 +69,11 @@ wd() {
   . ~/bin/wd/wd.sh
 }
 
-export PAGER=/usr/local/bin/vimpager
-alias less=$PAGER
-alias zless=$PAGER
+export PAGER=vimpager
+alias vp=vimpager
+alias vc=vimcat
+alias -g V='| vimpager'
+
 
 # Nvim host control
 export PATH="$HOME/bin/:$PATH"
