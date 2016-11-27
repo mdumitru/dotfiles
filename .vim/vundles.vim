@@ -72,6 +72,9 @@ Plugin 'tpope/vim-repeat'
 " surround.vim: quoting/parenthesizing made simple
 Plugin 'tpope/vim-surround'
 
+" unimpaired.vim: pairs of handy bracket mappings 
+Plugin 'tpope/vim-unimpaired'
+
 " A code-completion engine for Vim
 Plugin 'Valloric/YouCompleteMe'
 
