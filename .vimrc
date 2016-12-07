@@ -149,17 +149,20 @@ vnoremap * y/<c-r>"<cr>
 vnoremap # y?<c-r>"<cr>
 
 " Sometimes the color column is annoying.
-command! ToggleColorColumn
-            \ if &colorcolumn == "" |
-            \   if exists('b:__old_colorcolumn') |
-            \       let &colorcolumn=b:__old_colorcolumn |
-            \   else |
-            \       let &colorcolumn=81 |
-            \   endif |
-            \ else |
-            \   let b:__old_colorcolumn=&colorcolumn |
-            \   let &colorcolumn="" |
-            \ endif
+function! _ToggleColorColumn()
+    if &colorcolumn == ""
+        if exists('b:__old_colorcolumn')
+            let &colorcolumn=b:__old_colorcolumn
+        else
+            let &colorcolumn=81
+        endif
+    else
+        let b:__old_colorcolumn=&colorcolumn
+        let &colorcolumn=""
+    endif
+endfunction
+command! -complete=command ToggleColorColumn call _ToggleColorColumn()
+
 nnoremap <silent> <f3> :ToggleColorColumn<cr>
 
 
@@ -177,10 +180,11 @@ noremap <silent> <a-n> :tabedit<cr>
 " Both <f1> opening terminal help and highlighting are annoying.
 noremap <silent> <f1> <esc>:nohlsearch<cr>
 
-" Like windo but restore the current window.
+" Like windo but restore the current window and don't end in insert.
 function! _Windo(command)
     let l:__current_window=winnr()
     execute 'windo ' . a:command
+    stopinsert
     execute l:__current_window . 'wincmd w'
 endfunction
 command! -nargs=+ -complete=command Windo call _Windo(<q-args>)
@@ -189,19 +193,20 @@ command! -nargs=+ -complete=command Windo call _Windo(<q-args>)
 " On first use, it will turn them on.
 " This is useful when debugging from a terminal split and you want to see line
 " numbers in all visible source files.
-function! ToggleTabLineNumbers()
+function! _ToggleTabLineNumbers()
     if !exists('t:__old_linenumbers')
-      let t:__old_linenumbers=0
+        let t:__old_linenumbers=0
     endif
 
     " Toggle numbers in modifiable, non-terminal windows.
     Windo if &modifiable && &buftype !~ "terminal" |
-        \   let &number=!t:__old_linenumbers |
+        \     let &number=!t:__old_linenumbers |
         \ endif
 
     let t:__old_linenumbers=!t:__old_linenumbers
 endfunction
-nnoremap <silent> <f4> :call ToggleTabLineNumbers()<cr><esc>
+command! -complete=command ToggleTabLineNumbers call _ToggleTabLineNumbers()
+nnoremap <silent> <f4> :ToggleTabLineNumbers<cr><esc>
 
 
 if has('nvim')
@@ -222,7 +227,7 @@ if has('nvim')
     tnoremap <silent> <f1> <c-\><c-n>:nohlsearch<cr>gi
 
     " The BufEnter event is triggered, no need to return to insert explicitly.
-    tnoremap <silent> <f4> <c-\><c-n>:call ToggleTabLineNumbers()<cr>
+    tnoremap <silent> <f4> <c-\><c-n>:ToggleTabLineNumbers<cr>
 endif
 
 
