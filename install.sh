@@ -20,7 +20,7 @@ install_zsh() {
 	ln -fs `realpath ./.zsh` ~
 	ln -fs `realpath ./.zshrc` ~
 
-	zsh -c "source ~/.zshrc"
+	source ~/.zshrc
 
 	set +x
 }
