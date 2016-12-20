@@ -77,10 +77,19 @@ install_pgdb() {
 	set +x
 }
 
+install_ycm() {
+	set -x
+
+	ln -fs `realpath ./.ycm_extra_conf.py` ~
+
+	set +x
+}
+
 main() {
 	install_zsh
 	install_vim
 	install_pgdb
+	install_ycm
 }
 
 if [[ $# == 0 ]]; then
