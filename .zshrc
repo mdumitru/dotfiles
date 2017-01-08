@@ -26,16 +26,31 @@ export LC_ALL="en_US.UTF-8"
 export BROWSER='firefox'
 export XDG_CONFIG_HOME=$HOME/.config
 export TERM=xterm-256color
+export PATH="$HOME/bin/:$PATH"
 
 
-if command -v nvim > /dev/null; then
+# Interaction with neovim when running from its guest terminal.
+if check_com -c nvim; then
+    # The editor is set as vi/vim by grml-arch.
     export EDITOR='nvim'
+    export VIMPAGER_VIM='nvim'
 
-    neovim_autocd() {
-        [[ $NVIM_LISTEN_ADDRESS ]] && ~/bin/neovim-autocd.py
-    }
-    chpwd_functions+=( neovim_autocd )
+    if [[ $NVIM_LISTEN_ADDRESS ]] && check_com -c nvim-host-cmd; then
+        # Change nvim host's cwd when cd-ing from within a terminal.
+        neovim_autocd() {
+            nvim-host-cmd "execute \"tcd\" fnameescape(\"`pwd`\")"
+        }
+        chpwd_functions+=( neovim_autocd )
+
+        alias v=nvim-host-cmd
+        alias e='nvim-host-cmd edit'
+        alias tabe='nvim-host-cmd tabedit'
+        alias sp='nvim-host-cmd split'
+        alias vsp='nvim-host-cmd vsplit'
+        alias bosp='nvim-host-cmd botright split'
+    fi
 fi
+
 
 remake() {
     make clean || return $?
@@ -69,64 +84,3 @@ export PAGER=vimpager
 alias vp=vimpager
 alias vc=vimcat
 alias -g V='| vimpager'
-
-
-# Nvim host control
-export PATH="$HOME/bin/:$PATH"
-if command -v nvim-host-cmd > /dev/null; then
-    v() {
-        if [[ $# == 0 ]]; then
-            return 0;
-        fi
-
-        arg="$1"
-
-        if [[ $# > 0 ]]; then
-            shift
-            for i in "$@"; do
-                if [[ -f "$i" ]]; then
-                    i=`realpath $i | sed 's/ /\\ /g'`
-                fi
-                arg="$arg $i"
-            done
-        fi
-        nvim-host-cmd $arg
-    }
-    e() {
-        if [[ $# == 1 ]]; then
-            file=`realpath $1 | sed 's/ /\\ /g'`
-        fi
-        arg="edit $file"
-        nvim-host-cmd $arg
-    }
-    tabe() {
-        if [[ $# == 1 ]]; then
-            file=`realpath $1 | sed 's/ /\\ /g'`
-        fi
-        arg="tabedit $file"
-        nvim-host-cmd $arg
-    }
-    sp() {
-        if [[ $# == 1 ]]; then
-            file=`realpath $1 | sed 's/ /\\ /g'`
-        fi
-        arg="split $file"
-        nvim-host-cmd $arg
-    }
-    vsp() {
-        if [[ $# == 1 ]]; then
-            file=`realpath $1 | sed 's/ /\\ /g'`
-        fi
-        arg="vsplit $file"
-        nvim-host-cmd $arg
-    }
-    nerd() {
-        if [[ $# == 1 ]]; then
-            file=`realpath $1 | sed 's/ /\\ /g'`
-        else
-            file=`realpath .`
-        fi
-        arg='execute "Bdelete!" | NERDTree '$file
-        nvim-host-cmd $arg
-    }
-fi
