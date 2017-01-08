@@ -16,7 +16,7 @@ endif
 
 
 "------ General ------
-set nofoldenable        " unfold everything when opening a file
+set foldlevel=9999      " unfold everything when opening a file
 set foldmethod=indent   " define folds by indentation
 set hidden              " don't unload buffers not open in any window
 set history=9999        " remember these many commands and searches
