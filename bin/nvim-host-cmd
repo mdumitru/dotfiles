@@ -8,7 +8,7 @@ import neovim
 
 
 if len(sys.argv) == 1 or sys.argv[1] in ["--help", "-h"]:
-    print("Usage: %s <nvim-command>".format(os.path.basename(sys.argv[0])))
+    print("Usage: {} <nvim-command>".format(os.path.basename(sys.argv[0])))
     sys.exit(1)
 
 try:
