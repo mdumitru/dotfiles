@@ -15,11 +15,15 @@ antigen bundle sudo
 antigen bundle wd
 antigen bundle z
 antigen bundle nilsonholger/osx-zsh-completions
-# antigen bundle zsh-users/zsh-autosuggestions
+antigen bundle zsh-users/zsh-autosuggestions
 antigen bundle zsh-users/zsh-completions
 antigen bundle zsh-users/zsh-history-substring-search
 antigen bundle zsh-users/zsh-syntax-highlighting
 antigen apply
+
+# Make suggestions visible on solarized background.
+ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=10'
+
 
 # Vars, aliases
 export LC_ALL="en_US.UTF-8"
