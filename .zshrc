@@ -66,7 +66,7 @@ remake() {
 }
 
 weather() {
-        curl -4 "http://wttr.in/$1"
+    curl -4 "http://wttr.in/$1"
 }
 
 if command -v bpython > /dev/null; then
