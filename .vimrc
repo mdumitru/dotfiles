@@ -43,6 +43,9 @@ endif
 " Enable filetype detection, scripts and indent-scripts.
 filetype plugin indent on
 
+" Max nvim terminal scrollback.
+let g:terminal_scrollback_buffer_size=100000
+
 
 "------ Indents and tabs ------
 set autoindent      " indent a newline using the current one's level
