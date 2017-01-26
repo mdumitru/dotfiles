@@ -154,7 +154,11 @@ function! _ToggleColorColumn()
         if exists('b:__old_colorcolumn')
             let &colorcolumn=b:__old_colorcolumn
         else
-            let &colorcolumn=81
+            if &textwidth != 0
+                let &colorcolumn=&textwidth+1
+            else
+                let &colorcolumn=81
+            endif
         endif
     else
         let b:__old_colorcolumn=&colorcolumn
