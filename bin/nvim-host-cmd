@@ -1,6 +1,8 @@
 #!/usr/bin/env python
 # Forwards its arguments to neovim. Allows control of neovim from within a
 # neovim terminal.
+from __future__ import print_function
+
 import os
 import sys
 
