@@ -14,7 +14,7 @@ if len(sys.argv) == 1 or sys.argv[1] in ["--help", "-h"]:
 try:
     nvim_socket = os.environ["NVIM_LISTEN_ADDRESS"]
 except KeyError:
-    print("Couldn't read variable $NVIM_LISTEN_ADDRESS")
+    print("Couldn't read variable $NVIM_LISTEN_ADDRESS", file=sys.stderr)
     sys.exit(1)
 
 nvim = neovim.attach('socket', path=nvim_socket)
@@ -24,4 +24,5 @@ nvim = neovim.attach('socket', path=nvim_socket)
 try:
     nvim.command(" ".join(sys.argv[1:]))
 except neovim.api.nvim.NvimError as nve:
-    print("{}".format(nve)[2:-1])
+    print(nve.args[0].decode('utf-8'), file=sys.stderr)
+    sys.exit(1)
