@@ -5,9 +5,9 @@
 !.gvimrc
 !.vimrc
 !.vim/
-!.vim/vundles.vim
-!.vim/vundles.config/
-!.vim/vundles.config/*
+!.vim/plugins.vim
+!.vim/plugins.config/
+!.vim/plugins.config/*
 !.vim/ftdetect/
 !.vim/ftdetect/*
 !.vim/ftplugin/

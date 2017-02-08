@@ -1,4 +1,4 @@
-" Vundle plugin configuration
+" Plugin configurations
 "
 " All plugins here are sorted alphabetically (for lack of a better order), case
 " insensitive ('Ab' comes before 'ac' but after 'aa'). Case-sorting should
@@ -9,11 +9,11 @@
 
 filetype off                  " required by vundle
 
-set runtimepath+=~/.vim/bundle/Vundle.vim
-set runtimepath+=~/.vim/vundles/
+set runtimepath+=~/.vim/plugins/Vundle.vim
+set runtimepath+=~/.vim/plugins/
 
 
-call vundle#begin()
+call vundle#begin('~/.vim/plugins/')
 
 " let Vundle manage Vundle, required
 Plugin 'VundleVim/Vundle.vim'
@@ -124,7 +124,7 @@ filetype plugin indent on    " required by vundle
 
 
 " load all plugin settings
-let settings = expand($HOME . "/.vim/vundles.config/")
+let settings = expand($HOME . "/.vim/plugins.config/")
 for fpath in split(globpath(settings, '*.vim'), '\n')
     exe 'source' fpath
 endfor

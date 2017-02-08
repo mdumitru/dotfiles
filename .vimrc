@@ -103,17 +103,18 @@ set backspace=indent,eol,start
 set whichwrap=
 
 
-"------ Vundle config ------
-" We need to set the map leader before Vundle loads plugins & their settings.
+"------ Plugins config ------
+" We need to set the map leader before the plugins & their settings are loaded.
 " Comment this line when using a decent layout (UK), so that the leader is '\'.
 let mapleader=','
 
 
-" Let Vundle load all the plugins from .vim/vundles.vim (if it exists).
-let vundle_dir=expand($HOME . "/.vim/bundle/Vundle.vim")
-let vundles_path=expand($HOME . "/.vim/vundles.vim")
-if isdirectory(vundle_dir) && filereadable(vundles_path)
-    exe 'source' vundles_path
+" Let the plugin manager load all the plugins from .vim/plugins.vim (if it
+" exists).
+let manager_dir=expand($HOME . "/.vim/plugins/Vundle.vim")
+let plugins_path=expand($HOME . "/.vim/plugins.vim")
+if isdirectory(manager_dir) && filereadable(plugins_path)
+    exe 'source' plugins_path
 endif
 
 
