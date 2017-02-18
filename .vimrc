@@ -111,9 +111,10 @@ let mapleader=','
 
 " Let the plugin manager load all the plugins from .vim/plugins.vim (if it
 " exists).
-let manager_dir=expand($HOME . "/.vim/plugins/Vundle.vim")
+let manager_path=expand($HOME . "/.vim/plugins/vim-plug/plug.vim")
 let plugins_path=expand($HOME . "/.vim/plugins.vim")
-if isdirectory(manager_dir) && filereadable(plugins_path)
+if filereadable(manager_path) && filereadable(plugins_path)
+    exe 'source' manager_path
     exe 'source' plugins_path
 endif
 
