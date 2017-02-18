@@ -65,8 +65,20 @@ Plug 'tpope/vim-surround'
 " unimpaired.vim: pairs of handy bracket mappings 
 Plug 'tpope/vim-unimpaired'
 
+
+function! BuildYCM(info)
+    " info is a dictionary with 3 fields
+    " - name: name of the plugin
+    " - status: 'installed', 'updated', or 'unchanged'
+    " - force: set on PlugInstall! or PlugUpdate!
+    if a:info.force
+        !./install.py --all
+    endif
+endfunction
+
 " A code-completion engine for Vim
-Plug 'Valloric/YouCompleteMe'
+Plug 'Valloric/YouCompleteMe', { 'do': function('BuildYCM') }
+
 
 " AppleScript syntax highlighting
 Plug 'vim-scripts/applescript.vim'
