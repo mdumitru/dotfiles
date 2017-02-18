@@ -18,7 +18,7 @@ Plug 'easymotion/vim-easymotion'
 Plug 'jistr/vim-nerdtree-tabs'
 
 " BufExplorer Plugin for Vim
-Plug 'jlanzarotta/bufexplorer'
+Plug 'jlanzarotta/bufexplorer', { 'on': 'ToggleBufExplorer' }
 
 " Vim syntax highlighting for c, bison, flex
 Plug 'justinmk/vim-syntax-extra'
@@ -27,7 +27,7 @@ Plug 'justinmk/vim-syntax-extra'
 Plug 'majutsushi/tagbar'
 
 " Delete buffers and close files in Vim without messing up your layout.
-Plug 'moll/vim-bbye'
+Plug 'moll/vim-bbye', { 'on': 'Bdelete' }
 
 " Better whitespace highlighting for Vim
 Plug 'ntpeters/vim-better-whitespace'
@@ -36,7 +36,7 @@ Plug 'ntpeters/vim-better-whitespace'
 Plug 'nvie/vim-flake8'
 
 " Rename a buffer within Vim and on disk
-Plug 'Rename'
+Plug 'Rename', { 'on': 'Rename' }
 
 " Use Vim as PAGER
 Plug 'rkitover/vimpager'
@@ -48,7 +48,7 @@ Plug 'sickill/vim-pasta'
 Plug 'scrooloose/nerdcommenter'
 
 " A tree file explorer plugin
-Plug 'scrooloose/nerdtree'
+Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
 
 " Syntax checking hacks for vim
 Plug 'scrooloose/syntastic'
@@ -107,7 +107,7 @@ Plug 'xolox/vim-misc'
 Plug 'xolox/vim-session'
 
 " A plugin of NERDTree showing git status
-Plug 'Xuyuanp/nerdtree-git-plugin'
+Plug 'Xuyuanp/nerdtree-git-plugin', { 'on': 'NERDTreeToggle' }
 
 call plug#end()
 
