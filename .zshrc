@@ -63,11 +63,6 @@ if command -v bpython > /dev/null; then
     }
 fi
 
-# needed by the wd plugin
-wd() {
-  . ~/bin/wd/wd.sh
-}
-
 export PAGER=vimpager
 alias vp=vimpager
 alias vc=vimcat

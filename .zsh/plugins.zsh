@@ -17,6 +17,9 @@ if [[ ! -r "$manager_path" ]]; then
 fi
 source "$manager_path"
 
+# Needed by oh-my-zsh plugins.
+export ZSH="$ZPLUG_HOME/repos/robbyrussell/oh-my-zsh"
+
 
 # Useful, short aliases for common commands.
 zplug "plugins/common-aliases",    from:oh-my-zsh
