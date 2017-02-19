@@ -17,7 +17,11 @@
 
 " Allow zsh stuff (it's mostly plugins which should be installed with antigen)
 !.zshrc
+!.zsh/
 !.zsh/grml-arch.zsh
+!.zsh/plugins.zsh
+!.zsh/plugins.config/
+!.zsh/plugins.config/*
 
 !.gdbinit
 
