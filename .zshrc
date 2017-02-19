@@ -1,25 +1,22 @@
 # GRML upstream
 [[ -f ~/.zsh/grml-arch.zsh ]] && source ~/.zsh/grml-arch.zsh
 
-# Antigen plugins
-export ADOTDIR=~/.zsh/.antigen-cache
-export ZSH_CACHE_DIR=~/.zsh/.antigen-cache
-[[ -f ~/.zsh/antigen-repo/antigen.zsh ]] && source ~/.zsh/antigen-repo/antigen.zsh
+# Plugins
+[[ -f ~/.zsh/zplug/init.zsh ]] && source ~/.zsh/zplug/init.zsh
 
-antigen bundle common-aliases
-antigen bundle dirhistory
-antigen bundle fancy-ctrl-z
-antigen bundle git
-antigen bundle last-working-dir
-antigen bundle sudo
-antigen bundle wd
-antigen bundle z
-antigen bundle nilsonholger/osx-zsh-completions
-antigen bundle zsh-users/zsh-autosuggestions
-antigen bundle zsh-users/zsh-completions
-antigen bundle zsh-users/zsh-history-substring-search
-antigen bundle zsh-users/zsh-syntax-highlighting
-antigen apply
+zplug plugins/common-aliases,    from:oh-my-zsh
+zplug plugins/fancy-ctrl-z,  from:oh-my-zsh
+zplug plugins/git,   from:oh-my-zsh
+zplug plugins/last-working-dir,  from:oh-my-zsh
+zplug plugins/sudo,  from:oh-my-zsh
+zplug plugins/wd,    from:oh-my-zsh
+zplug plugins/z, from:oh-my-zsh
+zplug nilsonholger/osx-zsh-completions, if:"[[ $OSTYPE == *darwin* ]]"
+zplug zsh-users/zsh-autosuggestions
+zplug zsh-users/zsh-completions
+zplug zsh-users/zsh-history-substring-search
+zplug zsh-users/zsh-syntax-highlighting
+zplug load
 
 # Make suggestions visible on solarized background.
 ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=10'
