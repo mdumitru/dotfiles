@@ -9,6 +9,15 @@
 # pugins) the short description from github and it should hopefully indicate
 # the usefulness of a plugin.
 
+
+# Attempt to source the plugin manager.
+manager_path="$HOME/.zsh/zplug/init.zsh"
+if [[ ! -r "$manager_path" ]]; then
+    return
+fi
+source "$manager_path"
+
+
 # Useful, short aliases for common commands.
 zplug "plugins/common-aliases",    from:oh-my-zsh
 

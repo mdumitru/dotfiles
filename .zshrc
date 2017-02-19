@@ -2,11 +2,9 @@
 [[ -f ~/.zsh/grml-arch.zsh ]] && source ~/.zsh/grml-arch.zsh
 
 
-# Let the plugin manager load all the plugins.
-manager_path="$HOME/.zsh/zplug/init.zsh"
+# Load all plugins.
 plugins_path="$HOME/.zsh/plugins.zsh"
-if [[ -r "$manager_path" ]] && [[ -r "$plugins_path" ]]; then
-    source "$manager_path"
+if [[ -r "$plugins_path" ]]; then
     source "$plugins_path"
 fi
 

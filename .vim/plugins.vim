@@ -6,6 +6,16 @@
 "
 " The description provided above the plugin is (usually) the short description
 " from github and it should hopefully indicate the usefulness of a plugin.
+
+
+" Attempt to source the plugin manager.
+let manager_path=expand($HOME . "/.vim/plugins/vim-plug/plug.vim")
+if ! filereadable(manager_path)
+    finish
+endif
+exe 'source' manager_path
+
+
 call plug#begin('~/.vim/plugins/')
 
 " Precision colorscheme for the vim text editor
