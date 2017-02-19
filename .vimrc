@@ -109,8 +109,7 @@ set whichwrap=
 let mapleader=','
 
 
-" Let the plugin manager load all the plugins from .vim/plugins.vim (if it
-" exists).
+" Let the plugin manager load all the plugins.
 let manager_path=expand($HOME . "/.vim/plugins/vim-plug/plug.vim")
 let plugins_path=expand($HOME . "/.vim/plugins.vim")
 if filereadable(manager_path) && filereadable(plugins_path)
