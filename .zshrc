@@ -29,7 +29,6 @@ ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=10'
 export LC_ALL="en_US.UTF-8"
 export BROWSER='firefox'
 export XDG_CONFIG_HOME=$HOME/.config
-export TERM=xterm-256color
 export PATH="$HOME/bin/:$PATH"
 
 
