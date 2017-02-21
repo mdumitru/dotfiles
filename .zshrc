@@ -51,7 +51,8 @@ if check_com -c nvim; then
         alias tabe='nvim-host-cmd tabedit'
         alias sp='nvim-host-cmd split'
         alias vsp='nvim-host-cmd vsplit'
-        alias bosp='nvim-host-cmd botright split'
+        alias bo='nvim-host-cmd botright'
+        alias to='nvim-host-cmd topleft'
     fi
 fi
 
