@@ -39,7 +39,7 @@ if check_com -c nvim; then
     export EDITOR='nvim'
     export VIMPAGER_VIM='nvim'
 
-    if [[ $NVIM_LISTEN_ADDRESS ]] && check_com -c nvim-host-cmd; then
+    if [[ -w "$NVIM_LISTEN_ADDRESS" ]] && check_com -c nvim-host-cmd; then
         # Change nvim host's cwd when cd-ing from within a terminal.
         neovim_autocd() {
             nvim-host-cmd "execute \"tcd\" fnameescape(\"`pwd`\")"
