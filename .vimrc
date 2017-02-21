@@ -172,6 +172,10 @@ command! -complete=command ToggleColorColumn call _ToggleColorColumn()
 
 nnoremap <silent> <f3> :ToggleColorColumn<cr>
 
+" Easy termbin copy/paste.
+command! -range=% Tbcopy <line1>,<line2>write !netcat termbin.com 9999
+command! -nargs=1 -range Tbpaste <line1>,<line2>!curl --silent termbin.com/<f-args>
+
 
 "------ Global shortcuts ------
 " Uniform mappings that can be used from neovim's terminal.
