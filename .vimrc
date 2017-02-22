@@ -105,8 +105,7 @@ set whichwrap=
 
 "------ Vundle config ------
 " We need to set the map leader before Vundle loads plugins & their settings.
-" Comment this line when using a decent layout (UK), so that the leader is '\'.
-let mapleader=','
+let mapleader="\<space>"
 
 
 " Let Vundle load all the plugins from .vim/vundles.vim (if it exists).
@@ -137,9 +136,6 @@ nnoremap gh <nop>
 " Don't cancel visual select when shifting.
 vnoremap < <gv
 vnoremap > >gv
-
-" Space toggles folds in normal mode (if any).
-nnoremap <silent> <space> @=(foldlevel('.')?'za':"\<space>")<cr>
 
 set pastetoggle=<f2>
 
