@@ -1,28 +1,12 @@
 # GRML upstream
 [[ -f ~/.zsh/grml-arch.zsh ]] && source ~/.zsh/grml-arch.zsh
 
-# Antigen plugins
-export ADOTDIR=~/.zsh/.antigen-cache
-export ZSH_CACHE_DIR=~/.zsh/.antigen-cache
-[[ -f ~/.zsh/antigen-repo/antigen.zsh ]] && source ~/.zsh/antigen-repo/antigen.zsh
 
-antigen bundle common-aliases
-antigen bundle dirhistory
-antigen bundle fancy-ctrl-z
-antigen bundle git
-antigen bundle last-working-dir
-antigen bundle sudo
-antigen bundle wd
-antigen bundle z
-antigen bundle nilsonholger/osx-zsh-completions
-antigen bundle zsh-users/zsh-autosuggestions
-antigen bundle zsh-users/zsh-completions
-antigen bundle zsh-users/zsh-history-substring-search
-antigen bundle zsh-users/zsh-syntax-highlighting
-antigen apply
-
-# Make suggestions visible on solarized background.
-ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=10'
+# Load all plugins.
+plugins_path="$HOME/.zsh/plugins.zsh"
+if [[ -r "$plugins_path" ]]; then
+    source "$plugins_path"
+fi
 
 
 # Vars, aliases
@@ -77,11 +61,6 @@ if command -v bpython > /dev/null; then
         fi
     }
 fi
-
-# needed by the wd plugin
-wd() {
-  . ~/bin/wd/wd.sh
-}
 
 export PAGER=vimpager
 alias vp=vimpager

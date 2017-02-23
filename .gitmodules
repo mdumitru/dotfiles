@@ -1,10 +1,9 @@
-[submodule ".zsh/antigen-repo"]
-	path = .zsh/antigen-repo
-	url = https://github.com/zsh-users/antigen.git
-	ignore = untracked
-[submodule ".vim/bundle/Vundle.vim"]
-	path = .vim/bundle/Vundle.vim
-	url = https://github.com/VundleVim/Vundle.vim.git
 [submodule "gits/peda"]
 	path = gits/peda
 	url = https://github.com/longld/peda.git
+[submodule ".vim/plugins/vim-plug"]
+	path = .vim/plugins/vim-plug
+	url = https://github.com/junegunn/vim-plug.git
+[submodule ".zsh/zplug"]
+	path = .zsh/zplug
+	url = https://github.com/zplug/zplug

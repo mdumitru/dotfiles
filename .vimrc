@@ -108,11 +108,10 @@ set whichwrap=
 let mapleader="\<space>"
 
 
-" Let Vundle load all the plugins from .vim/vundles.vim (if it exists).
-let vundle_dir=expand($HOME . "/.vim/bundle/Vundle.vim")
-let vundles_path=expand($HOME . "/.vim/vundles.vim")
-if isdirectory(vundle_dir) && filereadable(vundles_path)
-    exe 'source' vundles_path
+" Load all plugins.
+let plugins_path=expand($HOME . "/.vim/plugins.vim")
+if filereadable(plugins_path)
+    exe 'source' plugins_path
 endif
 
 
