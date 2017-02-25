@@ -22,22 +22,19 @@ export ZSH="$ZPLUG_HOME/repos/robbyrussell/oh-my-zsh"
 
 
 # Useful, short aliases for common commands.
-zplug "plugins/common-aliases",    from:oh-my-zsh
+zplug "plugins/common-aliases", from:oh-my-zsh
 
 # Use Ctrl-Z to switch back to background task.
-zplug "plugins/fancy-ctrl-z",  from:oh-my-zsh
+zplug "plugins/fancy-ctrl-z", from:oh-my-zsh
 
 # Useful git aliases and functions.
-zplug "plugins/git",   from:oh-my-zsh
+zplug "plugins/git", from:oh-my-zsh
 
 # Keeps track of the last used wd and jumps into it for new shells.
-zplug "plugins/last-working-dir",  from:oh-my-zsh
-
-# sudo or sudoedit will be inserted before the command.
-zplug "plugins/sudo",  from:oh-my-zsh
+zplug "plugins/last-working-dir", from:oh-my-zsh
 
 # lets you jump to custom directories in zsh, without using cd.
-zplug "plugins/wd",    from:oh-my-zsh
+zplug "plugins/wd", from:oh-my-zsh
 
 # jump around
 zplug "plugins/z", from:oh-my-zsh
