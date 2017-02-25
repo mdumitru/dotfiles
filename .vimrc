@@ -16,13 +16,12 @@ endif
 
 
 "------ General ------
+set belloff=all         " don't ring the bell for any events
 set foldlevel=9999      " unfold everything when opening a file
 set foldmethod=indent   " define folds by indentation
 set hidden              " don't unload buffers not open in any window
 set history=9999        " remember these many commands and searches
 set mouse=a             " enable mouse in normal, visual, insert, command-line
-set noerrorbells        " never trigger an error sound
-set novisualbell        " never trigger an error flash
 set splitbelow          " a new horizontal split is placed below, not above
 set splitright          " a new vertical split is placed to the right, not left
 set timeoutlen=500      " wait these many milliseconds between a map's keys
