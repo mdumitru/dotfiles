@@ -24,9 +24,6 @@ Plug 'altercation/vim-colors-solarized'
 " Vim motions on speed!
 Plug 'easymotion/vim-easymotion'
 
-" NERDTree and tabs together in Vim, painlessly
-Plug 'jistr/vim-nerdtree-tabs'
-
 " BufExplorer Plugin for Vim
 Plug 'jlanzarotta/bufexplorer', { 'on': 'ToggleBufExplorer' }
 
