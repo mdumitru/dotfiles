@@ -52,10 +52,10 @@ zplug "nilsonholger/osx-zsh-completions", if:"[[ $OSTYPE == *darwin* ]]"
 zplug "zsh-users/zsh-completions"
 
 # ZSH port of the FISH shell's history search
-zplug "zsh-users/zsh-history-substring-search"
+zplug "zsh-users/zsh-history-substring-search", defer:3
 
 # Fish shell like syntax highlighting for Zsh.
-zplug "zsh-users/zsh-syntax-highlighting"
+zplug "zsh-users/zsh-syntax-highlighting", defer:2
 
 zplug "load"
 
