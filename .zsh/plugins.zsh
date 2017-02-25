@@ -46,7 +46,7 @@ zplug "plugins/z", from:oh-my-zsh
 zplug "nilsonholger/osx-zsh-completions", if:"[[ $OSTYPE == *darwin* ]]"
 
 # Fish-like autosuggestions for zsh
-zplug "zsh-users/zsh-autosuggestions"
+#zplug "zsh-users/zsh-autosuggestions"
 
 # Additional completion definitions for Zsh.
 zplug "zsh-users/zsh-completions"
