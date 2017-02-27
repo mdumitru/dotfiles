@@ -22,22 +22,19 @@ export ZSH="$ZPLUG_HOME/repos/robbyrussell/oh-my-zsh"
 
 
 # Useful, short aliases for common commands.
-zplug "plugins/common-aliases",    from:oh-my-zsh
+zplug "plugins/common-aliases", from:oh-my-zsh
 
 # Use Ctrl-Z to switch back to background task.
-zplug "plugins/fancy-ctrl-z",  from:oh-my-zsh
+zplug "plugins/fancy-ctrl-z", from:oh-my-zsh
 
 # Useful git aliases and functions.
-zplug "plugins/git",   from:oh-my-zsh
+zplug "plugins/git", from:oh-my-zsh
 
 # Keeps track of the last used wd and jumps into it for new shells.
-zplug "plugins/last-working-dir",  from:oh-my-zsh
-
-# sudo or sudoedit will be inserted before the command.
-zplug "plugins/sudo",  from:oh-my-zsh
+zplug "plugins/last-working-dir", from:oh-my-zsh
 
 # lets you jump to custom directories in zsh, without using cd.
-zplug "plugins/wd",    from:oh-my-zsh
+zplug "plugins/wd", from:oh-my-zsh
 
 # jump around
 zplug "plugins/z", from:oh-my-zsh
@@ -45,17 +42,20 @@ zplug "plugins/z", from:oh-my-zsh
 # ZSH completions for selected OS X commands.
 zplug "nilsonholger/osx-zsh-completions", if:"[[ $OSTYPE == *darwin* ]]"
 
+# A next-generation plugin manager for zsh
+zplug 'zplug/zplug', hook-build:'zplug --self-manage'
+
 # Fish-like autosuggestions for zsh
-zplug "zsh-users/zsh-autosuggestions"
+#zplug "zsh-users/zsh-autosuggestions"
 
 # Additional completion definitions for Zsh.
 zplug "zsh-users/zsh-completions"
 
 # ZSH port of the FISH shell's history search
-zplug "zsh-users/zsh-history-substring-search"
+zplug "zsh-users/zsh-history-substring-search", defer:3
 
 # Fish shell like syntax highlighting for Zsh.
-zplug "zsh-users/zsh-syntax-highlighting"
+zplug "zsh-users/zsh-syntax-highlighting", defer:2
 
 zplug "load"
 

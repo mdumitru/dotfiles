@@ -24,9 +24,6 @@ Plug 'altercation/vim-colors-solarized'
 " Vim motions on speed!
 Plug 'easymotion/vim-easymotion'
 
-" NERDTree and tabs together in Vim, painlessly
-Plug 'jistr/vim-nerdtree-tabs'
-
 " BufExplorer Plugin for Vim
 Plug 'jlanzarotta/bufexplorer', { 'on': 'ToggleBufExplorer' }
 
@@ -76,18 +73,22 @@ Plug 'tpope/vim-surround'
 Plug 'tpope/vim-unimpaired'
 
 
-function! BuildYCM(info)
-    " info is a dictionary with 3 fields
-    " - name: name of the plugin
-    " - status: 'installed', 'updated', or 'unchanged'
-    " - force: set on PlugInstall! or PlugUpdate!
-    if a:info.force
-        !./install.py --all
-    endif
-endfunction
+" Load YCM only if it's available.
+" See: https://github.com/Valloric/YouCompleteMe/issues/1558
+if v:version + has('patch584') >= 704 && (has('python') || has('python3'))
+    function! BuildYCM(info)
+        " info is a dictionary with 3 fields
+        " - name: name of the plugin
+        " - status: 'installed', 'updated', or 'unchanged'
+        " - force: set on PlugInstall! or PlugUpdate!
+        if a:info.force
+            !python install.py --all
+        endif
+    endfunction
 
-" A code-completion engine for Vim
-Plug 'Valloric/YouCompleteMe', { 'do': function('BuildYCM') }
+    " A code-completion engine for Vim
+    Plug 'Valloric/YouCompleteMe', { 'do': function('BuildYCM') }
+endif
 
 
 " AppleScript syntax highlighting
