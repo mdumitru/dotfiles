@@ -109,7 +109,7 @@ set backspace=indent,eol,start
 set whichwrap=
 
 
-"------ Vundle config ------
+"------ Plugins config ------
 " We need to set the map leader before Vundle loads plugins & their settings.
 let mapleader="\<space>"
 
