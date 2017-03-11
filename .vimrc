@@ -3,6 +3,13 @@ set runtimepath^=~/.vim
 set runtimepath+=~/.vim/after
 
 
+" Source 'before' file (if any).
+let vimbefore_path=expand($HOME . "/.vimrc.before")
+if filereadable(vimbefore_path)
+    exe 'source' plugins_path
+endif
+
+
 "------ Encoding settings ------
 " Encoding in neovim is utf-8 by default and raises an error when resourcing.
 if !has('nvim')
@@ -265,4 +272,11 @@ if has('nvim')
     tnoremap <a-o> <c-\><c-n>gt
     tnoremap <silent> <c-a-i> <c-\><c-n>:execute "tabmove" tabpagenr() - 2<cr>
     tnoremap <silent> <c-a-o> <c-\><c-n>:execute "tabmove" tabpagenr() + 1<cr>
+endif
+
+
+" Source 'after' file (if any).
+let vimafter_path=expand($HOME . "/.vimrc.after")
+if filereadable(vimafter_path)
+    exe 'source' plugins_path
 endif

@@ -120,6 +120,15 @@ Plug 'xolox/vim-session'
 " A plugin of NERDTree showing git status
 Plug 'Xuyuanp/nerdtree-git-plugin', { 'on': 'NERDTreeToggle' }
 
+
+" Source 'local_plugins' file (if any).
+" This file should contain only 'Plug' directives.
+let local_plugins_path=expand($HOME . "/.vim/plugins/local_plugins.vim")
+if filereadable(local_plugins_path)
+    exe 'source' local_plugins_path
+endif
+
+
 call plug#end()
 
 

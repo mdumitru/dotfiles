@@ -1,3 +1,10 @@
+" Source 'before' file (if any).
+let vimbefore_path=expand($HOME . "/.gvimrc.before")
+if filereadable(vimbefore_path)
+    exe 'source' plugins_path
+endif
+
+
 set guicursor=a:block-Cursor    " set curosor to always be a block
 set guioptions-=m  " remove menu bar
 set guioptions-=T  " remove toolbar
@@ -21,4 +28,11 @@ else
 
     " Start maximized.
     autocmd GUIEnter * call system("wmctrl -i -b add,maximized_vert,maximized_horz -r " . v:windowid)
+endif
+
+
+" Source 'after' file (if any).
+let vimafter_path=expand($HOME . "/.gvimrc.after")
+if filereadable(vimafter_path)
+    exe 'source' plugins_path
 endif

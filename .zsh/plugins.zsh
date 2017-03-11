@@ -57,6 +57,14 @@ zplug "zsh-users/zsh-history-substring-search", defer:3
 # Fish shell like syntax highlighting for Zsh.
 zplug "zsh-users/zsh-syntax-highlighting", defer:2
 
+
+# Source 'local_plugins' file (if any).
+# This file should contain only 'zplug' directives.
+if [[ -r "$HOME/.zsh/local_plugins.zsh" ]]; then
+    source "$HOME/.zsh/local_plugins.zsh"
+fi
+
+
 zplug "load"
 
 

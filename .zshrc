@@ -1,3 +1,8 @@
+# Source 'before' file if any.
+if [[ -r "$HOME/.zshrc.before" ]]; then
+    source "$HOME/.zshrc.before"
+fi
+
 # GRML upstream
 [[ -f ~/.zsh/grml-arch.zsh ]] && source ~/.zsh/grml-arch.zsh
 
@@ -66,3 +71,9 @@ export PAGER=vimpager
 alias vp=vimpager
 alias vc=vimcat
 alias -g V='| vimpager'
+
+
+# Source 'after' file if any.
+if [[ -r "$HOME/.zshrc.after" ]]; then
+    source "$HOME/.zshrc.after"
+fi
