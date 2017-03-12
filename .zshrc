@@ -3,6 +3,11 @@ if [[ -r "$HOME/.zshrc.before" ]]; then
     source "$HOME/.zshrc.before"
 fi
 
+# Source ~/.profile if it exists.
+if [[ -r "$HOME/.profile" ]]; then
+    source "$HOME/.profile"
+fi
+
 # GRML upstream
 [[ -f ~/.zsh/grml-arch.zsh ]] && source ~/.zsh/grml-arch.zsh
 
@@ -15,10 +20,7 @@ fi
 
 
 # Vars, aliases
-export LC_ALL="en_US.UTF-8"
 export BROWSER='firefox'
-export XDG_CONFIG_HOME=$HOME/.config
-export PATH="$HOME/bin/:$PATH"
 export PAGER=vimpager
 alias vp=vimpager
 alias vc=vimcat
