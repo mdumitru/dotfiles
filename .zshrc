@@ -9,13 +9,13 @@ if [[ -r "$HOME/.profile" ]]; then
 fi
 
 # GRML upstream
-[[ -f ~/.zsh/grml-arch.zsh ]] && source ~/.zsh/grml-arch.zsh
-
+if [[ -r "$HOME/.zsh/grml-arch.zsh" ]]; then
+    source "$HOME/.zsh/grml-arch.zsh"
+fi
 
 # Load all plugins.
-plugins_path="$HOME/.zsh/plugins.zsh"
-if [[ -r "$plugins_path" ]]; then
-    source "$plugins_path"
+if [[ -r "$HOME/.zsh/plugins.zsh" ]]; then
+    source "$HOME/.zsh/plugins.zsh"
 fi
 
 
