@@ -19,6 +19,10 @@ export LC_ALL="en_US.UTF-8"
 export BROWSER='firefox'
 export XDG_CONFIG_HOME=$HOME/.config
 export PATH="$HOME/bin/:$PATH"
+export PAGER=vimpager
+alias vp=vimpager
+alias vc=vimcat
+alias -g V='| vimpager'
 
 
 # Interaction with neovim when running from its guest terminal.
@@ -66,11 +70,6 @@ if command -v bpython > /dev/null; then
         fi
     }
 fi
-
-export PAGER=vimpager
-alias vp=vimpager
-alias vc=vimcat
-alias -g V='| vimpager'
 
 
 # Source 'after' file if any.
