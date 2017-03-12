@@ -1,30 +1,41 @@
 #!/usr/bin/env python
-# Forwards its arguments to neovim. Allows control of neovim from within a
-# neovim terminal.
+# pylint: disable=invalid-name
+"""Allows control of the neovim host from within a neovim terminal."""
 from __future__ import print_function
 
 import os
 import sys
 
-import neovim
+from neovim import attach
+from neovim.api.nvim import NvimError
 
 
-if len(sys.argv) == 1 or sys.argv[1] in ["--help", "-h"]:
+def _print_help():
     print("Usage: {} <nvim-command>".format(os.path.basename(sys.argv[0])))
-    sys.exit(1)
 
-try:
-    nvim_socket = os.environ["NVIM_LISTEN_ADDRESS"]
-except KeyError:
-    print("Couldn't read variable $NVIM_LISTEN_ADDRESS", file=sys.stderr)
-    sys.exit(1)
 
-nvim = neovim.attach('socket', path=nvim_socket)
+def main():  # pylint: disable=missing-docstring
+    if len(sys.argv) == 1 or sys.argv[1] in ["--help", "-h"]:
+        _print_help()
+        sys.exit(1)
 
-# Join all arguments into a single, space-separated string. This allows for
-# invocations like: nvim-host-cmd "map a" b.
-try:
-    nvim.command(" ".join(sys.argv[1:]))
-except neovim.api.nvim.NvimError as nve:
-    print(nve.args[0].decode('utf-8'), file=sys.stderr)
-    sys.exit(1)
+    addr = os.environ.get("NVIM_LISTEN_ADDRESS", None)
+    if addr is None:
+        print("Couldn't read variable $NVIM_LISTEN_ADDRESS", file=sys.stderr)
+        return 1
+
+    nvim = attach('socket', path=addr)
+
+    # Join all arguments into a single, space-separated string. This allows for
+    # invocations like: nvim-host-cmd "map a" b.
+    try:
+        nvim.command(" ".join(sys.argv[1:]))
+    except NvimError as nve:
+        print(nve.args[0].decode('utf-8'), file=sys.stderr)
+        return 1
+
+    return 0
+
+
+if __name__ == "__main__":
+    sys.exit(main())
