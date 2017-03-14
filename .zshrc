@@ -3,11 +3,6 @@ if [[ -r "$HOME/.zshrc.before" ]]; then
     source "$HOME/.zshrc.before"
 fi
 
-# Source ~/.profile if it exists.
-if [[ -r "$HOME/.profile" ]]; then
-    source "$HOME/.profile"
-fi
-
 # GRML upstream
 if [[ -r "$HOME/.zsh/grml-arch.zsh" ]]; then
     source "$HOME/.zsh/grml-arch.zsh"

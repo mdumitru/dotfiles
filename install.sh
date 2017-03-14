@@ -18,6 +18,7 @@ install_zsh() {
 
 	rm -rf ~/.zsh
 	ln -fs `realpath ./.profile` ~
+	ln -fs `realpath ./.zprofile` ~
 	ln -fs `realpath ./.zsh` ~
 	ln -fs `realpath ./.zshrc` ~
 

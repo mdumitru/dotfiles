@@ -17,6 +17,7 @@
 
 " Allow zsh stuff.
 !.zshrc
+!.zprofile
 !.zsh/
 !.zsh/grml-arch.zsh
 !.zsh/plugins.zsh
