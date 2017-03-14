@@ -83,7 +83,7 @@ def main():  # pylint: disable=missing-docstring
     augroup_name = "__editor_{}".format(os.getpid())
 
     try:
-        nvim.run_loop(_exit, _exit, _setup)
+        nvim.run_loop(_exit, _exit, _setup, lambda _: None)
     except NvimError as nve:
         print(nve.args[0].decode('utf-8'), file=sys.stderr)
         return 1
