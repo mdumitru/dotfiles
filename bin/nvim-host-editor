@@ -32,6 +32,8 @@ def _setup():
     # Save the terminal window to be able to return it.
     global termwin, termtab  # pylint: disable=global-variable-undefined
     termtab, termwin = nvim.eval("win_id2tabwin(win_getid())")
+    global termbuf  # pylint: disable=global-variable-undefined
+    termbuf = nvim.eval("bufnr(\"%\")")
 
     # Start editing the file.
     nvim.command("tabe {}".format(sys.argv[1]))
@@ -56,11 +58,13 @@ def _exit(*args, **kwargs):  # pylint: disable=unused-argument
     nvim.command("autocmd! {}".format(augroup_name))
     nvim.command("augroup! {}".format(augroup_name))
 
-    # Return the window of the terminal that spawned us.
-    nvim.command("execute \"tabnext\" {}".format(termtab))
-    nvim.command("execute {}.\"wincmd w\"".format(termwin))
-
-    nvim.stop_loop()
+    # If the terminal window was closed mid-edit, an exception is thrown.
+    try:
+        # Return the window of the terminal that spawned us.
+        nvim.command("execute \"tabnext\" {}".format(termtab))
+        nvim.command("execute {}.\"wincmd w\"".format(termwin))
+    finally:
+        nvim.stop_loop()
 
 
 def main():  # pylint: disable=missing-docstring
@@ -88,6 +92,11 @@ def main():  # pylint: disable=missing-docstring
         print(nve.args[0].decode('utf-8'), file=sys.stderr)
         return 1
     finally:
+        # If the terminal window was closed and we ended in another buffer,
+        # open a new tab with the terminal buffer and go there.
+        if termbuf != nvim.eval("bufnr(\"%\")"):
+            nvim.command("tab sbuffer {}".format(termbuf))
+
         # Ensure going back to terminal mode.
         if nvim.eval("mode()") != "t":
             nvim.input("i")
