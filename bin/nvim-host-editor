@@ -87,6 +87,10 @@ def main():  # pylint: disable=missing-docstring
     except NvimError as nve:
         print(nve.args[0].decode('utf-8'), file=sys.stderr)
         return 1
+    finally:
+        # Ensure going back to terminal mode.
+        if nvim.eval("mode()") != "t":
+            nvim.input("i")
 
     return 0
 
