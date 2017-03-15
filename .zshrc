@@ -25,10 +25,11 @@ alias -g V='| vimpager'
 # Interaction with neovim when running from its guest terminal.
 if check_com -c nvim; then
     # The editor is set as vi/vim by grml-arch.
-    export EDITOR='nvim'
+    export EDITOR='nvim-host-editor'
+    export VISUAL='nvim-host-editor'
     export VIMPAGER_VIM='nvim'
 
-    if [[ $NVIM_LISTEN_ADDRESS ]] && check_com -c nvim-host-cmd; then
+    if [[ -w "$NVIM_LISTEN_ADDRESS" ]] && check_com -c nvim-host-cmd; then
         # Change nvim host's cwd when cd-ing from within a terminal.
         neovim_autocd() {
             nvim-host-cmd "execute \"tcd\" fnameescape(\"`pwd`\")"
@@ -40,7 +41,8 @@ if check_com -c nvim; then
         alias tabe='nvim-host-cmd tabedit'
         alias sp='nvim-host-cmd split'
         alias vsp='nvim-host-cmd vsplit'
-        alias bosp='nvim-host-cmd botright split'
+        alias bo='nvim-host-cmd botright'
+        alias to='nvim-host-cmd topleft'
     fi
 fi
 

@@ -1,0 +1,108 @@
+#!/usr/bin/python
+# pylint: disable=invalid-name
+"""Use the neovim host as an editor.
+
+This script behaves like a basic editor: it receives a file as argument and
+blocks until editing is done, after which it successfully exists; thus it can
+be set as the value of environment variables like EDITOR, GIT_EDITOR etc.
+
+The file is opened as a new buffer in the neovim host and editing is considered
+complete when that buffer is deleted.
+For this reason, there can't be two or more instances of the editor editing the
+same file: neovim will just bring up the existing buffer and deleting it will
+cause all editor instances to exit.
+
+"""
+from __future__ import print_function
+import os
+import sys
+
+from neovim import attach
+from neovim.api.nvim import NvimError
+
+
+def _print_help():
+    print("Usage: {} <file>".format(os.path.basename(sys.argv[0])))
+
+
+def _setup():
+    # Exit terminal mode.
+    nvim.input("<c-\\><c-n>")
+
+    # Save the terminal window to be able to return it.
+    global termwin, termtab  # pylint: disable=global-variable-undefined
+    termtab, termwin = nvim.eval("win_id2tabwin(win_getid())")
+    global termbuf  # pylint: disable=global-variable-undefined
+    termbuf = nvim.eval("bufnr(\"%\")")
+
+    # Start editing the file.
+    nvim.command("tabe {}".format(sys.argv[1]))
+
+    # Mimic a different neovim instance (don't hide the buffer, don't allow
+    # closing all windows etc.)
+    nvim.command("setlocal bufhidden=wipe")
+    nvim.command("noremap <buffer> :wqa :wq")
+    nvim.command("noremap <buffer> :qa :q")
+    nvim.command("noremap <buffer> :qa! :q!")
+    nvim.command("noremap <buffer> :wqa! :wq!")
+
+    # Add BufUnload hook in an augroup, so that it can be later deleted.
+    nvim.command("augroup {}".format(augroup_name))
+    nvim.command("autocmd BufUnload <buffer> call "
+                 "rpcnotify({0}, \"n\")".format(nvim.channel_id))
+    nvim.command("augroup END")
+
+
+def _exit(*args, **kwargs):  # pylint: disable=unused-argument
+    # Cleanup the augroup; it seems it can't be removed unless it's empty.
+    nvim.command("autocmd! {}".format(augroup_name))
+    nvim.command("augroup! {}".format(augroup_name))
+
+    # If the terminal window was closed mid-edit, an exception is thrown.
+    try:
+        # Return the window of the terminal that spawned us.
+        nvim.command("execute \"tabnext\" {}".format(termtab))
+        nvim.command("execute {}.\"wincmd w\"".format(termwin))
+    finally:
+        nvim.stop_loop()
+
+
+def main():  # pylint: disable=missing-docstring
+    if len(sys.argv) == 1 or sys.argv[1] in ["--help", "-h"]:
+        _print_help()
+        return 1
+
+    # Attempt to connect to the neovim host. If none found, start a new nvim.
+    addr = os.environ.get("NVIM_LISTEN_ADDRESS", None)
+    if addr is None:
+        os.execvp("nvim", sys.argv[1:])
+
+    global nvim  # pylint: disable=global-variable-undefined
+    nvim = attach("socket", path=addr)
+
+    # Unique augroup names are needed for each file, but it's simpler to just
+    # use the editor's PID. If the same file is edited multiple times,
+    # additional augroups are created, but they too will be removed.
+    global augroup_name  # pylint: disable=global-variable-undefined
+    augroup_name = "__editor_{}".format(os.getpid())
+
+    try:
+        nvim.run_loop(_exit, _exit, _setup, lambda _: None)
+    except NvimError as nve:
+        print(nve.args[0].decode('utf-8'), file=sys.stderr)
+        return 1
+    finally:
+        # If the terminal window was closed and we ended in another buffer,
+        # open a new tab with the terminal buffer and go there.
+        if termbuf != nvim.eval("bufnr(\"%\")"):
+            nvim.command("tab sbuffer {}".format(termbuf))
+
+        # Ensure going back to terminal mode.
+        if nvim.eval("mode()") != "t":
+            nvim.input("i")
+
+    return 0
+
+
+if __name__ == "__main__":
+    sys.exit(main())
