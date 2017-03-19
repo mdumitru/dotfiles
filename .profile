@@ -9,9 +9,9 @@ export PATH
 
 # XDG user directories.
 # These should not be necessary.
-XDG_CONFIG_HOME=$HOME/.config
-XDG_CACHE_HOME=$HOME/.cache
-XDG_DATA_HOME=$HOME/.local/share
+XDG_CONFIG_HOME="$HOME/.config"
+XDG_CACHE_HOME="$HOME/.cache"
+XDG_DATA_HOME="$HOME/.local/share"
 export XDG_CONFIG_HOME XDG_CACHE_HOME XDG_DATA_HOME
 
 # XDG system directories.
