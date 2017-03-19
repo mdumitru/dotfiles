@@ -6,7 +6,7 @@ set runtimepath+=~/.vim/after
 " Source 'before' file (if any).
 let vimbefore_path=expand($HOME . "/.vimrc.before")
 if filereadable(vimbefore_path)
-    exe 'source' plugins_path
+    exe 'source' vimbefore_path
 endif
 
 
@@ -278,5 +278,5 @@ endif
 " Source 'after' file (if any).
 let vimafter_path=expand($HOME . "/.vimrc.after")
 if filereadable(vimafter_path)
-    exe 'source' plugins_path
+    exe 'source' vimafter_path
 endif
