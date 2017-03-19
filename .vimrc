@@ -275,6 +275,54 @@ if has('nvim')
 endif
 
 
+"------ Cscope ------
+if has("cscope") && has("unix")
+    function! _LoadCscope()
+        set nocscopeverbose " suppress 'duplicate connection' error
+
+        " Add database environment database (usually /fullpath/to/a/cscope.out).
+        " Cscope is bad with symlinks, so resolve them.
+        if $CSCOPE_DB != ""
+            execute "cscope add ". resolve($CSCOPE_DB) . " " .
+                        \ resolve(fnamemodify($CSCOPE_DB, ":p:h"))
+        endif
+
+        " Search cscope.out recursively in parent directories.
+        if has("file_in_path") && has("path_extra")
+            " Upwards search from cwd.
+            let db = findfile("cscope.out", ".;")
+            if !empty(db)
+                let path = strpart(db, 0, match(db, "/cscope.out$"))
+                execute "cscope add " . resolve(db) . " " . resolve(path)
+            endif
+        endif
+
+        set cscopeverbose
+    endfunction
+    command! LoadCscope call _LoadCscope()
+
+    " Automatically load cscope for these files.
+    autocmd FileType c,cpp call _LoadCscope()
+
+    " Use both cscope and ctag for 'ctrl-]', ':ta', and 'vim -t'.
+    set cscopetag
+    set cscopetagorder=0  " use cscope first, then ctags
+
+    " The 'silent' makes it so that pressing <Enter> is not required.
+    nnoremap <silent> <leader>ss :silent cscope find s <c-r>=expand("<cword>")<cr><cr>
+    nnoremap <silent> <leader>sg :silent cscope find g <c-r>=expand("<cword>")<cr><cr>
+    nnoremap <silent> <leader>sc :silent cscope find c <c-r>=expand("<cword>")<cr><cr>
+    nnoremap <silent> <leader>st :silent cscope find t <c-r>=expand("<cword>")<cr><cr>
+    nnoremap <silent> <leader>se :silent cscope find e <c-r>=expand("<cword>")<cr><cr>
+    nnoremap <silent> <leader>sf :silent cscope find f <c-r>=expand("<cfile>")<cr><cr>
+    nnoremap <silent> <leader>si :silent cscope find i ^<c-r>=expand("<cfile>")<cr>$<cr>
+    nnoremap <silent> <leader>sd :silent cscope find d <c-r>=expand("<cword>")<cr><cr>
+
+    " Open a quickfix window for the following queries.
+    set cscopequickfix=s-,c-,d-,i-,t-,e-,g-,a-
+endif
+
+
 " Source 'after' file (if any).
 let vimafter_path=expand($HOME . "/.vimrc.after")
 if filereadable(vimafter_path)
