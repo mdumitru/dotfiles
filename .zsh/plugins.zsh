@@ -43,7 +43,7 @@ zplug "plugins/z", from:oh-my-zsh
 zplug "nilsonholger/osx-zsh-completions", if:"[[ $OSTYPE == *darwin* ]]"
 
 # A next-generation plugin manager for zsh
-zplug 'zplug/zplug', hook-build:'zplug --self-manage'
+zplug "zplug/zplug", hook-build:"zplug --self-manage"
 
 # Fish-like autosuggestions for zsh
 #zplug "zsh-users/zsh-autosuggestions"
