@@ -33,14 +33,14 @@ zplug "plugins/git", from:oh-my-zsh
 # Keeps track of the last used wd and jumps into it for new shells.
 zplug "plugins/last-working-dir", from:oh-my-zsh
 
-# lets you jump to custom directories in zsh, without using cd.
-zplug "plugins/wd", from:oh-my-zsh
-
-# jump around
-zplug "plugins/z", from:oh-my-zsh
+# Jump to custom directories in zsh
+zplug "mfaerevaag/wd"
 
 # ZSH completions for selected OS X commands.
 zplug "nilsonholger/osx-zsh-completions", if:"[[ $OSTYPE == *darwin* ]]"
+
+# jump around
+zplug "rupa/z", use:"z.sh"
 
 # A next-generation plugin manager for zsh
 zplug "zplug/zplug", hook-build:"zplug --self-manage"
