@@ -45,6 +45,9 @@ zplug "rupa/z", use:"z.sh"
 # A next-generation plugin manager for zsh
 zplug "zplug/zplug", hook-build:"zplug --self-manage"
 
+# zsh anything.el-like widget.
+zplug "zsh-users/zaw"
+
 # Fish-like autosuggestions for zsh
 #zplug "zsh-users/zsh-autosuggestions"
 
