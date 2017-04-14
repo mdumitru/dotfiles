@@ -19,6 +19,12 @@ XDG_DATA_DIRS=/usr/local/share:/usr/share
 XDG_CONFIG_DIRS=/etc/xdg
 export XDG_DATA_DIRS XDG_CONFIG_DIRS
 
+# Prefer UTF-8 English.
+if locale -a | grep -F -q -x "en_US.UTF-8"; then
+    LC_ALL="en_US.UTF-8"
+    export LC_ALL
+fi
+
 # Source 'after' file (if any).
 if test -f "$HOME/.profile.after" -a -r "$HOME/.profile.after"; then
     . "$HOME/.profile.after"
