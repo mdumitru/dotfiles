@@ -126,10 +126,16 @@ nnoremap <silent> <c-s> :w!<cr>
 nnoremap <silent> <leader>w :w!<cr>
 cnoremap w!! SudoWrite sudo:%
 
-" Make typing commands easier. Easy-motion should be enough for navigation, but
-" we still keep the functionality of the semicolon.
+" Make working with commands easier.
 noremap ; :
-noremap : ;
+noremap q; q:
+noremap @; @:
+noremap "; ":
+
+" Easy-motion should be enough for navigation, but we still keep the
+" functionality of the semicolon. The delay doesn't matter if you keep typing
+" the command.
+noremap ;; ;
 
 " Quick replay 'q' macro and avoid Ex-mode.
 noremap Q <nop>
