@@ -87,11 +87,20 @@ install_ycm() {
 	set +x
 }
 
+install_ag() {
+	set -x
+
+	ln -fs `realpath ./.ignore` ~
+
+	set +x
+}
+
 main() {
 	install_zsh
 	install_vim
 	install_pgdb
 	install_ycm
+	install_ag
 }
 
 if [[ $# == 0 ]]; then

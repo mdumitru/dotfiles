@@ -17,6 +17,7 @@ fi
 # Vars, aliases
 export BROWSER='firefox'
 export PAGER=vimpager
+alias ag='ag --path-to-ignore ~/.ignore'
 alias vp=vimpager
 alias vc=vimcat
 alias -g V='| vimpager'

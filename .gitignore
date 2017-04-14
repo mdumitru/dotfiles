@@ -26,6 +26,8 @@
 
 !.gdbinit
 
+!.ignore
+
 !.profile
 
 !gits/
