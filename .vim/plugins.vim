@@ -72,6 +72,8 @@ Plug 'tpope/vim-surround'
 " unimpaired.vim: pairs of handy bracket mappings 
 Plug 'tpope/vim-unimpaired'
 
+" A vim plugin for toggling the display of the quickfix list and the location-list.
+Plug 'Valloric/ListToggle'
 
 " Load YCM only if it's available.
 " See: https://github.com/Valloric/YouCompleteMe/issues/1558

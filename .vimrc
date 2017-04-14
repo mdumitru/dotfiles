@@ -188,7 +188,6 @@ command! -nargs=1 -range Tbpaste <line1>,<line2>!curl --silent termbin.com/<f-ar
 " Uniform mappings that can be used from neovim's terminal.
 
 " Make it easy to close stuff (remember that 'hidden' is set).
-noremap <silent> <c-q> :q<cr>
 noremap <silent> <a-backspace> :lclose<cr>:Bdelete<cr>
 noremap <silent> <leader><backspace> :lclose<cr>:bdelete<cr>
 " Note that :Bdelete is provided by a plugin.
