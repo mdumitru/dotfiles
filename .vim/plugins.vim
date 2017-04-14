@@ -36,6 +36,9 @@ Plug 'justinmk/vim-syntax-extra'
 " Vim plugin that displays tags in a window, ordered by scope
 Plug 'majutsushi/tagbar', { 'on': 'TagbarToggle' }
 
+" Vim plugin for the Perl module / CLI script 'ack'
+Plug 'mileszs/ack.vim'
+
 " Delete buffers and close files in Vim without messing up your layout.
 Plug 'moll/vim-bbye', { 'on': 'Bdelete' }
 
