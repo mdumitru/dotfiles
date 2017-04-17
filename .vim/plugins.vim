@@ -116,6 +116,9 @@ Plug 'vim-airline/vim-airline'
 " A collection of themes for vim-airline
 Plug 'vim-airline/vim-airline-themes'
 
+" Vim plugin that provides additional text objects
+Plug 'wellle/targets.vim'
+
 " Swap your windows without ruining your layout
 Plug 'wesQ3/vim-windowswap'
 
