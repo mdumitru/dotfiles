@@ -137,6 +137,10 @@ noremap "; ":
 " the command.
 noremap ;; ;
 
+" The backtick is more useful but harder to reach.
+noremap ' `
+noremap ` '
+
 " Quick replay 'q' macro and avoid Ex-mode.
 noremap Q <nop>
 nnoremap Q @q
