@@ -27,6 +27,12 @@ Plug 'ctrlpvim/ctrlp.vim'
 " Vim motions on speed!
 Plug 'easymotion/vim-easymotion'
 
+" Perform all your vim insert mode completions with Tab
+Plug 'ervandew/supertab'
+
+" vim-snipmate default snippets
+Plug 'honza/vim-snippets'
+
 " BufExplorer Plugin for Vim
 Plug 'jlanzarotta/bufexplorer', { 'on': 'ToggleBufExplorer' }
 
@@ -65,6 +71,9 @@ Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
 
 " Syntax checking hacks for vim
 Plug 'scrooloose/syntastic'
+
+" UltiSnips - The ultimate snippet solution for Vim.
+Plug 'SirVer/ultisnips'
 
 " a Git wrapper so awesome, it should be illegal
 Plug 'tpope/vim-fugitive'
