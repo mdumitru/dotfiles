@@ -75,7 +75,7 @@ def main():  # pylint: disable=missing-docstring
     # Attempt to connect to the neovim host. If none found, start a new nvim.
     addr = os.environ.get("NVIM_LISTEN_ADDRESS", None)
     if addr is None:
-        os.execvp("nvim", sys.argv[1:])
+        os.execvp("nvim", sys.argv)
 
     global nvim  # pylint: disable=global-variable-undefined
     nvim = attach("socket", path=addr)
