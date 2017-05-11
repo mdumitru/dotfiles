@@ -162,6 +162,13 @@ command! Sv source $MYVIMRC
 vnoremap * y/<c-r>"<cr>
 vnoremap # y?<c-r>"<cr>
 
+" Inspired by VimFX commands.
+let g:__most_recent_tab=1
+autocmd TabLeave * let g:__most_recent_tab=tabpagenr()
+noremap <silent> g0 :tabrewind<cr>
+noremap <silent> g$ :tablast<cr>
+noremap <silent> gl :execute 'tabnext ' . g:__most_recent_tab<cr>
+
 " Sometimes the color column is annoying.
 function! _ToggleColorColumn()
     if &colorcolumn == ""
