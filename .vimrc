@@ -137,6 +137,9 @@ noremap "; ":
 " the command.
 noremap ;; ;
 
+" yy already exists to copy the whole line.
+noremap Y y$
+
 " The backtick is more useful but harder to reach.
 noremap ' `
 noremap ` '
