@@ -21,6 +21,7 @@ alias ag='ag --path-to-ignore ~/.ignore'
 alias vp=vimpager
 alias vc=vimcat
 alias -g V='| vimpager'
+alias gdb='gdb -q'
 
 
 # Interaction with neovim when running from its guest terminal.
