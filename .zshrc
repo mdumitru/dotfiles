@@ -63,13 +63,15 @@ weather() {
 }
 
 if command -v bpython > /dev/null; then
-    python() {
+    py() {
         if [[ $# == 0 ]]; then
             bpython
         else
             command python $@
         fi
     }
+else
+    alias py='python'
 fi
 
 
