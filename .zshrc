@@ -74,6 +74,9 @@ else
     alias py='python'
 fi
 
+# Very succint pylint output (only errors, warnings and grade).
+alias pyl='pylint --disable=RP0001 --disable=RP0002 --disable=RP0003 --disable=RP0101 --disable=RP0401 --disable=RP0701 --disable=RP0801'
+
 
 # Source 'after' file if any.
 if [[ -r "$HOME/.zshrc.after" ]]; then
