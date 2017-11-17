@@ -48,8 +48,12 @@ zplug "zplug/zplug", hook-build:"zplug --self-manage"
 # zsh anything.el-like widget.
 zplug "zsh-users/zaw"
 
-# Fish-like autosuggestions for zsh
-#zplug "zsh-users/zsh-autosuggestions"
+# In older zsh versions, this seems incompatible with the syntax highlighting
+# plugin.
+if is52; then
+    # Fish-like autosuggestions for zsh
+    zplug "zsh-users/zsh-autosuggestions"
+fi
 
 # Additional completion definitions for Zsh.
 zplug "zsh-users/zsh-completions"

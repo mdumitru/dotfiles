@@ -155,6 +155,11 @@ is439(){
     return 1
 }
 
+is52(){
+    [[ $ZSH_VERSION == 5.<2->* || $ZSH_VERSION == <6->* ]] && return 0
+    return 1
+}
+
 #f1# Checks whether or not you're running grml
 isgrml(){
     [[ -f /etc/grml_version ]] && return 0
