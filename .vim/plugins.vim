@@ -55,7 +55,7 @@ Plug 'ntpeters/vim-better-whitespace'
 Plug 'nvie/vim-flake8'
 
 " Rename a buffer within Vim and on disk
-Plug 'Rename', { 'on': 'Rename' }
+Plug 'vim-scripts/Rename', { 'on': 'Rename' }
 
 " Use Vim as PAGER
 Plug 'rkitover/vimpager'
