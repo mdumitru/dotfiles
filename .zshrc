@@ -14,6 +14,10 @@ if [[ -r "$HOME/.zsh/plugins.zsh" ]]; then
 fi
 
 
+# Reclaim incremental forward history search.
+stty stop undef && stty start undef || true
+
+
 # Vars, aliases
 export BROWSER='firefox'
 export PAGER=vimpager
