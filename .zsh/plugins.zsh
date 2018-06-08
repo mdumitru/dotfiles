@@ -21,9 +21,6 @@ source "$manager_path"
 export ZSH="$ZPLUG_HOME/repos/robbyrussell/oh-my-zsh"
 
 
-# Useful, short aliases for common commands.
-zplug "plugins/common-aliases", from:oh-my-zsh
-
 # Use Ctrl-Z to switch back to background task.
 zplug "plugins/fancy-ctrl-z", from:oh-my-zsh
 

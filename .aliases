@@ -3,6 +3,24 @@ if test -f "$HOME/.aliases.before" -a -r "$HOME/.aliases.before"; then
     . "$HOME/.aliases.before"
 fi
 
+
+alias l='ls -lFh'
+alias la='ls -lAFh'
+alias ll='ls -l'
+alias lt='ls -ltFh'
+alias ldot='ls -ld .*'
+
+alias zshrc='$EDITOR ~/.zshrc'
+
+alias grep='grep --color'
+
+alias fd='find . -type d -name'
+alias ff='find . -type f -name'
+
+alias rm='rm -i'
+alias cp='cp -i'
+alias mv='mv -i'
+
 alias vp=vimpager
 alias vc=vimcat
 
