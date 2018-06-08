@@ -1,0 +1,18 @@
+# Source 'before' file (if any).
+if [[ -r "$HOME/.zsh_aliases.before" ]]; then
+    source "$HOME/.zsh_aliases.before"
+fi
+
+# Source ~/.aliases if it exists.
+if [[ -r "$HOME/.aliases" ]]; then
+    emulate sh -c 'source "$HOME/.aliases"'
+fi
+
+
+alias -g V='| vimpager'
+
+
+# Source 'after' file (if any).
+if [[ -r "$HOME/.aliases.after" ]]; then
+    source "$HOME/.aliases.after"
+fi

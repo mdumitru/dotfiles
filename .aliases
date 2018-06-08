@@ -1,0 +1,22 @@
+# Source 'before' file (if any).
+if test -f "$HOME/.aliases.before" -a -r "$HOME/.aliases.before"; then
+    . "$HOME/.aliases.before"
+fi
+
+alias vp=vimpager
+alias vc=vimcat
+
+# The global ignore file should contain uninteresting things (e.g. ctags).
+alias ag='ag --path-to-ignore ~/.ignore'
+
+# Skip annoying intro banner.
+alias gdb='gdb -q'
+
+# Very succint pylint output (only errors, warnings and grade).
+alias pyl='pylint --disable=RP0001 --disable=RP0002 --disable=RP0003 --disable=RP0101 --disable=RP0401 --disable=RP0701 --disable=RP0801'
+
+
+# Source 'after' file (if any).
+if test -f "$HOME/.aliases.after" -a -r "$HOME/.aliases.after"; then
+    . "$HOME/.aliases.after"
+fi
