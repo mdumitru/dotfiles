@@ -1,4 +1,4 @@
 # Source ~/.profile if it exists.
 if [[ -r "$HOME/.profile" ]]; then
-    source "$HOME/.profile"
+    emulate sh -c 'source "$HOME/.profile"'
 fi
