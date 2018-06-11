@@ -7,6 +7,35 @@ fi
 PATH="$HOME/bin/:$PATH"
 export PATH
 
+# As env variables are inherited by regular interactive shells, they should be
+# set here so only the login shells modify them.
+if command -v nvim > /dev/null; then
+    if command -v nvim-host-editor > /dev/null; then
+        EDITOR=nvim-host-editor
+    else
+        EDITOR=nvim
+    fi
+
+    # Needed for vimpager, harmless in its absence.
+    VIMPAGER_VIM=nvim
+else
+    if command -v vim > /dev/null; then
+        EDITOR=vim
+    else
+        EDITOR=vi
+    fi
+fi
+export EDITOR
+
+EDITOR="$VISUAL"
+export VISUAL
+
+if command -v vimpager > /dev/null; then
+    PAGER=vimpager
+    export PAGER
+    export VIMPAGER_VIM
+fi
+
 # XDG user directories.
 # These should not be necessary.
 XDG_CONFIG_HOME="$HOME/.config"

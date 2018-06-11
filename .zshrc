@@ -23,16 +23,8 @@ fi
 stty stop undef && stty start undef || true
 
 
-# Vars, aliases
-export PAGER=vimpager
-
 # Interaction with neovim when running from its guest terminal.
 if check_com -c nvim; then
-    # The editor is set as vi/vim by grml-arch.
-    export EDITOR='nvim-host-editor'
-    export VISUAL='nvim-host-editor'
-    export VIMPAGER_VIM='nvim'
-
     if [[ -w "$NVIM_LISTEN_ADDRESS" ]] && check_com -c nvim-host-cmd; then
         # Change nvim host's cwd when cd-ing from within a terminal.
         neovim_autocd() {
