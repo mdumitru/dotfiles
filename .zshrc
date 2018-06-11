@@ -51,20 +51,6 @@ if check_com -c nvim; then
     fi
 fi
 
-
-remake() {
-    make clean || return $?
-    if [[ $# == 0 ]]; then
-        make
-    else
-        make $@
-    fi
-}
-
-weather() {
-    curl -4 "http://wttr.in/$1"
-}
-
 if command -v bpython > /dev/null; then
     py() {
         if [[ $# == 0 ]]; then

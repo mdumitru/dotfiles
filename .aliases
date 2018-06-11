@@ -34,6 +34,19 @@ alias gdb='gdb -q'
 alias pyl='pylint --disable=RP0001 --disable=RP0002 --disable=RP0003 --disable=RP0101 --disable=RP0401 --disable=RP0701 --disable=RP0801'
 
 
+remake() {
+    make clean || return $?
+    if test $# -eq 0; then
+        make
+    else
+        make $@
+    fi
+}
+
+weather() {
+    curl -4 "http://wttr.in/$1"
+}
+
 # Source 'after' file (if any).
 if test -f "$HOME/.aliases.after" -a -r "$HOME/.aliases.after"; then
     . "$HOME/.aliases.after"
