@@ -24,7 +24,6 @@ stty stop undef && stty start undef || true
 
 
 # Vars, aliases
-export BROWSER='firefox'
 export PAGER=vimpager
 
 # Interaction with neovim when running from its guest terminal.
