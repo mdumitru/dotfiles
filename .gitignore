@@ -18,6 +18,7 @@
 " Allow zsh stuff.
 !.zshrc
 !.zprofile
+!.zsh_aliases
 !.zsh/
 !.zsh/grml-arch.zsh
 !.zsh/plugins.zsh
@@ -28,7 +29,9 @@
 
 !.ignore
 
+" Allow shell stuff
 !.profile
+!.aliases
 
 !gits/
 !gits/*
