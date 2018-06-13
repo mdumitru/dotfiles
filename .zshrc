@@ -19,8 +19,8 @@ if [[ -r "$HOME/.zsh/plugins.zsh" ]]; then
 fi
 
 # Automatically change directories in the host neovim when cd-ing.
-if [[ -w "$NVIM_LISTEN_ADDRESS" ]] && typeset -f nvim_cd > /dev/null; then
-    chpwd_functions+=( 'nvim_cd' )
+if typeset -f nvim_cd > /dev/null; then
+    chpwd_functions+=( nvim_cd )
 fi
 
 # Source 'after' file if any.
