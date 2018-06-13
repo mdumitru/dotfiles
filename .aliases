@@ -78,6 +78,26 @@ done
 set --
 
 
+# Interaction with neovim when running from its guest terminal.
+if command -v nvim > /dev/null; then
+    if test -n "$NVIM_LISTEN_ADDRESS" -a -w "$NVIM_LISTEN_ADDRESS" && \
+        command -v nvim-host-cmd > /dev/null;
+    then
+        nvim_cd() {
+            nvim-host-cmd "execute \"tcd\" fnameescape(\"`pwd`\")"
+        }
+
+        alias v=nvim-host-cmd
+        alias e='nvim-host-cmd edit'
+        alias tabe='nvim-host-cmd tabedit'
+        alias sp='nvim-host-cmd split'
+        alias vsp='nvim-host-cmd vsplit'
+        alias bo='nvim-host-cmd botright'
+        alias to='nvim-host-cmd topleft'
+    fi
+fi
+
+
 # Source 'after' file (if any).
 if test -f "$HOME/.aliases.after" -a -r "$HOME/.aliases.after"; then
     . "$HOME/.aliases.after"

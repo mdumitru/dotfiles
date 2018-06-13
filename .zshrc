@@ -19,28 +19,13 @@ if [[ -r "$HOME/.zsh/plugins.zsh" ]]; then
 fi
 
 
+# Automatically change directories in the host neovim when cd-ing.
+if [[ -w "$NVIM_LISTEN_ADDRESS" ]] && typeset -f nvim_cd > /dev/null; then
+    chpwd_functions+=( 'nvim_cd' )
+fi
+
 # Reclaim incremental forward history search.
 stty stop undef && stty start undef || true
-
-
-# Interaction with neovim when running from its guest terminal.
-if check_com -c nvim; then
-    if [[ -w "$NVIM_LISTEN_ADDRESS" ]] && check_com -c nvim-host-cmd; then
-        # Change nvim host's cwd when cd-ing from within a terminal.
-        neovim_autocd() {
-            nvim-host-cmd "execute \"tcd\" fnameescape(\"`pwd`\")"
-        }
-        chpwd_functions+=( neovim_autocd )
-
-        alias v=nvim-host-cmd
-        alias e='nvim-host-cmd edit'
-        alias tabe='nvim-host-cmd tabedit'
-        alias sp='nvim-host-cmd split'
-        alias vsp='nvim-host-cmd vsplit'
-        alias bo='nvim-host-cmd botright'
-        alias to='nvim-host-cmd topleft'
-    fi
-fi
 
 
 # Source 'after' file if any.
