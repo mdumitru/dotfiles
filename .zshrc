@@ -42,18 +42,6 @@ if check_com -c nvim; then
     fi
 fi
 
-if command -v bpython > /dev/null; then
-    py() {
-        if [[ $# == 0 ]]; then
-            bpython
-        else
-            command python $@
-        fi
-    }
-else
-    alias py='python'
-fi
-
 
 # Source 'after' file if any.
 if [[ -r "$HOME/.zshrc.after" ]]; then

@@ -47,6 +47,37 @@ weather() {
     curl -4 "http://wttr.in/$1"
 }
 
+# Ideally, whenver an interactive python session is wanted, this should invoke
+# bpython and the regular interpreter otherwise (bpython seems to sometimes
+# break when non-interactive).
+_py() {
+    suffix=$1
+    if test $# -ne 0; then
+        shift
+    fi
+
+    # Consider all invocations with no arguments as interactive.
+    if test $# -eq 0; then
+        bpython$suffix
+    else
+        python$suffix $@
+    fi
+}
+
+# An array would be nice.
+set "" 2 3
+for suffix; do
+    if command -v bpython$suffix > /dev/null; then
+        alias py$suffix="_py $suffix"
+    else
+        if command -v python$suffix > /dev/null; then
+            alias py$suffix=python$suffix
+        fi
+    fi
+done
+set --
+
+
 # Source 'after' file (if any).
 if test -f "$HOME/.aliases.after" -a -r "$HOME/.aliases.after"; then
     . "$HOME/.aliases.after"
