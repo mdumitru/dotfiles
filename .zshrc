@@ -18,15 +18,10 @@ if [[ -r "$HOME/.zsh/plugins.zsh" ]]; then
     source "$HOME/.zsh/plugins.zsh"
 fi
 
-
 # Automatically change directories in the host neovim when cd-ing.
 if [[ -w "$NVIM_LISTEN_ADDRESS" ]] && typeset -f nvim_cd > /dev/null; then
     chpwd_functions+=( 'nvim_cd' )
 fi
-
-# Reclaim incremental forward history search.
-stty stop undef && stty start undef || true
-
 
 # Source 'after' file if any.
 if [[ -r "$HOME/.zshrc.after" ]]; then

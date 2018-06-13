@@ -54,6 +54,10 @@ if locale -a | grep -F -q -x "en_US.UTF-8"; then
     export LC_ALL
 fi
 
+# Reclaim incremental forward history search (and get rid of the idiotic stop).
+stty stop undef && stty start undef || true
+
+
 # Source 'after' file (if any).
 if test -f "$HOME/.profile.after" -a -r "$HOME/.profile.after"; then
     . "$HOME/.profile.after"
