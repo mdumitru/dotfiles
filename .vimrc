@@ -55,10 +55,9 @@ let g:terminal_scrollback_buffer_size=100000
 
 "------ Indents and tabs ------
 set autoindent      " indent a newline using the current one's level
-set cindent         " use c-like indenting
 
 " Tabs are replaced with spaces, indentation is 4 characters.
-set expandtab
+set noexpandtab
 set smarttab
 set tabstop=4
 set softtabstop=4

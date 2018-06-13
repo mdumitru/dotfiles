@@ -6,4 +6,5 @@ setlocal textwidth=79
 setlocal colorcolumn=80
 setlocal expandtab
 setlocal autoindent
+setlocal cindent
 setlocal fileformat=unix
