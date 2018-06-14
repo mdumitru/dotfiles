@@ -24,11 +24,11 @@ export ZSH="$ZPLUG_HOME/repos/robbyrussell/oh-my-zsh"
 # Useful git aliases and functions.
 zplug "plugins/git", from:oh-my-zsh
 
-# Keeps track of the last used wd and jumps into it for new shells.
-zplug "plugins/last-working-dir", from:oh-my-zsh
-
 # Use Ctrl-Z to switch back to background task.
 zplug "mdumitru/fancy-ctrl-z"
+
+# Keeps track of the last used wd and jumps into it for new shells.
+zplug "mdumitru/last-working-dir"
 
 # Jump to custom directories in zsh
 zplug "mfaerevaag/wd"
