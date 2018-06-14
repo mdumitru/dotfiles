@@ -193,6 +193,11 @@ command! -complete=command ToggleColorColumn call _ToggleColorColumn()
 
 nnoremap <silent> <f3> :ToggleColorColumn<cr>
 
+" Insert date at cursor poisiton.
+nnoremap <silent> <f5> i<c-r>=substitute(system('date'),'[\r\n]*$','','')<cr><esc>
+inoremap <silent> <f5> <c-r>=substitute(system('date'),'[\r\n]*$','','')<cr>
+
+
 " Easy termbin copy/paste.
 command! -range=% Tbcopy <line1>,<line2>write !netcat termbin.com 9999
 command! -nargs=1 -range Tbpaste <line1>,<line2>!curl --silent termbin.com/<f-args>
