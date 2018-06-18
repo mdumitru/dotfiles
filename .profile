@@ -27,7 +27,7 @@ else
 fi
 export EDITOR
 
-EDITOR="$VISUAL"
+VISUAL="$EDITOR"
 export VISUAL
 
 if command -v vimpager > /dev/null; then
