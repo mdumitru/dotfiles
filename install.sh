@@ -1,115 +1,351 @@
 #!/bin/sh
+# Dotfiles install script.
+#
+# The purpose of this script is to make sure all config files are where they
+# need to be, all plugins are installed and, in general, complete other forms of
+# setup.
+#
+# It should adhere to the following principles:
+#   - written in pure shell for maximum portability
+#   - modularized: easy to add components; easy to select components at runtime
+#   - no harmful effects (i.e. should be able to backup/restore)
 
-show_usage() {
-	cat <<- __EOF__
-	Running this script with no arguments will install config files for zsh,
-	vim, nvim and gdb.
 
-	Pass individual arguments to fine-tune the installation.
-	Arguments are of the form "install_XXX".
+OPTIND=1
+BACKUPDIR="$HOME/dotfiles_backup"
+BACKUP=1
+RESTORE=0
+DELETE_BACKUP_AFTER_RESTORE=0
+INSTALL_LIST=""
+SH_INSTALLED=0
+VIM_INSTALLED=0
+VIM_PLUGINS_INSTALLED=0
 
-	Example:
-	    $0 install_zsh install_gdb
-	__EOF__
+
+show_help() {
+    cat << __EOF__
+Dotfiles install script.
+
+This should be invoked from its folder (the dotfiles folder). If this is the
+same as the HOME folder, not much is needed to be done.
+
+Arguments:
+    -h/-?
+        display this help message
+
+    -i <component>
+        install the target component. Available components are:
+            shell
+            zsh
+            bash
+            vim
+            nvim
+            pgdb
+            xvim
+            search
+
+        If no "-i" option is provided, ALL components are installed.
+
+    -n
+do not perform backup of previous dotfiles; the backup is done by
+        default
+
+    -r
+        restore backupped dotfiles from the backup directory; this should not be
+        used together with "-i" options
+
+    -d
+        delete the backup after restoring; by default, the backup is left intact
+
+    -b <backup-dir>
+        set the backup directory; default is: "$BACKUPDIR"
+
+__EOF__
+}
+
+do_backup() {
+    trap "echo Backup failed! Aborting ..." EXIT
+    set -e
+
+    for item; do
+        if test -e "$HOME/$item"; then
+            item_dir=$(dirname "$item")
+            item_basename=$(basename "$item")
+            dst_dir="$BACKUPDIR/$item_dir"
+            mkdir -p "$dst_dir"
+
+            mv "$HOME/$item" "$dst_dir/$item_basename"
+        fi
+    done
+
+    set +e
+    trap "" EXIT
+}
+
+restore_backup() {
+    trap "echo Backup failed! Aborting ..." EXIT
+    set -e
+
+    cd "$BACKUPDIR"
+    for item in $(find . -type f); do
+        homefile="$HOME/$item"
+
+        echo "Restoring \"$item\" ..."
+        rm -rf "$homefile"
+        dir=$(dirname "$item")
+        mkdir -p "$HOME/$dir"
+        if test $DELETE_BACKUP_AFTER_RESTORE -eq 1; then
+            mv "$item" "$HOME"
+        else
+            cp -R "$item" "$HOME"
+        fi
+    done
+
+    if test $DELETE_BACKUP_AFTER_RESTORE -eq 1; then
+        echo "Removing backup directory \"$BACKUPDIR\" ..."
+        rm -rf "$BACKUPDIR"
+    fi
+    cd -
+
+    set +e
+    trap "" EXIT
+}
+
+install_helper() {
+    if test $BACKUP -eq 1; then
+        do_backup $@
+    fi
+
+    for item; do
+        dir=$(dirname "$item")
+        dst_dir="$HOME/$dir"
+        mkdir -p "$dst_dir"
+
+        echo "Copying \"$item\" ..."
+        rm -rf "$dst_dir/$item"
+        ln -s $(realpath "$item") "$dst_dir"
+    done
+}
+
+install_shell() {
+    echo "Installing shell files ..."
+    install_helper ".profile" ".aliases"
+    SH_INSTALLED=1
 }
 
 install_zsh() {
-	set -x
+    if test $SH_INSTALLED -eq 0; then
+        install_shell
+    fi
 
-	rm -rf ~/.zsh
-	ln -fs `realpath ./.profile` ~
-	ln -fs `realpath ./.zprofile` ~
-	ln -fs `realpath ./.zsh` ~
-	ln -fs `realpath ./.zshrc` ~
+    if ! command -v zsh > /dev/null; then
+        echo "\"zsh\" not found! Nothing to do here ..." >&2
+        return 1
+    fi
 
-	zsh -c "source ~/.zshrc"
+    echo "Installing zsh files ..."
+    install_helper ".zprofile" ".zshrc" ".zsh_aliases" ".zsh"
 
-	set +x
+    install_zsh_plugins
 }
 
-nvim_python() {
-	set -x
+install_zsh_plugins() {
+    if ! command -v zsh > /dev/null; then
+        echo "\"zsh\" not found! Nothing to do here ..." >&2
+        return 1
+    fi
 
-	if command -v pip2 &> /dev/null; then
-		pip2 install --user -U neovim
-	fi
+    echo "Installing zsh plugins ..."
+    zsh -c "source $HOME/.zshrc; zplug install"
+}
 
-	if command -v pip3 &> /dev/null; then
-		pip3 install --user -U neovim
-	fi
+install_bash() {
+    if test $SH_INSTALLED -eq 0; then
+        install_shell
+    fi
 
-	if command -v pip &> /dev/null; then
-		pip install --user -U neovim
-	fi
+    if ! command -v bash > /dev/null; then
+        echo "\"bash\" not found! Nothing to do here ..." >&2
+        return 1
+    fi
 
-	set +x
+    echo "Installing bash files ..."
+    install_helper ".bash_profile" ".bashrc" ".bash_aliases"
 }
 
 install_vim() {
-	set -x
+    echo "Installing vim files ..."
+    install_helper ".vimrc" ".gvimrc" ".vim"
 
-	rm -rf ~/.vim
-	ln -fs `realpath ./.vim` ~
-	ln -fs `realpath ./.vimrc` ~
-	ln -fs `realpath ./.gvimrc` ~
+    # Maybe neovim is present, but not vim. We still need the above files, so we
+    # check for vim's existance only after.
+    if ! command -v vim > /dev/null; then
+        echo "\"vim\" not found! Nothing to do here ..." >&2
+        return 1
+    fi
 
-	if command -v nvim &> /dev/null; then
-		mkdir -p ~/bin
-		rm -rf ~/bin/nvim
-		for file in `ls ./bin`; do
-			ln -fs `realpath ./bin/$file` ~/bin/
-		done
+    install_vim_plugins
+    VIM_INSTALLED=1
+}
 
-		mkdir -p ~/.config/nvim
-		ln -fs ~/.vimrc ~/.config/nvim/init.vim
+install_vim_plugins() {
+    if ! command -v vim > /dev/null; then
+        echo "\"vim\" not found! Nothing to do here ..." >&2
+        return 1
+    fi
 
-		nvim_python
-	fi
+    echo "Installing vim plugins ..."
+    vim "+PlugInstall | qa!"
+    VIM_PLUGINS_INSTALLED=1
+}
 
-	set +x
+install_nvim() {
+    if test $VIM_INSTALLED -eq 0; then
+        install_vim
+    fi
+
+    if ! command -v nvim > /dev/null; then
+        echo "\"nvim\" not found! Nothing to do here ..." >&2
+        return 1
+    fi
+
+    echo "Installing nvim files ..."
+    install_helper ".config/nvim" "bin/nvim-host-cmd" "bin/nvim-host-editor"
+    install_nvim_plugins
+    install_nvim_python
+}
+
+install_nvim_plugins() {
+    if ! command -v nvim > /dev/null; then
+        echo "\"nvim\" not found! Nothing to do here ..." >&2
+        return 1
+    fi
+
+    if test $VIM_PLUGINS_INSTALLED -eq 1; then
+        return 0
+    fi
+
+    echo "Installing nvim plugins ..."
+    nvim "+PlugInstall | qa!"
+}
+
+install_nvim_python() {
+    echo "Installing neovim python package ..."
+
+    # Ensure this is installed in all possible pips.
+    if command -v pip2 > /dev/null; then
+        pip2 install --user --upgrade --no-warn-conflicts neovim
+    fi
+
+    if command -v pip3 > /dev/null; then
+        pip3 install --user --upgrade --no-warn-conflicts neovim
+    fi
+
+    if command -v pip > /dev/null; then
+        pip install --user --upgrade --no-warn-conflicts neovim
+    fi
+}
+
+install_xvim() {
+    if test $VIM_INSTALLED -eq 0; then
+        install_vim
+    fi
+
+    echo "Installing xvim files ..."
+    install_helper ".xvimrc"
 }
 
 install_pgdb() {
-	set -x
-
-	mkdir -p ~/gits
-	ln -fs `realpath ./gits/peda` ~/gits &> /dev/null
-	ln -fs `realpath ./.gdbinit` ~
-
-	set +x
+    echo "Installing peda gdb ..."
+    install_helper "gits/peda" ".gdbinit"
 }
 
 install_ycm() {
-	set -x
-
-	ln -fs `realpath ./.ycm_extra_conf.py` ~
-
-	set +x
+    echo "Installing ycm files ..."
+    install_helper ".ycm_extra_conf.py"
 }
 
-install_ag() {
-	set -x
-
-	ln -fs `realpath ./.ignore` ~
-
-	set +x
+install_search() {
+    echo "Installing search files ..."
+    install_helper ".ignore"
 }
 
-main() {
-	install_zsh
-	install_vim
-	install_pgdb
-	install_ycm
-	install_ag
+setup() {
+    git submodule init
+    git submodule update
 }
 
-if [[ $# == 0 ]]; then
-	main
-elif [[ $1 == --help || $1 == -h ]]; then
-	show_usage
-else
-	for arg in $@; do
-		"$arg"
-	done
+install_in_home() {
+    install_zsh_plugins
+    install_vim_plugins
+    install_nvim_plugins
+}
+
+install_all() {
+    install_zsh
+    install_bash
+    install_nvim
+    install_pgdb
+    install_ycm
+    install_search
+}
+
+install() {
+    if test -z "$@"; then
+        install_all
+    else
+        for item; do
+            install_$item
+        done
+    fi
+}
+
+# Ensure we can use "realpath".
+if ! command -v realpath > /dev/null; then
+    . "$(pwd)/sh-realpath/realpath.sh"
 fi
 
+setup
+if test "$(pwd)" = "$HOME"; then
+    install_in_home
+    exit 0
+fi
+
+while getopts "h?bdnri:" opt; do
+    case "$opt" in
+        h|\?)
+            show_help
+            exit 0
+            ;;
+        b)
+            BACKUPDIR="$OPTARG"
+            ;;
+        d)
+            DELETE_BACKUP_AFTER_RESTORE=1
+            ;;
+        n)
+            BACKUP=0
+            ;;
+        r)
+            RESTORE=1
+            ;;
+        i)
+            INSTALL_LIST="$OPTARG $INSTALL_LIST"
+            ;;
+    esac
+done
+
+if test $RESTORE -eq 1; then
+    restore_backup
+    exit 0
+fi
+
+if test $BACKUP -eq 1; then
+    mkdir -p "$BACKUPDIR"
+    if test $(find "$BACKUPDIR" | wc -l) -ne 1; then
+        echo "Backup directory not empty! Aborting ..." >&2
+        exit 1
+    fi
+fi
+
+install $INSTALL_LIST
