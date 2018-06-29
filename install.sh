@@ -21,7 +21,6 @@ SH_INSTALLED=0
 VIM_INSTALLED=0
 VIM_PLUGINS_INSTALLED=0
 
-
 show_help() {
     cat << __EOF__
 Dotfiles install script.
@@ -87,7 +86,8 @@ restore_backup() {
     set -e
 
     cd "$BACKUPDIR"
-    for item in $(find . -type f); do
+    find . -type f | while IFS= read -r item
+    do
         homefile="$HOME/$item"
 
         echo "Restoring \"$item\" ..."
@@ -113,7 +113,7 @@ restore_backup() {
 
 install_helper() {
     if test $BACKUP -eq 1; then
-        do_backup $@
+        do_backup "$@"
     fi
 
     for item; do
@@ -122,8 +122,8 @@ install_helper() {
         mkdir -p "$dst_dir"
 
         echo "Copying \"$item\" ..."
-        rm -rf "$dst_dir/$item"
-        ln -s $(realpath "$item") "$dst_dir"
+        rm -rf "${dst_dir:?}/$item"
+        ln -s "$(realpath "$item")" "$dst_dir"
     done
 }
 
@@ -295,13 +295,14 @@ install() {
         install_all
     else
         for item; do
-            install_$item
+            "install_$item"
         done
     fi
 }
 
 # Ensure we can use "realpath".
 if ! command -v realpath > /dev/null; then
+    # shellcheck source=/dev/null
     . "$(pwd)/sh-realpath/realpath.sh"
 fi
 
@@ -342,10 +343,10 @@ fi
 
 if test $BACKUP -eq 1; then
     mkdir -p "$BACKUPDIR"
-    if test $(find "$BACKUPDIR" | wc -l) -ne 1; then
+    if test "$(find "$BACKUPDIR" | wc -l)" -ne 1; then
         echo "Backup directory not empty! Aborting ..." >&2
         exit 1
     fi
 fi
 
-install $INSTALL_LIST
+install "$INSTALL_LIST"
