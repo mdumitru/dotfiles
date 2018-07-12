@@ -26,6 +26,9 @@ alias vc=vimcat
 
 alias rg='rg --smart-case'
 
+alias tj='kill -TERM %1'
+alias kj='kill -KILL %1'
+
 # The global ignore file should contain uninteresting things (e.g. ctags).
 alias ag='ag --path-to-ignore ~/.ignore'
 
