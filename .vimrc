@@ -260,7 +260,7 @@ if has('nvim')
 
     " Ensure we always end up in insert mode when going to a terminal buffer.
     autocmd TermOpen * if &buftype == 'terminal' | startinsert | endif
-    autocmd BufWinEnter,WinEnter * if &buftype == 'terminal' | startinsert | endif
+    autocmd BufWinEnter,BufEnter,WinEnter * if &buftype == 'terminal' | startinsert | endif
     autocmd BufLeave * if &buftype == 'terminal' | stopinsert | endif
 
     " Instantly close a terminal buffer when its process exits.
