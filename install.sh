@@ -210,7 +210,8 @@ install_nvim() {
     fi
 
     echo "Installing nvim files ..."
-    install_helper ".config/nvim" "bin/nvim-host-cmd" "bin/nvim-host-editor"
+    install_helper ".config/nvim" "bin/nvim-host-cmd" "bin/nvim-host-editor" \
+        ".local/share/nvim"
     install_nvim_plugins
     install_nvim_python
 }

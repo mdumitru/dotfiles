@@ -9,7 +9,7 @@
 
 
 " Attempt to source the plugin manager.
-let manager_path=expand($HOME . "/.vim/plugins/vim-plug/plug.vim")
+let manager_path=expand($HOME . "/.vim/autoload/plug.vim")
 if ! filereadable(manager_path)
     finish
 endif
