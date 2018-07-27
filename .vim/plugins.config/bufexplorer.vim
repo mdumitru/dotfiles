@@ -3,6 +3,7 @@ let g:bufExplorerDefaultHelp=0
 " Always open the buffer in the bufexplorer window
 let g:bufExplorerFindActive=0
 let g:bufExplorerShowRelativePath=1
+let g:bufExplorerShowNoName=1
 
 
 " Alt+e opens buf explorer, so that it works from nvim terminal
