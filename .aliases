@@ -24,6 +24,8 @@ alias mv='mv -i'
 alias vp=vimpager
 alias vc=vimcat
 
+alias rg='rg --smart-case'
+
 # The global ignore file should contain uninteresting things (e.g. ctags).
 alias ag='ag --path-to-ignore ~/.ignore'
 
