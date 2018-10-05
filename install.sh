@@ -271,6 +271,11 @@ install_search() {
     install_helper ".ignore"
 }
 
+install_git() {
+    echo "Installing git files ..."
+    install_helper ".gitconfig"
+}
+
 setup() {
     git submodule init
     git submodule update
@@ -289,6 +294,7 @@ install_all() {
     install_pgdb
     install_ycm
     install_search
+    install_git
 }
 
 install() {

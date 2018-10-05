@@ -38,4 +38,6 @@
 !bin/
 !bin/*
 
+" Allow git stuff
 !.gitignore
+!.gitconfig
