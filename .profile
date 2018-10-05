@@ -5,6 +5,10 @@ fi
 
 # Add ~/bin/ to path.
 PATH="$HOME/bin/:$PATH"
+
+# Add cabal stuff to path
+PATH="$HOME/.cabal/bin/:$PATH"
+
 export PATH
 
 # As env variables are inherited by regular interactive shells, they should be
