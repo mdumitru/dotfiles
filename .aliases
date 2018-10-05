@@ -63,7 +63,7 @@ _py() {
 
     # Consider all invocations with no arguments as interactive.
     if test $# -eq 0; then
-        bpython$suffix
+        python$suffix -m bpython
     else
         python$suffix $@
     fi
@@ -72,8 +72,8 @@ _py() {
 # An array would be nice.
 set "" 2 3
 for suffix; do
-    if command -v bpython$suffix > /dev/null; then
-        alias py$suffix="_py $suffix"
+    if python$suffix -m bpython -c "" &>/dev/null; then
+        alias py$suffix="_py \"$suffix\""
     else
         if command -v python$suffix > /dev/null; then
             alias py$suffix=python$suffix
