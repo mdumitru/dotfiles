@@ -3,8 +3,8 @@ if test -f "$HOME/.profile.before" -a -r "$HOME/.profile.before"; then
     . "$HOME/.profile.before"
 fi
 
-# Add ~/bin/ to path.
-PATH="$HOME/bin/:$PATH"
+# Add ~/bin/ and ~/.local/bin to path.
+PATH="$HOME/bin/:$HOME/.local/bin:$PATH"
 
 # Add cabal stuff to path
 PATH="$HOME/.cabal/bin/:$PATH"
