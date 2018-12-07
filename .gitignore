@@ -41,3 +41,6 @@
 " Allow git stuff
 !.gitignore
 !.gitconfig
+
+" Allow X stuff
+!.xinitrc
