@@ -17,10 +17,6 @@ if [[ ! -r "$manager_path" ]]; then
 fi
 source "$manager_path"
 
-# Needed by oh-my-zsh plugins.
-export ZSH="$ZPLUG_HOME/repos/robbyrussell/oh-my-zsh"
-
-
 # Use Ctrl-Z to switch back to background task.
 zplug "mdumitru/fancy-ctrl-z"
 
