@@ -18,6 +18,7 @@ alias -g LL='2>&1 | less'
 alias -g NE='2> /dev/null'
 alias -g NO='> /dev/null 2>&1'
 
+alias sz="source \"$HOME/.zshrc\""
 
 # Source 'after' file (if any).
 if [[ -r "$HOME/.aliases.after" ]]; then
