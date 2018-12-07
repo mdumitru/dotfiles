@@ -6,8 +6,8 @@ from __future__ import print_function
 import os
 import sys
 
-from neovim import attach
-from neovim.api.nvim import NvimError
+from pynvim import attach
+from pynvim import NvimError
 
 
 def _print_help():
