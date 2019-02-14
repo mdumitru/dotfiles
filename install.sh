@@ -276,6 +276,16 @@ install_git() {
     install_helper ".gitconfig"
 }
 
+install_alacritty() {
+    if ! command -v alacritty > /dev/null; then
+        echo "\"alacritty\" not found! Nothing to do here ..." >&2
+        return 1
+    fi
+
+    echo "Installing alacritty files ..."
+    install_helper ".alacritty.yml"
+}
+
 setup() {
     git submodule init
     git submodule update
@@ -295,6 +305,7 @@ install_all() {
     install_ycm
     install_search
     install_git
+    install_alacritty
 }
 
 install() {
