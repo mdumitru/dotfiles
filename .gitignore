@@ -14,6 +14,8 @@
 !.vim/after/*
 !.vim/colors/
 !.vim/colors/*
+!.vim/syntax/
+!.vim/syntax/*
 
 " Allow zsh stuff.
 !.zshrc
