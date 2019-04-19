@@ -1,3 +1,8 @@
+shell if test -f "$HOME/.gdbinit.before"; then \
+            echo 'source "$HOME/.gdbinit.before"'; \
+      fi > /tmp/.gdbinit
+source /tmp/.gdbinit
+
 # Source all settings from the peda dir
 source ~/gits/peda/peda.py
 
@@ -10,3 +15,7 @@ set history filename ~/.gdb_history
 set history size 32768
 set history expansion on
 
+shell if test -f "$HOME/.gdbinit.after"; then \
+            echo source "$HOME/.gdbinit.after"; \
+      fi > /tmp/.gdbinit
+source /tmp/.gdbinit
