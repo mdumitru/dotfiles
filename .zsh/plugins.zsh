@@ -17,6 +17,16 @@ if [[ ! -r "$manager_path" ]]; then
 fi
 source "$manager_path"
 
+zplug "junegunn/fzf-bin", \
+    as:command, \
+    from:gh-r, \
+    rename-to:"fzf"
+
+# A command-line fuzzy finder
+zplug "junegunn/fzf", \
+    hook-build:"./install --bin", \
+    use:"shell/*.zsh"
+
 # Use Ctrl-Z to switch back to background task.
 zplug "mdumitru/fancy-ctrl-z"
 
