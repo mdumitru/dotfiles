@@ -65,7 +65,7 @@ autocmd FileChangedShellPost *
 set autoindent      " indent a newline using the current one's level
 
 " Tabs are replaced with spaces, indentation is 4 characters.
-set noexpandtab
+set expandtab
 set smarttab
 set tabstop=4
 set softtabstop=4
