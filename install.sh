@@ -273,7 +273,7 @@ install_search() {
 
 install_git() {
     echo "Installing git files ..."
-    install_helper ".gitconfig"
+    install_helper ".gitconfig" "bin/diff-so-fancy"
 }
 
 install_alacritty() {

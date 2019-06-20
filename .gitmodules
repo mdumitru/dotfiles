@@ -10,3 +10,6 @@
 [submodule "sh-realpath"]
 	path = sh-realpath
 	url = https://github.com/mkropat/sh-realpath
+[submodule "gits/diff-so-fancy"]
+	path = gits/diff-so-fancy
+	url = https://github.com/so-fancy/diff-so-fancy
