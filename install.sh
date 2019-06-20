@@ -313,7 +313,8 @@ install() {
         install_all
     else
         for item; do
-            "install_$item"
+            # shellcheck disable=SC2086
+            install_$item
         done
     fi
 }
