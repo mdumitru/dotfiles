@@ -92,7 +92,7 @@ Plug 'Valloric/ListToggle'
 
 " Load YCM only if it's available.
 " See: https://github.com/Valloric/YouCompleteMe/issues/1558
-if v:version + has('patch584') >= 704 && (has('python') || has('python3'))
+if v:version + has('patch584') > 704 && (has('python') || has('python3'))
     function! BuildYCM(info)
         " info is a dictionary with 3 fields
         " - name: name of the plugin
