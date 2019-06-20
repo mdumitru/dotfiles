@@ -51,7 +51,10 @@ endif
 filetype plugin indent on
 
 " Max nvim terminal scrollback.
-let g:terminal_scrollback_buffer_size=100000
+if has('nvim')
+    let g:terminal_scrollback_buffer_size=100000  " legacy
+    set scrollback=100000
+endif
 
 " Triger `autoread` when files changes on disk
 " https://unix.stackexchange.com/questions/149209/refresh-changed-content-of-file-opened-in-vim/383044#383044
@@ -65,7 +68,7 @@ autocmd FileChangedShellPost *
 "------ Indents and tabs ------
 set autoindent      " indent a newline using the current one's level
 
-" Tabs are replaced with spaces, indentation is 4 characters.
+" Tabs are replaced with spaces
 set expandtab
 set smarttab
 set tabstop=4
@@ -91,7 +94,7 @@ set wildignorecase              " ignore case when autocompleting
 set wildignore=*.obj,*.o,*~,*.pyc
 set wildignore+=__pycache__
 set wildignore+=*.so,*.a,*.dll
-set wildignore+=*.out,*.exe,*.com
+set wildignore+=*.exe,*.com
 set wildignore+=*DS_Store*
 set wildignore+=.git/*,.hg/*,.svn/*
 
@@ -160,7 +163,7 @@ nnoremap Q @q
 " Disable select mode.
 nnoremap gh <nop>
 
-" Don't cancel visual select when shifting.
+" don't cancel visual select when shifting.
 vnoremap < <gv
 vnoremap > >gv
 
@@ -202,7 +205,7 @@ command! -complete=command ToggleColorColumn call _ToggleColorColumn()
 
 nnoremap <silent> <f3> :ToggleColorColumn<cr>
 
-" Insert date at cursor poisiton.
+" Insert date at cursor position.
 nnoremap <silent> <f5> i<c-r>=substitute(system('date'),'[\r\n]*$','','')<cr><esc>
 inoremap <silent> <f5> <c-r>=substitute(system('date'),'[\r\n]*$','','')<cr>
 
@@ -263,18 +266,12 @@ if has('nvim')
     autocmd TermOpen * if &buftype == 'terminal' | startinsert | endif
     autocmd BufWinEnter,BufEnter,WinEnter * if &buftype == 'terminal' | startinsert | endif
 
-    " Instantly close a terminal buffer when its process exits.
-    " XXX This makes it impossible to work with non-interactive processes and
-    " check their output.
-    autocmd TermClose * bdelete!
-
     command! Tsplit split | terminal
     command! Tvsplit vsplit | terminal
     command! Ttabedit tabedit | terminal
     noremap <a-t> :Ttabedit<cr>
     tnoremap <a-t> <c-\><c-n>:Ttabedit<cr>
     tnoremap <a-n> <c-\><c-n>:tabedit<cr>
-    tnoremap <silent> <c-a-q> <c-\><c-n>:q<cr>
     tnoremap <silent> <f1> <c-\><c-n>:nohlsearch<cr>gi
 
     " The BufEnter event is triggered, no need to return to insert explicitly.
@@ -311,54 +308,6 @@ if has('nvim')
     tnoremap <a-o> <c-\><c-n>gt
     tnoremap <silent> <c-a-i> <c-\><c-n>:execute "tabmove" tabpagenr() - 2<cr>
     tnoremap <silent> <c-a-o> <c-\><c-n>:execute "tabmove" tabpagenr() + 1<cr>
-endif
-
-
-"------ Cscope ------
-if has("cscope") && has("unix")
-    function! _LoadCscope()
-        set nocscopeverbose " suppress 'duplicate connection' error
-
-        " Add database environment database (usually /fullpath/to/a/cscope.out).
-        " Cscope is bad with symlinks, so resolve them.
-        if $CSCOPE_DB != ""
-            execute "cscope add ". resolve($CSCOPE_DB) . " " .
-                        \ resolve(fnamemodify($CSCOPE_DB, ":p:h"))
-        endif
-
-        " Search cscope.out recursively in parent directories.
-        if has("file_in_path") && has("path_extra")
-            " Upwards search from cwd.
-            let db = findfile("cscope.out", ".;")
-            if !empty(db)
-                let path = strpart(db, 0, match(db, "/cscope.out$"))
-                execute "cscope add " . resolve(db) . " " . resolve(path)
-            endif
-        endif
-
-        set cscopeverbose
-    endfunction
-    command! LoadCscope call _LoadCscope()
-
-    " Automatically load cscope for these files.
-    autocmd FileType c,cpp call _LoadCscope()
-
-    " Use both cscope and ctag for 'ctrl-]', ':ta', and 'vim -t'.
-    set cscopetag
-    set cscopetagorder=0  " use cscope first, then ctags
-
-    " The 'silent' makes it so that pressing <Enter> is not required.
-    nnoremap <silent> <leader>ss :silent cscope find s <c-r>=expand("<cword>")<cr><cr>
-    nnoremap <silent> <leader>sg :silent cscope find g <c-r>=expand("<cword>")<cr><cr>
-    nnoremap <silent> <leader>sc :silent cscope find c <c-r>=expand("<cword>")<cr><cr>
-    nnoremap <silent> <leader>st :silent cscope find t <c-r>=expand("<cword>")<cr><cr>
-    nnoremap <silent> <leader>se :silent cscope find e <c-r>=expand("<cword>")<cr><cr>
-    nnoremap <silent> <leader>sf :silent cscope find f <c-r>=expand("<cfile>")<cr><cr>
-    nnoremap <silent> <leader>si :silent cscope find i ^<c-r>=expand("<cfile>")<cr>$<cr>
-    nnoremap <silent> <leader>sd :silent cscope find d <c-r>=expand("<cword>")<cr><cr>
-
-    " Open a quickfix window for the following queries.
-    set cscopequickfix=s-,c-,d-,i-,t-,e-,g-,a-
 endif
 
 
