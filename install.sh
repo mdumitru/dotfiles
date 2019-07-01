@@ -140,7 +140,7 @@ install_zsh() {
 
     if ! command -v zsh > /dev/null; then
         echo "\"zsh\" not found! Nothing to do here ..." >&2
-        return 1
+        return 0
     fi
 
     echo "Installing zsh files ..."
@@ -152,7 +152,7 @@ install_zsh() {
 install_zsh_plugins() {
     if ! command -v zsh > /dev/null; then
         echo "\"zsh\" not found! Nothing to do here ..." >&2
-        return 1
+        return 0
     fi
 
     echo "Installing zsh plugins ..."
@@ -166,7 +166,7 @@ install_bash() {
 
     if ! command -v bash > /dev/null; then
         echo "\"bash\" not found! Nothing to do here ..." >&2
-        return 1
+        return 0
     fi
 
     echo "Installing bash files ..."
@@ -181,7 +181,7 @@ install_vim() {
     # check for vim's existance only after.
     if ! command -v vim > /dev/null; then
         echo "\"vim\" not found! Nothing to do here ..." >&2
-        return 1
+        return 0
     fi
 
     install_vim_plugins
@@ -191,7 +191,7 @@ install_vim() {
 install_vim_plugins() {
     if ! command -v vim > /dev/null; then
         echo "\"vim\" not found! Nothing to do here ..." >&2
-        return 1
+        return 0
     fi
 
     echo "Installing vim plugins ..."
@@ -206,7 +206,7 @@ install_nvim() {
 
     if ! command -v nvim > /dev/null; then
         echo "\"nvim\" not found! Nothing to do here ..." >&2
-        return 1
+        return 0
     fi
 
     echo "Installing nvim files ..."
@@ -219,7 +219,7 @@ install_nvim() {
 install_nvim_plugins() {
     if ! command -v nvim > /dev/null; then
         echo "\"nvim\" not found! Nothing to do here ..." >&2
-        return 1
+        return 0
     fi
 
     if test $VIM_PLUGINS_INSTALLED -eq 1; then
@@ -279,7 +279,7 @@ install_git() {
 install_alacritty() {
     if ! command -v alacritty > /dev/null; then
         echo "\"alacritty\" not found! Nothing to do here ..." >&2
-        return 1
+        return 0
     fi
 
     echo "Installing alacritty files ..."
