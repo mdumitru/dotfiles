@@ -42,6 +42,7 @@ Arguments:
             pgdb
             xvim
             search
+            i3
 
         If no "-i" option is provided, ALL components are installed.
 
@@ -235,15 +236,15 @@ install_nvim_python() {
 
     # Ensure this is installed in all possible pips.
     if command -v pip2 > /dev/null; then
-        pip2 install --user --upgrade --no-warn-conflicts neovim
+        pip2 install --user --upgrade --no-warn-conflicts pynvim
     fi
 
     if command -v pip3 > /dev/null; then
-        pip3 install --user --upgrade --no-warn-conflicts neovim
+        pip3 install --user --upgrade --no-warn-conflicts pynvim
     fi
 
     if command -v pip > /dev/null; then
-        pip install --user --upgrade --no-warn-conflicts neovim
+        pip install --user --upgrade --no-warn-conflicts pynvim
     fi
 }
 
@@ -286,6 +287,16 @@ install_alacritty() {
     install_helper ".alacritty.yml"
 }
 
+install_i3() {
+    if ! command -v i3 > /dev/null; then
+        echo "\"i3\" not found! Nothing to do here ..." >&2
+        return 0
+    fi
+
+    echo "Installing i3 files ..."
+    install_helper ".config/i3/config"
+}
+
 setup() {
     git submodule init
     git submodule update
@@ -306,6 +317,7 @@ install_all() {
     install_search
     install_git
     install_alacritty
+    install_i3
 }
 
 install() {
