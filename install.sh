@@ -42,6 +42,7 @@ Arguments:
             pgdb
             xvim
             search
+            alacritty
             i3
 
         If no "-i" option is provided, ALL components are installed.
