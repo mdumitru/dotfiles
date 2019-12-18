@@ -66,9 +66,6 @@ Plug 'sickill/vim-pasta'
 " Vim plugin for intensely orgasmic commenting
 Plug 'scrooloose/nerdcommenter'
 
-" A tree file explorer plugin
-Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
-
 " Syntax checking hacks for vim
 Plug 'scrooloose/syntastic'
 
@@ -136,9 +133,6 @@ Plug 'xolox/vim-misc'
 
 " Extended session management for Vim
 Plug 'xolox/vim-session'
-
-" A plugin of NERDTree showing git status
-Plug 'Xuyuanp/nerdtree-git-plugin', { 'on': 'NERDTreeToggle' }
 
 
 " Source 'local_plugins' file (if any).
