@@ -105,9 +105,6 @@ if v:version + has('patch584') > 704 && (has('python') || has('python3'))
 endif
 
 
-" AppleScript syntax highlighting
-Plug 'vim-scripts/applescript.vim'
-
 " An alternative indentation script for python
 Plug 'vim-scripts/indentpython.vim'
 
