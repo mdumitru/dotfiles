@@ -89,7 +89,7 @@ if command -v nvim > /dev/null; then
         command -v nvim-host-cmd > /dev/null;
     then
         nvim_cd() {
-            nvim-host-cmd "execute \"tcd\" fnameescape(\"$(pwd)\") | file term:$$:$(pwd)/$(basename $SHELL)"
+            nvim-host-cmd "execute \"lcd\" fnameescape(\"$(pwd)\") | file term:$$:$(pwd)/$(basename $SHELL)"
         }
 
         alias v=nvim-host-cmd
