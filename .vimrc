@@ -23,18 +23,21 @@ endif
 
 
 "------ General ------
-" older vims don't seem to support this
-silent! set belloff=all " don't ring the bell for any events
-set foldlevel=9999      " unfold everything when opening a file
-set foldmethod=indent   " define folds by indentation
-set hidden              " don't unload buffers not open in any window
-set history=9999        " remember these many commands and searches
-set mouse=a             " enable mouse in normal, visual, insert, command-line
-set splitbelow          " a new horizontal split is placed below, not above
-set splitright          " a new vertical split is placed to the right, not left
-set timeoutlen=500      " wait these many milliseconds between a map's keys
+" older vims don't seem to support this, hence the 'silent!'
+silent! set belloff=all
 
-" Set persistent undo.
+set foldlevel=9999
+set foldmethod=indent
+set hidden
+set history=9999
+set mouse=a
+
+" this seems more intuitive, as that is how text works
+set splitbelow
+set splitright
+
+set timeoutlen=500
+
 " TODO cross-platform
 if has('persistent_undo')
     silent !mkdir -p ~/.vim/temp_dirs/undodir > /dev/null 2>&1
@@ -42,15 +45,15 @@ if has('persistent_undo')
     set undofile
 endif
 
-" Set the clipboard to the system clipboard.
+" I cannot imagine why you wouldn't want this; copying from vim helps when
+" searching functions/keywords etc. Copying to vim would be possible without
+" sharing the system clipboard, but this makes it more uniform.
 if has('clipboard')
     set clipboard=unnamed,unnamedplus
 endif
 
-" Enable filetype detection, scripts and indent-scripts.
 filetype plugin indent on
 
-" Max nvim terminal scrollback.
 if has('nvim')
     let g:terminal_scrollback_buffer_size=100000  " legacy
     set scrollback=100000
@@ -66,9 +69,10 @@ autocmd FileChangedShellPost *
   \ echohl WarningMsg | echo "File changed on disk. Buffer reloaded." | echohl None
 
 "------ Indents and tabs ------
-set autoindent      " indent a newline using the current one's level
+set autoindent
 
-" Tabs are replaced with spaces
+" precisely because they can be set to any visual values, tabs are bad; we
+" want control over how the file ends up looking
 set expandtab
 set smarttab
 set tabstop=4
@@ -77,18 +81,18 @@ set shiftwidth=4
 
 
 "------ Console UI & Text display ------
-set cursorline          " highlight the current line
-set showcmd             " show partial command in the bot-right
+set cursorline
+set showcmd
 set noshowmode          " the *line plugin should take care of this
-set scrolloff=8         " start scrolling when within these many lines of edge
-set report=0            " always report how many lines were changed
+set scrolloff=8
+set report=0
 set shortmess=cfilmnrxI
-set list                " display whitespaces
-set showbreak=↪\        " mark visually wrapped lines
+set list
+set showbreak=↪\        " intentional trailing ws
 set listchars=tab:»\ ,trail:·,nbsp:␣
-set wildmenu                    " enable cycling through tab completion options
+set wildmenu
 set wildmode=list:longest,full
-set wildignorecase              " ignore case when autocompleting
+set wildignorecase
 
 " Ignore these files when autocompleting.
 set wildignore=*.obj,*.o,*~,*.pyc
@@ -100,21 +104,20 @@ set wildignore+=.git/*,.hg/*,.svn/*
 
 
 "------ Text editing and searching behavior ------
-" Turn on syntax highlighting, keeping current settings.
 if !exists("g:syntax_on")
     syntax enable
 endif
 
-set incsearch       " search as we type
-set ignorecase      " make search case-insensitive
-set smartcase       " make search case-sensitive if it contains upper-case chars
-set hlsearch        " highlight search results
-set showmatch       " highlight matching bracket
-set matchtime=2     " tenths of a second to show the matching bracket
-set textwidth=0     " don't wrap lines
+set incsearch
+set ignorecase
+set smartcase
+set hlsearch
+set showmatch
+set matchtime=2
+set textwidth=0
 set formatoptions=tcroqnj
 
-" Allow backspace to delete indents, newlines and characters past insert-start.
+" intuitive backspace
 set backspace=indent,eol,start
 
 " Don't allow keys that move the cursor left/right to move it between lines.
@@ -122,7 +125,8 @@ set whichwrap=
 
 
 "------ Plugins config ------
-" We need to set the map leader before Vundle loads plugins & their settings.
+" We need to set the map leader before the plugin manager loads plugins &
+" their settings.
 let mapleader="\<space>"
 
 
@@ -160,10 +164,11 @@ noremap ` '
 noremap Q <nop>
 nnoremap Q @q
 
-" Disable select mode.
+" select mode is unintuitive and useless
 nnoremap gh <nop>
 
-" don't cancel visual select when shifting.
+" don't cancel visual select when shifting; we should be able to use '.' even
+" after the visual selection's gone, but sometimes it doesn't work...
 vnoremap < <gv
 vnoremap > >gv
 

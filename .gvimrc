@@ -5,7 +5,7 @@ if filereadable(s:vimbefore_path)
 endif
 
 
-set guicursor=a:block-Cursor    " set curosor to always be a block
+set guicursor=a:block-Cursor
 set guioptions-=m  " remove menu bar
 set guioptions-=T  " remove toolbar
 set guioptions-=r  " remove right-hand scroll bar
@@ -13,16 +13,16 @@ set guioptions-=L  " remove left-hand scroll bar
 
 
 if has("gui_win32")
-    set guifont=Hack:h14:cDEFAULT   " font options
-    set linespace=2                 " pixels between lines
+    set guifont=Hack:h14:cDEFAULT
+    set linespace=2
 
     noremap <silent> <f11> <esc>:call libcallnr("gvimfullscreen.dll", "ToggleFullScreen", 0)<cr>
 
     " Start maximized.
     autocmd GUIEnter * simalt ~x
 else
-    set guifont=DejaVu\ Sans\ Mono\ 11  " font options
-    set linespace=-1                    " pixels between lines
+    set guifont=DejaVu\ Sans\ Mono\ 11
+    set linespace=-1
 
     noremap <silent> <f11> <esc>:call system("wmctrl -ir " . v:windowid . " -b toggle,fullscreen")<cr>
 
