@@ -1,1 +1,1 @@
-noremap <silent> <f2> :silent! StripWhitespace<cr>
+noremap <silent> <f6> :silent! StripWhitespace<cr>
