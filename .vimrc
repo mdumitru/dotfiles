@@ -82,7 +82,7 @@ set showcmd             " show partial command in the bot-right
 set noshowmode          " the *line plugin should take care of this
 set scrolloff=8         " start scrolling when within these many lines of edge
 set report=0            " always report how many lines were changed
-set shortmess=filmnrxI  " make sure exactly these options are set
+set shortmess=cfilmnrxI
 set list                " display whitespaces
 set showbreak=↪\        " mark visually wrapped lines
 set listchars=tab:»\ ,trail:·,nbsp:␣

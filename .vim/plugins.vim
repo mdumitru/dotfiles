@@ -21,17 +21,8 @@ call plug#begin('~/.vim/plugins/')
 " Precision colorscheme for the vim text editor
 Plug 'altercation/vim-colors-solarized'
 
-" Fuzzy file, buffer, mru, tag, etc finder.
-Plug 'ctrlpvim/ctrlp.vim'
-
 " Vim motions on speed!
 Plug 'easymotion/vim-easymotion'
-
-" Perform all your vim insert mode completions with Tab
-Plug 'ervandew/supertab'
-
-" vim-snipmate default snippets
-Plug 'honza/vim-snippets'
 
 " BufExplorer Plugin for Vim
 Plug 'jlanzarotta/bufexplorer', { 'on': 'ToggleBufExplorer' }
@@ -42,35 +33,23 @@ Plug 'justinmk/vim-syntax-extra'
 " Vim plugin that displays tags in a window, ordered by scope
 Plug 'majutsushi/tagbar', { 'on': 'TagbarToggle' }
 
-" Vim plugin for the Perl module / CLI script 'ack'
-Plug 'mileszs/ack.vim'
-
 " Delete buffers and close files in Vim without messing up your layout.
 Plug 'moll/vim-bbye', { 'on': 'Bdelete' }
+
+" Intellisense engine for vim8 & neovim, full language server protocol support as VSCode
+Plug 'neoclide/coc.nvim', {'branch': 'release', 'for': ['c', 'cpp', 'python', 'json']}
 
 " Better whitespace highlighting for Vim
 Plug 'ntpeters/vim-better-whitespace'
 
-" Flake8 plugin for Vim (python syntax & style checker)
-Plug 'nvie/vim-flake8'
-
 " Rename a buffer within Vim and on disk
 Plug 'vim-scripts/Rename', { 'on': 'Rename' }
-
-" Use Vim as PAGER
-Plug 'rkitover/vimpager'
 
 " Pasting in Vim with indentation adjusted to destination context
 Plug 'sickill/vim-pasta'
 
 " Vim plugin for intensely orgasmic commenting
 Plug 'scrooloose/nerdcommenter'
-
-" Syntax checking hacks for vim
-Plug 'scrooloose/syntastic'
-
-" UltiSnips - The ultimate snippet solution for Vim.
-Plug 'SirVer/ultisnips'
 
 " a Git wrapper so awesome, it should be illegal
 Plug 'tpope/vim-fugitive'
@@ -81,32 +60,11 @@ Plug 'tpope/vim-repeat'
 " surround.vim: quoting/parenthesizing made simple
 Plug 'tpope/vim-surround'
 
-" unimpaired.vim: pairs of handy bracket mappings 
+" unimpaired.vim: pairs of handy bracket mappings
 Plug 'tpope/vim-unimpaired'
 
 " A vim plugin for toggling the display of the quickfix list and the location-list.
 Plug 'Valloric/ListToggle'
-
-" Load YCM only if it's available.
-" See: https://github.com/Valloric/YouCompleteMe/issues/1558
-if v:version + has('patch584') > 704 && (has('python') || has('python3'))
-    function! BuildYCM(info)
-        " info is a dictionary with 3 fields
-        " - name: name of the plugin
-        " - status: 'installed', 'updated', or 'unchanged'
-        " - force: set on PlugInstall! or PlugUpdate!
-        if a:info.force
-            !python install.py --all
-        endif
-    endfunction
-
-    " A code-completion engine for Vim
-    Plug 'Valloric/YouCompleteMe', { 'do': function('BuildYCM') }
-endif
-
-
-" An alternative indentation script for python
-Plug 'vim-scripts/indentpython.vim'
 
 " Allows one to edit a file with privileges from an unprivileged session.
 Plug 'vim-scripts/sudo.vim'

@@ -1,0 +1,50 @@
+{
+    "languageserver": {
+        "ccls": {
+            "command": "ccls",
+            "filetypes": [
+                "c",
+                "cpp",
+                "objc",
+                "objcpp"
+            ],
+            "rootPatterns": [
+                ".ccls",
+                "compile_commands.json",
+                ".vim/",
+                ".git/",
+                ".hg/"
+            ],
+            "initializationOptions": {
+                "cache": {
+                    "directory": "/tmp/ccls"
+                }
+            }
+        },
+        "clangd": {
+            "command": "clangd",
+            "filetypes": [],
+            "args": [
+                "-log=verbose",
+                "-index"
+            ],
+            "rootPatterns": [
+                ".ccls",
+                "compile_commands.json",
+                ".vim/",
+                ".git/",
+                ".hg/",
+                ".svn/"
+            ]
+        }
+    },
+    "suggest.floatEnable": true,
+    "suggest.enablePreview": true,
+    "coc.preferences.colorSupport": true,
+    "list.nextKeymap": "<c-n>",
+    "list.previousKeymap": "<c-p>",
+    "list.source.grep.args": [
+        "--ignore-file",
+        "~/.ignore"
+    ]
+}

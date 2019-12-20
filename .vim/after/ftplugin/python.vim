@@ -10,5 +10,6 @@ setlocal cindent
 setlocal fileformat=unix
 
 let plugins_dir = expand($HOME . "/.vim/plugins-local-config/")
+exe 'source ' plugins_dir . "coc.nvim"
 exe 'source ' plugins_dir . "vim-better-whitespace"
 exe 'source ' plugins_dir . "tagbar"
