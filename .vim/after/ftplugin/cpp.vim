@@ -9,7 +9,7 @@ setlocal shiftwidth=4
 setlocal textwidth=80
 setlocal colorcolumn=81
 
-let plugins_dir = expand($HOME . "/.vim/plugins-local-config/")
-exe 'source ' plugins_dir . "coc.nvim"
-exe 'source ' plugins_dir . "vim-better-whitespace"
-exe 'source ' plugins_dir . "tagbar"
+let s:plugins_dir = expand($HOME . "/.vim/plugins-local-config/")
+exe 'source ' s:plugins_dir . "coc.nvim"
+exe 'source ' s:plugins_dir . "vim-better-whitespace"
+exe 'source ' s:plugins_dir . "tagbar"

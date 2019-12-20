@@ -4,9 +4,9 @@ set runtimepath+=~/.vim/after
 
 
 " Source 'before' file (if any).
-let vimbefore_path=expand($HOME . "/.vimrc.before")
-if filereadable(vimbefore_path)
-    exe 'source' vimbefore_path
+let s:vimbefore_path=expand($HOME . "/.vimrc.before")
+if filereadable(s:vimbefore_path)
+    exe 'source' s:vimbefore_path
 endif
 
 
@@ -127,9 +127,9 @@ let mapleader="\<space>"
 
 
 " Load all plugins.
-let plugins_path=expand($HOME . "/.vim/plugins.vim")
-if filereadable(plugins_path)
-    exe 'source' plugins_path
+let s:plugins_path=expand($HOME . "/.vim/plugins.vim")
+if filereadable(s:plugins_path)
+    exe 'source' s:plugins_path
 endif
 
 
@@ -230,7 +230,7 @@ noremap <silent> <f1> <esc>:nohlsearch<cr>
 
 " Like windo but restore the current window and don't end in insert.
 function! _Windo(command)
-    let l:__current_window=winnr()
+    let l:_current_window=winnr()
     execute 'windo ' . a:command
     stopinsert
     execute l:__current_window . 'wincmd w'
@@ -312,7 +312,7 @@ endif
 
 
 " Source 'after' file (if any).
-let vimafter_path=expand($HOME . "/.vimrc.after")
-if filereadable(vimafter_path)
-    exe 'source' vimafter_path
+let s:vimafter_path=expand($HOME . "/.vimrc.after")
+if filereadable(s:vimafter_path)
+    exe 'source' s:vimafter_path
 endif

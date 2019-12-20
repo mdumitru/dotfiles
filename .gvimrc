@@ -1,6 +1,6 @@
 " Source 'before' file (if any).
-let vimbefore_path=expand($HOME . "/.gvimrc.before")
-if filereadable(vimbefore_path)
+let s:vimbefore_path=expand($HOME . "/.gvimrc.before")
+if filereadable(s:vimbefore_path)
     exe 'source' plugins_path
 endif
 
@@ -32,7 +32,7 @@ endif
 
 
 " Source 'after' file (if any).
-let vimafter_path=expand($HOME . "/.gvimrc.after")
-if filereadable(vimafter_path)
+let s:vimafter_path=expand($HOME . "/.gvimrc.after")
+if filereadable(s:vimafter_path)
     exe 'source' plugins_path
 endif

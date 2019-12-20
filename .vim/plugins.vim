@@ -9,11 +9,11 @@
 
 
 " Attempt to source the plugin manager.
-let manager_path=expand($HOME . "/.vim/autoload/plug.vim")
-if ! filereadable(manager_path)
+let s:manager_path=expand($HOME . "/.vim/autoload/plug.vim")
+if ! filereadable(s:manager_path)
     finish
 endif
-exe 'source' manager_path
+exe 'source' s:manager_path
 
 
 call plug#begin('~/.vim/plugins/')
@@ -92,9 +92,9 @@ Plug 'xolox/vim-session'
 
 " Source 'local_plugins' file (if any).
 " This file should contain only 'Plug' directives.
-let local_plugins_path=expand($HOME . "/.vim/plugins/local_plugins.vim")
-if filereadable(local_plugins_path)
-    exe 'source' local_plugins_path
+let s:local_plugins_path=expand($HOME . "/.vim/plugins/local_plugins.vim")
+if filereadable(s:local_plugins_path)
+    exe 'source' s:local_plugins_path
 endif
 
 
@@ -102,7 +102,7 @@ call plug#end()
 
 
 " load all plugin settings
-let settings = expand($HOME . "/.vim/plugins-global-config/")
-for fpath in split(globpath(settings, '*'), '\n')
+let s:settings = expand($HOME . "/.vim/plugins-global-config/")
+for fpath in split(globpath(s:settings, '*'), '\n')
     exe 'source ' fpath
 endfor
