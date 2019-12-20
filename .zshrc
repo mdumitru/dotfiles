@@ -20,7 +20,8 @@ fi
 
 # Automatically change directories in the host neovim when cd-ing.
 if typeset -f nvim_cd > /dev/null; then
-    chpwd_functions+=( nvim_cd )
+    autoload -U add-zsh-hook
+    add-zsh-hook chpwd nvim_cd
 fi
 
 # Source 'after' file if any.
