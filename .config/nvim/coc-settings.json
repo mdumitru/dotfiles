@@ -41,6 +41,8 @@
     "suggest.floatEnable": true,
     "suggest.enablePreview": true,
     "coc.preferences.colorSupport": true,
+    "diagnostic.errorSign": ">>",
+    "diagnostic.warningSign": "> ",
     "list.nextKeymap": "<c-n>",
     "list.previousKeymap": "<c-p>",
     "list.source.grep.args": [
