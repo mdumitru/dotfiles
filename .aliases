@@ -14,9 +14,6 @@ alias zshrc='$EDITOR ~/.zshrc'
 
 alias grep='grep --color'
 
-alias fd='find . -type d -name'
-alias ff='find . -type f -name'
-
 alias rm='rm -i'
 alias cp='cp -i'
 alias mv='mv -i'
