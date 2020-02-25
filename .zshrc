@@ -18,12 +18,6 @@ if [[ -r "$HOME/.zsh/plugins.zsh" ]]; then
     source "$HOME/.zsh/plugins.zsh"
 fi
 
-# Automatically change directories in the host neovim when cd-ing.
-if typeset -f nvim_cd > /dev/null; then
-    autoload -U add-zsh-hook
-    add-zsh-hook chpwd nvim_cd
-fi
-
 # Source 'after' file if any.
 if [[ -r "$HOME/.zshrc.after" ]]; then
     source "$HOME/.zshrc.after"
