@@ -86,7 +86,7 @@ set showcmd
 set noshowmode          " the *line plugin should take care of this
 set scrolloff=8
 set report=0
-set shortmess=cfilmnrxI
+set shortmess=caIO
 set list
 set showbreak=↪\        " intentional trailing ws
 set listchars=tab:»\ ,trail:·,nbsp:␣
