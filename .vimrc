@@ -238,7 +238,7 @@ function! _Windo(command)
     let l:_current_window=winnr()
     execute 'windo ' . a:command
     stopinsert
-    execute l:__current_window . 'wincmd w'
+    execute l:_current_window . 'wincmd w'
 endfunction
 command! -nargs=+ -complete=command Windo call _Windo(<q-args>)
 
@@ -267,9 +267,14 @@ if has('nvim')
     tnoremap <esc> <c-\><c-n>
     tnoremap <c-a-e> <esc>
 
+    function! _PrepareTerminal()
+        startinsert
+        set nonumber
+    endfunction
+
     " Ensure we always end up in insert mode when going to a terminal buffer.
-    autocmd TermOpen * if &buftype == 'terminal' | startinsert | endif
-    autocmd BufWinEnter,BufEnter,WinEnter * if &buftype == 'terminal' | startinsert | endif
+    autocmd TermOpen * if &buftype == 'terminal' | call _PrepareTerminal() | endif
+    autocmd BufWinEnter,BufEnter,WinEnter * if &buftype == 'terminal' | call _PrepareTerminal() | endif
 
     command! Tsplit split | terminal
     command! Tvsplit vsplit | terminal

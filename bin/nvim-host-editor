@@ -26,9 +26,6 @@ def _print_help():
 
 
 def _setup():
-    # Exit terminal mode.
-    nvim.input("<c-\\><c-n>")
-
     # Save the terminal window to be able to return it.
     global termwin, termtab  # pylint: disable=global-variable-undefined
     termtab, termwin = nvim.eval("win_id2tabwin(win_getid())")
@@ -51,6 +48,9 @@ def _setup():
     nvim.command("autocmd BufUnload <buffer> call "
                  "rpcnotify({0}, \"n\")".format(nvim.channel_id))
     nvim.command("augroup END")
+
+    # Exit terminal mode.
+    nvim.input("<c-\\><c-n>")
 
 
 def _exit(*args, **kwargs):  # pylint: disable=unused-argument
