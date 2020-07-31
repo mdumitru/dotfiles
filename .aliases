@@ -91,6 +91,12 @@ if command -v nvim > /dev/null; then
     fi
 fi
 
+# neovim messes with this and vim has issues because of it
+# monitor: https://github.com/neovim/neovim/issues/9960#issuecomment-488262473
+# (we shove this here because this file is sourced by all shells and we don't
+# want it in .profile because we want non-login shells to source it).
+unset VIMRUNTIME
+
 
 # Source 'after' file (if any).
 if test -f "$HOME/.aliases.after" -a -r "$HOME/.aliases.after"; then
