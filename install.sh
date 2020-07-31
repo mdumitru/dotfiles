@@ -34,16 +34,18 @@ Arguments:
 
     -i <component>
         install the target component. Available components are:
-            shell
-            zsh
+            alacritty
             bash
-            vim
+            git
+            i3
             nvim
             pgdb
-            xvim
             search
-            alacritty
-            i3
+            shell
+            vim
+            xvim
+            ycm
+            zsh
 
         If no "-i" option is provided, ALL components are installed.
 
