@@ -12,7 +12,7 @@
 
 
 OPTIND=1
-BACKUPDIR="$HOME/dotfiles_backup"
+BACKUPDIR="$HOME/dotfiles_backups/$(date '+%y%m%d_%H%M%S')"
 BACKUP=1
 RESTORE=0
 DELETE_BACKUP_AFTER_RESTORE=0
