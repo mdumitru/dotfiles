@@ -30,9 +30,6 @@ Plug 'jlanzarotta/bufexplorer', { 'on': 'ToggleBufExplorer' }
 " Vim syntax highlighting for c, bison, flex
 Plug 'justinmk/vim-syntax-extra'
 
-" Vim plugin that displays tags in a window, ordered by scope
-Plug 'majutsushi/tagbar', { 'on': 'TagbarToggle' }
-
 " Delete buffers and close files in Vim without messing up your layout.
 Plug 'moll/vim-bbye', { 'on': 'Bdelete' }
 
