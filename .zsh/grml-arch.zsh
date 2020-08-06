@@ -3230,19 +3230,19 @@ cdt() {
 #f5# List files which have been accessed within the last {\it n} days, {\it n} defaults to 1
 accessed() {
     emulate -L zsh
-    print -l -- *(a-${1:-1})
+    print -l -- *(a-${1:-1}) .*(m-${1:-1})
 }
 
 #f5# List files which have been changed within the last {\it n} days, {\it n} defaults to 1
 changed() {
     emulate -L zsh
-    print -l -- *(c-${1:-1})
+    print -l -- *(c-${1:-1}) .*(m-${1:-1})
 }
 
 #f5# List files which have been modified within the last {\it n} days, {\it n} defaults to 1
 modified() {
     emulate -L zsh
-    print -l -- *(m-${1:-1})
+    print -l -- *(m-${1:-1}) .*(m-${1:-1})
 }
 # modified() was named new() in earlier versions, add an alias for backwards compatibility
 check_com new || alias new=modified
