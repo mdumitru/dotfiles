@@ -8,6 +8,30 @@ if [[ -r "$HOME/.zsh_aliases" ]]; then
     source "$HOME/.zsh_aliases"
 fi
 
+# check for version/system
+# check for versions (compatibility reasons)
+is4(){
+    [[ $ZSH_VERSION == <4->* ]] && return 0
+    return 1
+}
+
+is433(){
+    [[ $ZSH_VERSION == 4.3.<3->* || $ZSH_VERSION == 4.<4->* \
+                                 || $ZSH_VERSION == <5->* ]] && return 0
+    return 1
+}
+
+is437(){
+    [[ $ZSH_VERSION == 4.3.<7->* || $ZSH_VERSION == 4.<4->* \
+                                 || $ZSH_VERSION == <5->* ]] && return 0
+    return 1
+}
+
+is52(){
+    [[ $ZSH_VERSION == 5.<2->* || $ZSH_VERSION == <6->* ]] && return 0
+    return 1
+}
+
 # set some important options (as early as possible)
 
 # append history list to the history file; this is the default but we make sure

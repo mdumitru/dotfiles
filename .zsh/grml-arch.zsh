@@ -110,56 +110,6 @@ fi
 # load .zshrc.pre to give the user the chance to overwrite the defaults
 [[ -r ${ZDOTDIR:-${HOME}}/.zshrc.pre ]] && source ${ZDOTDIR:-${HOME}}/.zshrc.pre
 
-# check for version/system
-# check for versions (compatibility reasons)
-is4(){
-    [[ $ZSH_VERSION == <4->* ]] && return 0
-    return 1
-}
-
-is41(){
-    [[ $ZSH_VERSION == 4.<1->* || $ZSH_VERSION == <5->* ]] && return 0
-    return 1
-}
-
-is42(){
-    [[ $ZSH_VERSION == 4.<2->* || $ZSH_VERSION == <5->* ]] && return 0
-    return 1
-}
-
-is425(){
-    [[ $ZSH_VERSION == 4.2.<5->* || $ZSH_VERSION == 4.<3->* || $ZSH_VERSION == <5->* ]] && return 0
-    return 1
-}
-
-is43(){
-    [[ $ZSH_VERSION == 4.<3->* || $ZSH_VERSION == <5->* ]] && return 0
-    return 1
-}
-
-is433(){
-    [[ $ZSH_VERSION == 4.3.<3->* || $ZSH_VERSION == 4.<4->* \
-                                 || $ZSH_VERSION == <5->* ]] && return 0
-    return 1
-}
-
-is437(){
-    [[ $ZSH_VERSION == 4.3.<7->* || $ZSH_VERSION == 4.<4->* \
-                                 || $ZSH_VERSION == <5->* ]] && return 0
-    return 1
-}
-
-is439(){
-    [[ $ZSH_VERSION == 4.3.<9->* || $ZSH_VERSION == 4.<4->* \
-                                 || $ZSH_VERSION == <5->* ]] && return 0
-    return 1
-}
-
-is52(){
-    [[ $ZSH_VERSION == 5.<2->* || $ZSH_VERSION == <6->* ]] && return 0
-    return 1
-}
-
 #f1# are we running within an utf environment?
 isutfenv() {
     case "$LANG $CHARSET $LANGUAGE" in
@@ -173,7 +123,6 @@ isutfenv() {
 (( EUID != 0 )) && SUDO='sudo' || SUDO=''
 
 # check for zsh v3.1.7+
-
 if ! [[ ${ZSH_VERSION} == 3.1.<7->*      \
      || ${ZSH_VERSION} == 3.<2->.<->*    \
      || ${ZSH_VERSION} == <4->.<->*   ]] ; then
@@ -370,45 +319,6 @@ check_com() {
     return 1
 }
 
-# creates an alias and precedes the command with
-# sudo if $EUID is not zero.
-salias() {
-    emulate -L zsh
-    local only=0 ; local multi=0
-    local key val
-    while getopts ":hao" opt; do
-        case $opt in
-            o) only=1 ;;
-            a) multi=1 ;;
-            h)
-                printf 'usage: salias [-hoa] <alias-expression>\n'
-                printf '  -h      shows this help text.\n'
-                printf '  -a      replace '\'' ; '\'' sequences with '\'' ; sudo '\''.\n'
-                printf '          be careful using this option.\n'
-                printf '  -o      only sets an alias if a preceding sudo would be needed.\n'
-                return 0
-                ;;
-            *) salias -h >&2; return 1 ;;
-        esac
-    done
-    shift "$((OPTIND-1))"
-
-    if (( ${#argv} > 1 )) ; then
-        printf 'Too many arguments %s\n' "${#argv}"
-        return 1
-    fi
-
-    key="${1%%\=*}" ;  val="${1#*\=}"
-    if (( EUID == 0 )) && (( only == 0 )); then
-        alias -- "${key}=${val}"
-    elif (( EUID > 0 )) ; then
-        (( multi > 0 )) && val="${val// ; / ; sudo }"
-        alias -- "${key}=sudo ${val}"
-    fi
-
-    return 0
-}
-
 # Check if we can read given files and source those we can.
 xsource() {
     if (( ${#argv} < 1 )) ; then
@@ -419,32 +329,6 @@ xsource() {
     while (( ${#argv} > 0 )) ; do
         [[ -r "$1" ]] && source "$1"
         shift
-    done
-    return 0
-}
-
-# Check if we can read a given file and 'cat(1)' it.
-xcat() {
-    emulate -L zsh
-    if (( ${#argv} != 1 )) ; then
-        printf 'usage: xcat FILE\n' >&2
-        return 1
-    fi
-
-    [[ -r $1 ]] && cat $1
-    return 0
-}
-
-# Remove these functions again, they are of use only in these
-# setup files. This should be called at the end of .zshrc.
-xunfunction() {
-    emulate -L zsh
-    local -a funcs
-    local func
-    funcs=(salias xcat xsource xunfunction zrcautoload zrcautozle)
-    for func in $funcs ; do
-        [[ -n ${functions[$func]} ]] \
-            && unfunction $func
     done
     return 0
 }
@@ -847,128 +731,6 @@ inplaceMkDirs() {
 
 zle -N inplaceMkDirs
 
-#v1# set number of lines to display per page
-HELP_LINES_PER_PAGE=20
-#v1# set location of help-zle cache file
-HELP_ZLE_CACHE_FILE=~/.cache/zsh_help_zle_lines.zsh
-# helper function for help-zle, actually generates the help text
-help_zle_parse_keybindings()
-{
-    emulate -L zsh
-    setopt extendedglob
-    unsetopt ksharrays  #indexing starts at 1
-
-    #v1# choose files that help-zle will parse for keybindings
-    ((${+HELPZLE_KEYBINDING_FILES})) || HELPZLE_KEYBINDING_FILES=( /etc/zsh/zshrc ~/.zshrc.pre ~/.zshrc ~/.zshrc.local )
-
-    if [[ -r $HELP_ZLE_CACHE_FILE ]]; then
-        local load_cache=0
-        local f
-        for f ($HELPZLE_KEYBINDING_FILES) [[ $f -nt $HELP_ZLE_CACHE_FILE ]] && load_cache=1
-        [[ $load_cache -eq 0 ]] && . $HELP_ZLE_CACHE_FILE && return
-    fi
-
-    #fill with default keybindings, possibly to be overwriten in a file later
-    #Note that due to zsh inconsistency on escaping assoc array keys, we encase the key in '' which we will remove later
-    local -A help_zle_keybindings
-    help_zle_keybindings['<Ctrl>@']="set MARK"
-    help_zle_keybindings['<Ctrl>x<Ctrl>j']="vi-join lines"
-    help_zle_keybindings['<Ctrl>x<Ctrl>b']="jump to matching brace"
-    help_zle_keybindings['<Ctrl>x<Ctrl>u']="undo"
-    help_zle_keybindings['<Ctrl>_']="undo"
-    help_zle_keybindings['<Ctrl>x<Ctrl>f<c>']="find <c> in cmdline"
-    help_zle_keybindings['<Ctrl>a']="goto beginning of line"
-    help_zle_keybindings['<Ctrl>e']="goto end of line"
-    help_zle_keybindings['<Ctrl>t']="transpose charaters"
-    help_zle_keybindings['<Alt>t']="transpose words"
-    help_zle_keybindings['<Alt>s']="spellcheck word"
-    help_zle_keybindings['<Ctrl>k']="backward kill buffer"
-    help_zle_keybindings['<Ctrl>u']="forward kill buffer"
-    help_zle_keybindings['<Ctrl>y']="insert previously killed word/string"
-    help_zle_keybindings["<Alt>'"]="quote line"
-    help_zle_keybindings['<Alt>"']="quote from mark to cursor"
-    help_zle_keybindings['<Alt><arg>']="repeat next cmd/char <arg> times (<Alt>-<Alt>1<Alt>0a -> -10 times 'a')"
-    help_zle_keybindings['<Alt>u']="make next word Uppercase"
-    help_zle_keybindings['<Alt>l']="make next word lowercase"
-    help_zle_keybindings['<Ctrl>xd']="preview expansion under cursor"
-    help_zle_keybindings['<Alt>q']="push current CL into background, freeing it. Restore on next CL"
-    help_zle_keybindings['<Alt>.']="insert (and interate through) last word from prev CLs"
-    help_zle_keybindings['<Alt>,']="complete word from newer history (consecutive hits)"
-    help_zle_keybindings['<Alt>m']="repeat last typed word on current CL"
-    help_zle_keybindings['<Ctrl>v']="insert next keypress symbol literally (e.g. for bindkey)"
-    help_zle_keybindings['!!:n*<Tab>']="insert last n arguments of last command"
-    help_zle_keybindings['!!:n-<Tab>']="insert arguments n..N-2 of last command (e.g. mv s s d)"
-    help_zle_keybindings['<Alt>h']="show help/manpage for current command"
-
-    #init global variables
-    unset help_zle_lines help_zle_sln
-    typeset -g -a help_zle_lines
-    typeset -g help_zle_sln=1
-
-    local k v f cline
-    local lastkeybind_desc contents     #last description starting with #k# that we found
-    local num_lines_elapsed=0            #number of lines between last description and keybinding
-    #search config files in the order they a called (and thus the order in which they overwrite keybindings)
-    for f in $HELPZLE_KEYBINDING_FILES; do
-        [[ -r "$f" ]] || continue   #not readable ? skip it
-        contents="$(<$f)"
-        for cline in "${(f)contents}"; do
-            #zsh pattern: matches lines like: #k# ..............
-            if [[ "$cline" == (#s)[[:space:]]#\#k\#[[:space:]]##(#b)(*)[[:space:]]#(#e) ]]; then
-                lastkeybind_desc="$match[*]"
-                num_lines_elapsed=0
-            #zsh pattern: matches lines that set a keybinding using bind2map, bindkey or compdef -k
-            #             ignores lines that are commentend out
-            #             grabs first in '' or "" enclosed string with length between 1 and 6 characters
-            elif [[ "$cline" == [^#]#(bind2maps[[:space:]](*)-s|bindkey|compdef -k)[[:space:]](*)(#b)(\"((?)(#c1,6))\"|\'((?)(#c1,6))\')(#B)(*)  ]]; then
-                #description prevously found ? description not more than 2 lines away ? keybinding not empty ?
-                if [[ -n $lastkeybind_desc && $num_lines_elapsed -lt 2 && -n $match[1] ]]; then
-                    #substitute keybinding string with something readable
-                    k=${${${${${${${match[1]/\\e\^h/<Alt><BS>}/\\e\^\?/<Alt><BS>}/\\e\[5~/<PageUp>}/\\e\[6~/<PageDown>}//(\\e|\^\[)/<Alt>}//\^/<Ctrl>}/3~/<Alt><Del>}
-                    #put keybinding in assoc array, possibly overwriting defaults or stuff found in earlier files
-                    #Note that we are extracting the keybinding-string including the quotes (see Note at beginning)
-                    help_zle_keybindings[${k}]=$lastkeybind_desc
-                fi
-                lastkeybind_desc=""
-            else
-              ((num_lines_elapsed++))
-            fi
-        done
-    done
-    unset contents
-    #calculate length of keybinding column
-    local kstrlen=0
-    for k (${(k)help_zle_keybindings[@]}) ((kstrlen < ${#k})) && kstrlen=${#k}
-    #convert the assoc array into preformated lines, which we are able to sort
-    for k v in ${(kv)help_zle_keybindings[@]}; do
-        #pad keybinding-string to kstrlen chars and remove outermost characters (i.e. the quotes)
-        help_zle_lines+=("${(r:kstrlen:)k[2,-2]}${v}")
-    done
-    #sort lines alphabetically
-    help_zle_lines=("${(i)help_zle_lines[@]}")
-    [[ -d ${HELP_ZLE_CACHE_FILE:h} ]] || mkdir -p "${HELP_ZLE_CACHE_FILE:h}"
-    echo "help_zle_lines=(${(q)help_zle_lines[@]})" >| $HELP_ZLE_CACHE_FILE
-    zcompile $HELP_ZLE_CACHE_FILE
-}
-typeset -g help_zle_sln
-typeset -g -a help_zle_lines
-
-# Provides (partially autogenerated) help on keybindings and the zsh line editor
-help-zle()
-{
-    emulate -L zsh
-    unsetopt ksharrays  #indexing starts at 1
-    #help lines already generated ? no ? then do it
-    [[ ${+functions[help_zle_parse_keybindings]} -eq 1 ]] && {help_zle_parse_keybindings && unfunction help_zle_parse_keybindings}
-    #already displayed all lines ? go back to the start
-    [[ $help_zle_sln -gt ${#help_zle_lines} ]] && help_zle_sln=1
-    local sln=$help_zle_sln
-    #note that help_zle_sln is a global var, meaning we remember the last page we viewed
-    help_zle_sln=$((help_zle_sln + HELP_LINES_PER_PAGE))
-    zle -M "${(F)help_zle_lines[sln,help_zle_sln-1]}"
-}
-zle -N help-zle
-
 ## complete word from currently visible Screen or Tmux buffer.
 if check_com -c screen || check_com -c tmux; then
     _complete_screen_display() {
@@ -1134,8 +896,6 @@ bind2maps emacs viins       -- -s '^x.' zleiab
 bind2maps emacs viins       -- -s '^xb' help-show-abk
 #k# mkdir -p <dir> from string under cursor or marked area
 bind2maps emacs viins       -- -s '^xM' inplaceMkDirs
-#k# display help for keybindings and ZLE
-bind2maps emacs viins       -- -s '^xz' help-zle
 #k# Insert files and test globbing
 bind2maps emacs viins       -- -s "^xf" insert-files
 #k# Edit the current line in \kbd{\$EDITOR}
@@ -2112,83 +1872,6 @@ sll() {
     return ${RTN}
 }
 
-# TODO: Is it supported to use pager settings like this?
-#   PAGER='less -Mr' - If so, the use of $PAGER here needs fixing
-# with respect to wordsplitting. (ie. ${=PAGER})
-if check_com -c $PAGER ; then
-    #f3# View Debian's changelog of given package(s)
-    dchange() {
-        emulate -L zsh
-        [[ -z "$1" ]] && printf 'Usage: %s <package_name(s)>\n' "$0" && return 1
-
-        local package
-        for package in "$@" ; do
-            if [[ -r /usr/share/doc/${package}/changelog.Debian.gz ]] ; then
-                $PAGER /usr/share/doc/${package}/changelog.Debian.gz
-            elif [[ -r /usr/share/doc/${package}/changelog.gz ]] ; then
-                $PAGER /usr/share/doc/${package}/changelog.gz
-            elif [[ -r /usr/share/doc/${package}/changelog ]] ; then
-                $PAGER /usr/share/doc/${package}/changelog
-            else
-                if check_com -c aptitude ; then
-                    echo "No changelog for package $package found, using aptitude to retrieve it."
-                    aptitude changelog "$package"
-                elif check_com -c apt-get ; then
-                    echo "No changelog for package $package found, using apt-get to retrieve it."
-                    apt-get changelog "$package"
-                else
-                    echo "No changelog for package $package found, sorry."
-                fi
-            fi
-        done
-    }
-    _dchange() { _files -W /usr/share/doc -/ }
-    compdef _dchange dchange
-
-    #f3# View Debian's NEWS of a given package
-    dnews() {
-        emulate -L zsh
-        if [[ -r /usr/share/doc/$1/NEWS.Debian.gz ]] ; then
-            $PAGER /usr/share/doc/$1/NEWS.Debian.gz
-        else
-            if [[ -r /usr/share/doc/$1/NEWS.gz ]] ; then
-                $PAGER /usr/share/doc/$1/NEWS.gz
-            else
-                echo "No NEWS file for package $1 found, sorry."
-                return 1
-            fi
-        fi
-    }
-    _dnews() { _files -W /usr/share/doc -/ }
-    compdef _dnews dnews
-
-    #f3# View Debian's copyright of a given package
-    dcopyright() {
-        emulate -L zsh
-        if [[ -r /usr/share/doc/$1/copyright ]] ; then
-            $PAGER /usr/share/doc/$1/copyright
-        else
-            echo "No copyright file for package $1 found, sorry."
-            return 1
-        fi
-    }
-    _dcopyright() { _files -W /usr/share/doc -/ }
-    compdef _dcopyright dcopyright
-
-    #f3# View upstream's changelog of a given package
-    uchange() {
-        emulate -L zsh
-        if [[ -r /usr/share/doc/$1/changelog.gz ]] ; then
-            $PAGER /usr/share/doc/$1/changelog.gz
-        else
-            echo "No changelog for package $1 found, sorry."
-            return 1
-        fi
-    }
-    _uchange() { _files -W /usr/share/doc -/ }
-    compdef _uchange uchange
-fi
-
 # zsh profiling
 profile() {
     ZSH_PROFILE_RC=1 zsh "$@"
@@ -2276,19 +1959,6 @@ deswap() {
     cat $(sed -ne 's:.* /:/:p' /proc/[0-9]*/maps | sort -u | grep -v '^/dev/')  > /dev/null
     print 'Finished, running "swapoff -a; swapon -a" may also be useful.'
 }
-
-# a wrapper for vim, that deals with title setting
-#   VIM_OPTIONS
-#       set this array to a set of options to vim you always want
-#       to have set when calling vim (in .zshrc.local), like:
-#           VIM_OPTIONS=( -p )
-#       This will cause vim to send every file given on the
-#       commandline to be send to it's own tab (needs vim7).
-if check_com vim; then
-    vim() {
-        VIM_PLEASE_SET_TITLE='yes' command vim ${VIM_OPTIONS} "$@"
-    }
-fi
 
 ssl_hashes=( sha512 sha256 sha1 md5 )
 
