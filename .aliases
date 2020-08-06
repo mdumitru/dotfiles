@@ -10,8 +10,6 @@ alias ll='ls -l'
 alias lt='ls -ltFh'
 alias ldot='ls -ld .*'
 
-alias zshrc='$EDITOR ~/.zshrc'
-
 alias grep='grep --color'
 
 alias s=vimpager
