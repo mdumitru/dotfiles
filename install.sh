@@ -287,7 +287,7 @@ install_alacritty() {
     fi
 
     echo "Installing alacritty files ..."
-    install_helper ".alacritty.yml"
+    install_helper ".config/alacritty"
 }
 
 install_i3() {
@@ -297,7 +297,7 @@ install_i3() {
     fi
 
     echo "Installing i3 files ..."
-    install_helper ".config/i3/config"
+    install_helper ".config/i3"
 }
 
 setup() {

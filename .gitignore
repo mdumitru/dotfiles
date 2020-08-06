@@ -49,9 +49,6 @@
 " Allow X stuff
 !.xinitrc
 
-" Allow terminal stuff
-!.alacritty.yml
-
 " Allow all config stuff
 !.config/
 !.config/**
