@@ -98,6 +98,29 @@ if test -n "$NVIM_LISTEN_ADDRESS" -a -w "$NVIM_LISTEN_ADDRESS"; then
     stty stop undef && stty start undef || true
 fi
 
+# OS detection
+OSTYPE=$(uname -s)
+
+islinux() {
+    test $OSTYPE = "Linux"
+}
+
+isdarwin() {
+    test $OSTYPE = "Darwin"
+}
+
+isfreebsd() {
+    test $OSTYPE = "FreeBSD"
+}
+
+isopenbsd() {
+    test $OSTYPE = "OpenBSD"
+}
+
+issolaris() {
+    test $OSTYPE = "SunOS"
+}
+
 # Source 'after' file (if any).
 if test -f "$HOME/.aliases.after" -a -r "$HOME/.aliases.after"; then
     . "$HOME/.aliases.after"
