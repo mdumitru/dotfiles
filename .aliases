@@ -91,6 +91,13 @@ if test -n "$NVIM_LISTEN_ADDRESS" -a -w "$NVIM_LISTEN_ADDRESS"; then
     # (we shove this here because this file is sourced by all shells and we
     # don't want it in .profile because we want non-login shells to source it).
     unset VIMRUNTIME
+
+    # Reclaim incremental forward history search (and get rid of the idiotic
+    # stop).
+    # This should only be executed once, by a login shell; but it needs to be
+    # executed once for every instance of a neovim terminal, which don't start
+    # login shells.
+    stty stop undef && stty start undef || true
 fi
 
 # Source 'after' file (if any).
