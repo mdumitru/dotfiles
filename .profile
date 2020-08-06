@@ -14,11 +14,7 @@ export PATH
 # As env variables are inherited by regular interactive shells, they should be
 # set here so only the login shells modify them.
 if command -v nvim > /dev/null; then
-    if command -v nvim-host-editor > /dev/null; then
-        EDITOR=nvim-host-editor
-    else
-        EDITOR=nvim
-    fi
+    EDITOR=nvim-host-editor
 
     # Needed for vimpager, harmless in its absence.
     VIMPAGER_VIM=nvim
