@@ -40,6 +40,7 @@ Arguments:
             i3
             nvim
             pgdb
+            rofi
             search
             shell
             vim
@@ -300,6 +301,16 @@ install_i3() {
     install_helper ".config/i3"
 }
 
+install_rofi() {
+    if ! command -v rofi > /dev/null; then
+        echo "\"rofi\" not found! Nothing to do here ..." >&2
+        return 0
+    fi
+
+    echo "Installing rofi files ..."
+    install_helper ".config/rofi"
+}
+
 setup() {
     git submodule init
     git submodule update
@@ -321,6 +332,7 @@ install_all() {
     install_git
     install_alacritty
     install_i3
+    install_rofi
 }
 
 install() {

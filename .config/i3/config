@@ -27,8 +27,13 @@ bindsym $mod+Shift+c kill
 # WinKey tab (sane)
 bindsym $mod+Tab fullscreen disable, focus left, fullscreen enable
 
-# start dmenu (a program launcher)
-bindsym $mod+r exec dmenu_run
+# Program launcher
+bindsym $mod+r exec rofi -show run
+
+# Window switcher (this comes from macOS's Spotlight)
+bindsym Mod1+space exec rofi -show window
+
+bindsym $mod+Shift+s exec rofi -show ssh
 
 # change focus
 bindsym $mod+j focus down
