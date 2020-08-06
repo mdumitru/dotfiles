@@ -76,27 +76,22 @@ set --
 
 
 # Interaction with neovim when running from its guest terminal.
-if command -v nvim > /dev/null; then
-    if test -n "$NVIM_LISTEN_ADDRESS" -a -w "$NVIM_LISTEN_ADDRESS" && \
-        command -v nvim-host-cmd > /dev/null;
-    then
-        # vim's cwd might differ from the shell's, so we manually match it
-        alias v='nvim-host-cmd lcd "$PWD" \|'
-        alias e='nvim-host-cmd lcd "$PWD" \| edit'
-        alias tabe='nvim-host-cmd lcd "$PWD" \| tabedit'
-        alias sp='nvim-host-cmd lcd "$PWD" \| split'
-        alias vsp='nvim-host-cmd lcd "$PWD" \| vsplit'
-        alias bo='nvim-host-cmd lcd "$PWD" \| botright'
-        alias to='nvim-host-cmd lcd "$PWD" \| topleft'
-    fi
+if test -n "$NVIM_LISTEN_ADDRESS" -a -w "$NVIM_LISTEN_ADDRESS"; then
+    # vim's cwd might differ from the shell's, so we manually match it
+    alias v='nvim-host-cmd lcd "$PWD" \|'
+    alias e='nvim-host-cmd lcd "$PWD" \| edit'
+    alias tabe='nvim-host-cmd lcd "$PWD" \| tabedit'
+    alias sp='nvim-host-cmd lcd "$PWD" \| split'
+    alias vsp='nvim-host-cmd lcd "$PWD" \| vsplit'
+    alias bo='nvim-host-cmd lcd "$PWD" \| botright'
+    alias to='nvim-host-cmd lcd "$PWD" \| topleft'
+
+    # neovim messes with this and vim has issues because of it
+    # monitor: https://github.com/neovim/neovim/issues/9960#issuecomment-488262473
+    # (we shove this here because this file is sourced by all shells and we
+    # don't want it in .profile because we want non-login shells to source it).
+    unset VIMRUNTIME
 fi
-
-# neovim messes with this and vim has issues because of it
-# monitor: https://github.com/neovim/neovim/issues/9960#issuecomment-488262473
-# (we shove this here because this file is sourced by all shells and we don't
-# want it in .profile because we want non-login shells to source it).
-unset VIMRUNTIME
-
 
 # Source 'after' file (if any).
 if test -f "$HOME/.aliases.after" -a -r "$HOME/.aliases.after"; then
