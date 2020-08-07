@@ -645,13 +645,6 @@ zleiab() {
 
 zle -N zleiab
 
-help-show-abk()
-{
-  zle -M "$(print "Available abbreviations for expansion:"; print -a -C 2 ${(kv)abk})"
-}
-
-zle -N help-show-abk
-
 # press "ctrl-e d" to insert the actual date in the form yyyy-mm-dd
 insert-datestamp() { LBUFFER+=${(%):-'%D{%Y-%m-%d}'}; }
 zle -N insert-datestamp
@@ -659,18 +652,6 @@ zle -N insert-datestamp
 # press esc-m for inserting last typed word again (thanks to caphuso!)
 insert-last-typed-word() { zle insert-last-word -- 0 -1 };
 zle -N insert-last-typed-word;
-
-function grml-zsh-fg() {
-  if (( ${#jobstates} )); then
-    zle .push-input
-    [[ -o hist_ignore_space ]] && BUFFER=' ' || BUFFER=''
-    BUFFER="${BUFFER}fg"
-    zle .accept-line
-  else
-    zle -M 'No background jobs. Doing nothing.'
-  fi
-}
-zle -N grml-zsh-fg
 
 # run command line as user root via sudo:
 sudo-command-line() {
@@ -892,41 +873,21 @@ bind2maps emacs             -- Right  forward-char
 bind2maps       viins vicmd -- Right  vi-forward-char
 #k# Perform abbreviation expansion
 bind2maps emacs viins       -- -s '^x.' zleiab
-#k# Display list of abbreviations that would expand
-bind2maps emacs viins       -- -s '^xb' help-show-abk
 #k# mkdir -p <dir> from string under cursor or marked area
 bind2maps emacs viins       -- -s '^xM' inplaceMkDirs
 #k# Insert files and test globbing
 bind2maps emacs viins       -- -s "^xf" insert-files
-#k# Edit the current line in \kbd{\$EDITOR}
-bind2maps emacs viins       -- -s '\ee' edit-command-line
-#k# search history backward for entry beginning with typed text
-bind2maps emacs viins       -- -s '^xp' history-beginning-search-backward-end
-#k# search history forward for entry beginning with typed text
-bind2maps emacs viins       -- -s '^xP' history-beginning-search-forward-end
-#k# search history backward for entry beginning with typed text
-bind2maps emacs viins       -- PageUp history-beginning-search-backward-end
-#k# search history forward for entry beginning with typed text
-bind2maps emacs viins       -- PageDown history-beginning-search-forward-end
 bind2maps emacs viins       -- -s "^x^h" commit-to-history
 #k# Kill left-side word or everything up to next slash
 bind2maps emacs viins       -- -s '\ev' slash-backward-kill-word
-#k# Kill left-side word or everything up to next slash
-bind2maps emacs viins       -- -s '\e^h' slash-backward-kill-word
-#k# Kill left-side word or everything up to next slash
-bind2maps emacs viins       -- -s '\e^?' slash-backward-kill-word
 # Do history expansion on space:
 bind2maps emacs viins       -- -s ' ' magic-space
-#k# Trigger menu-complete
-bind2maps emacs viins       -- -s '\ei' menu-complete  # menu completion via esc-i
 #k# Insert a timestamp on the command line (yyyy-mm-dd)
 bind2maps emacs viins       -- -s '^ed' insert-datestamp
 #k# Insert last typed word
-bind2maps emacs viins       -- -s "\em" insert-last-typed-word
-#k# A smart shortcut for \kbd{fg<enter>}
-bind2maps emacs viins       -- -s '^z' grml-zsh-fg
+bind2maps emacs viins       -- -s "\e^m" insert-last-typed-word
 #k# prepend the current command with "sudo"
-bind2maps emacs viins       -- -s "^os" sudo-command-line
+bind2maps emacs viins       -- -s "^xs" sudo-command-line
 #k# jump to after first word (for adding options)
 bind2maps emacs viins       -- -s '^x1' jump_after_first_word
 #k# complete word from history with menu
@@ -963,33 +924,6 @@ if zrcgotkeymap menuselect; then
     # by using 'undo' one's got a simple file browser
     bind2maps menuselect -- -s '^o' accept-and-infer-next-history
 fi
-
-# Finally, here are still a few hardcoded escape sequences; Special sequences
-# like Ctrl-<Cursor-key> etc do suck a fair bit, because they are not
-# standardised and most of the time are not available in a terminals terminfo
-# entry.
-#
-# While we do not encourage adding bindings like these, we will keep these for
-# backward compatibility.
-
-## use Ctrl-left-arrow and Ctrl-right-arrow for jumping to word-beginnings on
-## the command line.
-# URxvt sequences:
-bind2maps emacs viins vicmd -- -s '\eOc' forward-word
-bind2maps emacs viins vicmd -- -s '\eOd' backward-word
-# These are for xterm:
-bind2maps emacs viins vicmd -- -s '\e[1;5C' forward-word
-bind2maps emacs viins vicmd -- -s '\e[1;5D' backward-word
-## the same for alt-left-arrow and alt-right-arrow
-# URxvt again:
-bind2maps emacs viins vicmd -- -s '\e\e[C' forward-word
-bind2maps emacs viins vicmd -- -s '\e\e[D' backward-word
-# Xterm again:
-bind2maps emacs viins vicmd -- -s '^[[1;3C' forward-word
-bind2maps emacs viins vicmd -- -s '^[[1;3D' backward-word
-# Also try ESC Left/Right:
-bind2maps emacs viins vicmd -- -s '\e'${key[Right]} forward-word
-bind2maps emacs viins vicmd -- -s '\e'${key[Left]}  backward-word
 
 # autoloading
 
@@ -1586,84 +1520,6 @@ else
     grml_prompt_fallback
 fi
 
-# Terminal-title wizardry
-
-function ESC_print () {
-    info_print $'\ek' $'\e\\' "$@"
-}
-function set_title () {
-    info_print  $'\e]0;' $'\a' "$@"
-}
-
-function info_print () {
-    local esc_begin esc_end
-    esc_begin="$1"
-    esc_end="$2"
-    shift 2
-    printf '%s' ${esc_begin}
-    printf '%s' "$*"
-    printf '%s' "${esc_end}"
-}
-
-function grml_reset_screen_title () {
-    # adjust title of xterm
-    # see http://www.faqs.org/docs/Linux-mini/Xterm-Title.html
-    [[ ${NOTITLE:-} -gt 0 ]] && return 0
-    case $TERM in
-        (xterm*|rxvt*)
-            set_title ${(%):-"%n@%m: %~"}
-            ;;
-    esac
-}
-
-function grml_vcs_to_screen_title () {
-    if [[ $TERM == screen* ]] ; then
-        if [[ -n ${vcs_info_msg_1_} ]] ; then
-            ESC_print ${vcs_info_msg_1_}
-        else
-            ESC_print "zsh"
-        fi
-    fi
-}
-
-function grml_maintain_name () {
-    # set hostname if not running on host with name 'grml'
-    if [[ -n "$HOSTNAME" ]] && [[ "$HOSTNAME" != $(hostname) ]] ; then
-       NAME="@$HOSTNAME"
-    fi
-}
-
-function grml_cmd_to_screen_title () {
-    # get the name of the program currently running and hostname of local
-    # machine set screen window title if running in a screen
-    if [[ "$TERM" == screen* ]] ; then
-        local CMD="${1[(wr)^(*=*|sudo|ssh|-*)]}$NAME"
-        ESC_print ${CMD}
-    fi
-}
-
-function grml_control_xterm_title () {
-    case $TERM in
-        (xterm*|rxvt*)
-            set_title "${(%):-"%n@%m:"}" "$1"
-            ;;
-    esac
-}
-
-# The following autoload is disabled for now, since this setup includes a
-# static version of the ‘add-zsh-hook’ function above. It needs to be
-# reenabled as soon as that static definition is removed again.
-#zrcautoload add-zsh-hook || add-zsh-hook () { :; }
-if [[ $NOPRECMD -eq 0 ]]; then
-    add-zsh-hook precmd grml_reset_screen_title
-    add-zsh-hook precmd grml_vcs_to_screen_title
-    add-zsh-hook preexec grml_maintain_name
-    add-zsh-hook preexec grml_cmd_to_screen_title
-    if [[ $NOTITLE -eq 0 ]]; then
-        add-zsh-hook preexec grml_control_xterm_title
-    fi
-fi
-
 # 'hash' some often used directories
 #d# start
 hash -d deb=/var/cache/apt/archives
@@ -1674,23 +1530,6 @@ hash -d slog=/var/log/syslog
 hash -d src=/usr/src
 hash -d www=/var/www
 #d# end
-
-# some aliases
-if check_com -c screen ; then
-    if [[ $UID -eq 0 ]] ; then
-        if [[ -r /etc/grml/screenrc ]]; then
-            alias screen='screen -c /etc/grml/screenrc'
-        fi
-    elif [[ ! -r $HOME/.screenrc ]] ; then
-        if [[ -r /etc/grml/screenrc_grml ]]; then
-            alias screen='screen -c /etc/grml/screenrc_grml'
-        else
-            if [[ -r /etc/grml/screenrc ]]; then
-                alias screen='screen -c /etc/grml/screenrc'
-            fi
-        fi
-    fi
-fi
 
 # do we have GNU ls with color-support?
 if [[ "$TERM" != dumb ]]; then
@@ -1755,21 +1594,6 @@ fi
 if check_com -c dpkg-query ; then
     #a3# List installed Debian-packages sorted by size
     alias debs-by-size="dpkg-query -Wf 'x \${Installed-Size} \${Package} \${Status}\n' | sed -ne '/^x  /d' -e '/^x \(.*\) install ok installed$/s//\1/p' | sort -nr"
-fi
-
-# if cdrecord is a symlink (to wodim) or isn't present at all warn:
-if [[ -L /usr/bin/cdrecord ]] || ! check_com -c cdrecord; then
-    if check_com -c wodim; then
-        cdrecord() {
-            <<__EOF0__
-cdrecord is not provided under its original name by Debian anymore.
-See #377109 in the BTS of Debian for more details.
-
-Please use the wodim binary instead
-__EOF0__
-            return 1
-        }
-    fi
 fi
 
 # shell functions
@@ -2329,28 +2153,6 @@ _simple_extract()
 }
 compdef _simple_extract simple-extract
 alias se=simple-extract
-
-#f5# Change the xterm title from within GNU-screen
-xtrename() {
-    emulate -L zsh
-    if [[ $1 != "-f" ]] ; then
-        if [[ -z ${DISPLAY} ]] ; then
-            printf 'xtrename only makes sense in X11.\n'
-            return 1
-        fi
-    else
-        shift
-    fi
-    if [[ -z $1 ]] ; then
-        printf 'usage: xtrename [-f] "title for xterm"\n'
-        printf '  renames the title of xterm from _within_ screen.\n'
-        printf '  also works without screen.\n'
-        printf '  will not work if DISPLAY is unset, use -f to override.\n'
-        return 0
-    fi
-    print -n "\eP\e]0;${1}\C-G\e\\"
-    return 0
-}
 
 #f2# Find history events by search pattern and list them by date.
 whatwhen()  {
