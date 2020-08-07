@@ -28,7 +28,7 @@ bindsym $mod+Shift+c kill
 bindsym $mod+Tab fullscreen disable, focus left, fullscreen enable
 
 # Program launcher
-bindsym $mod+r exec rofi -show run
+bindsym $mod+r exec rofi -show drun
 
 # Window switcher (this comes from macOS's Spotlight)
 bindsym Mod1+space exec rofi -show window
