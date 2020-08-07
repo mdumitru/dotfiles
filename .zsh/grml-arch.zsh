@@ -265,12 +265,18 @@ ZSH_NO_DEFAULT_LOCALE=${ZSH_NO_DEFAULT_LOCALE:-0}
 typeset -ga ls_options
 typeset -ga grep_options
 if ls --color=auto / >/dev/null 2>&1; then
-    ls_options+=( --color=auto )
+    if [[ ${ls_options[(r)--color=auto]} != --color=auto ]]; then
+        ls_options+=( --color=auto )
+    fi
 elif ls -G / >/dev/null 2>&1; then
-    ls_options+=( -G )
+    if [[ ${ls_options[(r)-G]} != -G ]]; then
+        ls_options+=( -G )
+    fi
 fi
 if grep --color=auto -q "a" <<< "a" >/dev/null 2>&1; then
-    grep_options+=( --color=auto )
+    if [[ ${grep_options[(r)--color=auto]} != --color=auto ]]; then
+        grep_options+=( --color=auto )
+    fi
 fi
 
 # utility functions
