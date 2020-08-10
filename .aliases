@@ -39,7 +39,7 @@ remake() {
 }
 
 weather() {
-    curl -4 "http://wttr.in/$1"
+    curl -4 "https://wttr.in/$1"
 }
 
 # Ideally, whenver an interactive python session is wanted, this should invoke
