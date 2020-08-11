@@ -298,7 +298,7 @@ install_i3() {
     fi
 
     echo "Installing i3 files ..."
-    install_helper ".config/i3"
+    install_helper ".config/i3" "bin/lock"
 }
 
 install_rofi() {
