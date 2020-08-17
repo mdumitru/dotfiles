@@ -84,7 +84,17 @@ set shiftwidth=4
 set cursorline
 set showcmd
 set noshowmode          " the *line plugin should take care of this
+
+" A weird glitch happens in terminal buffers when exiting insert mode if
+" scrolloff > 0; ideally, we should set the local scrolloff to 0 for terminal
+" buffers but scrolloff is a global-only option (recent vim patched it to be
+" local, don't know about neovim).
 set scrolloff=8
+if has('nvim')
+    au TermEnter * setlocal scrolloff=0
+    au TermLeave * if &buftype !~ "terminal" | setlocal scrolloff=8 | endif
+endif
+
 set report=0
 set shortmess=caIO
 set list
