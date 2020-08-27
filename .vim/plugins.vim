@@ -30,11 +30,17 @@ Plug 'jlanzarotta/bufexplorer', { 'on': 'ToggleBufExplorer' }
 " Vim syntax highlighting for c, bison, flex
 Plug 'justinmk/vim-syntax-extra'
 
+" A modern Vim and neovim filetype plugin for LaTeX files.
+Plug 'lervag/vimtex', {'for': ['tex', 'context', 'bib', 'latex', 'plaintex']}
+let g:tex_flavor='latex'
+
 " Delete buffers and close files in Vim without messing up your layout.
 Plug 'moll/vim-bbye', { 'on': 'Bdelete' }
 
 " Intellisense engine for vim8 & neovim, full language server protocol support as VSCode
-Plug 'neoclide/coc.nvim', {'branch': 'release', 'for': ['c', 'cpp', 'python', 'json']}
+if has('nvim')
+    Plug 'neoclide/coc.nvim', {'branch': 'release', 'for': ['c', 'cpp', 'python', 'json', 'tex', 'latex', 'plaintex', 'context', 'bib']}
+endif
 
 " Better whitespace highlighting for Vim
 Plug 'ntpeters/vim-better-whitespace'

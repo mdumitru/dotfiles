@@ -36,6 +36,11 @@
                 ".hg/",
                 ".svn/"
             ]
+        },
+        "latex": {
+            "command": "texlab",
+            "filetypes": ["tex", "bib", "latex", "plaintex", "context"],
+            "disableCompletion": true
         }
     },
     "suggest.floatEnable": true,
@@ -48,5 +53,6 @@
     "list.source.grep.args": [
         "--ignore-file",
         "~/.ignore"
-    ]
+    ],
+    "latex.build.args": ["-pdf", "-interaction=nonstopmode", "-synctex=1", "-pv"]
 }
