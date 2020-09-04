@@ -12,6 +12,8 @@ alias ldot='ls -ld .*'
 
 alias grep='grep --color'
 
+alias nt='nvim +term'
+
 alias s=vimpager
 
 alias rg='rg --smart-case'
