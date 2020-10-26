@@ -44,6 +44,7 @@ Arguments:
             search
             shell
             vim
+            x
             xvim
             ycm
             zsh
@@ -309,6 +310,11 @@ install_rofi() {
 
     echo "Installing rofi files ..."
     install_helper ".config/rofi"
+}
+
+install_x() {
+    echo "Installing X files ..."
+    install_helper ".xinitrc" "bin/capslockcontrolesc.sh" "bin/screenshot"
 }
 
 setup() {
