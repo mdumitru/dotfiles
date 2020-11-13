@@ -61,8 +61,8 @@ endfunction
 
 nmap <buffer><leader>rn <plug>(coc-rename)
 
-xmap <buffer><leader>f  <plug>(coc-format-selected)
-nmap <buffer><leader>f  <plug>(coc-format-selected)
+xmap <buffer>=  <plug>(coc-format-selected)
+nmap <buffer>=  <plug>(coc-format-selected)
 
 augroup coc_group
   autocmd!
