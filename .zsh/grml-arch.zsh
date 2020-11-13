@@ -2030,6 +2030,11 @@ simple-extract() {
                 USES_STDIN=true
                 USES_STDOUT=false
                 ;;
+            *(tar.lz|tlz))
+                DECOMP_CMD="tar --lzip -xvf -"
+                USES_STDIN=true
+                USES_STDOUT=false
+                ;;
             *tar)
                 DECOMP_CMD="tar -xvf -"
                 USES_STDIN=true
