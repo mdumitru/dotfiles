@@ -216,7 +216,7 @@ function! _ToggleColorColumn()
         let &colorcolumn=""
     endif
 endfunction
-command! -complete=command ToggleColorColumn call _ToggleColorColumn()
+command! ToggleColorColumn call _ToggleColorColumn()
 
 nnoremap <silent> <f3> :ToggleColorColumn<cr>
 
@@ -268,7 +268,7 @@ function! _ToggleTabLineNumbers()
 
     let t:__old_linenumbers=!t:__old_linenumbers
 endfunction
-command! -complete=command ToggleTabLineNumbers call _ToggleTabLineNumbers()
+command! ToggleTabLineNumbers call _ToggleTabLineNumbers()
 nnoremap <silent> <f4> :ToggleTabLineNumbers<cr><esc>
 
 
