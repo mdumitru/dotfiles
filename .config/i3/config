@@ -76,7 +76,7 @@ bindsym $mod+e layout toggle split
 bindsym $mod+Shift+space floating toggle
 
 # change focus between tiling / floating windows
-bindsym $mod+space focus mode_toggle
+bindsym $mod+t focus mode_toggle
 
 # focus the parent container
 bindsym $mod+a focus parent
@@ -146,7 +146,7 @@ bindsym $mod+q mode "resize"
 bar {
         status_command i3blocks
         mode hide
-        font pango:Hack 16
+        font pango:Hack 12
 }
 
 # Multi-screen screenshots with scrot
@@ -157,3 +157,20 @@ bindsym --release $mod+Shift+s exec "$HOME/bin/screenshot -s"
 
 # screenlock
 bindsym --release $mod+Ctrl+l exec $HOME/bin/lock
+
+bindsym XF86MonBrightnessDown exec light -U 5
+bindsym XF86MonBrightnessUp exec light -A 5
+
+#bindsym XF86AudioLowerVolume exec pactl set-sink-volume 0 -5%
+#bindsym XF86AudioRaiseVolume exec pactl set-sink-volume 0 +5%
+
+#bindsym XF86AudioMute exec pactl set-sink-mute 0 toggle
+
+# change volume or toggle mute
+bindsym XF86AudioRaiseVolume exec amixer -q -D pulse sset Master 5%+ && pkill -RTMIN+10 i3blocks 
+bindsym XF86AudioLowerVolume exec amixer -q -D pulse sset Master 5%- && pkill -RTMIN+10 i3blocks
+bindsym XF86AudioMute exec amixer -q -D pulse sset Master toggle && pkill -RTMIN+10 i3blocks
+
+# move focused workspace between monitors
+bindsym $mod+Ctrl+greater move workspace to output right
+bindsym $mod+Ctrl+less move workspace to output left
