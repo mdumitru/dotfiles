@@ -33,7 +33,6 @@ bindsym $mod+space exec rofi -show drun -sorting-method fzf -i
 # Window switcher (this comes from macOS's Spotlight)
 bindsym Mod1+space exec rofi -show window
 
-bindsym $mod+Shift+s exec rofi -show ssh
 
 # change focus
 bindsym $mod+j focus down
