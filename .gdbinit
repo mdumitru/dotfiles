@@ -4,7 +4,7 @@ shell if test -f "$HOME/.gdbinit.before"; then \
 source /tmp/.gdbinit
 
 # Source all settings from the peda dir
-source ~/gits/peda/peda.py
+source ~/gits/pwndbg/gdbinit.py
 
 # When inspecting large portions of code the scrollbar works better than 'less'
 set pagination off
