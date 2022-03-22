@@ -54,5 +54,8 @@
         "--ignore-file",
         "~/.ignore"
     ],
+    "python.linting.flake8Enabled": true,
+    "python.linting.banditEnabled": true,
+    "python.linting.mypyEnabled": true,
     "latex.build.args": ["-pdf", "-interaction=nonstopmode", "-synctex=1", "-pv"]
 }
