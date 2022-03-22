@@ -9,6 +9,9 @@ PATH="$HOME/bin/:$HOME/.local/bin:$PATH"
 # Add cabal stuff to path
 PATH="$HOME/.cabal/bin/:$PATH"
 
+# Add cargo stuff to path
+PATH="$HOME/.cargo/bin/:$PATH"
+
 export PATH
 
 # As env variables are inherited by regular interactive shells, they should be
