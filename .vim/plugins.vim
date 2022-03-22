@@ -21,6 +21,9 @@ call plug#begin('~/.vim/plugins/')
 " Precision colorscheme for the vim text editor
 Plug 'altercation/vim-colors-solarized'
 
+" Syntax highlighter for ANTLR files in vim
+Plug 'dylon/vim-antlr'
+
 " Vim motions on speed!
 Plug 'easymotion/vim-easymotion'
 
