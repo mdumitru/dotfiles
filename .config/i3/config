@@ -24,8 +24,8 @@ bindsym $mod+Return exec alacritty
 # kill focused window
 bindsym $mod+Shift+c kill
 
-# WinKey tab (sane)
-bindsym $mod+Tab fullscreen disable, focus left, fullscreen enable
+exec_always --no-startup-id focus-last.py
+bindsym Mod1+Tab exec "$HOME/bin/focus-last.py --switch"
 
 # Program launcher
 bindsym $mod+r exec rofi -show drun
