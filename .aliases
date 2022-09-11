@@ -78,7 +78,8 @@ set --
 
 
 # Interaction with neovim when running from its guest terminal.
-if test -n "$NVIM_LISTEN_ADDRESS" -a -w "$NVIM_LISTEN_ADDRESS"; then
+if test -n "$NVIM_LISTEN_ADDRESS" -a -w "$NVIM_LISTEN_ADDRESS" \
+        -o "$NVIM" -a -w "$NVIM"; then
     # vim's cwd might differ from the shell's, so we manually match it
     alias v=nvim-host-cmd
     alias e='nvim-host-cmd edit'
