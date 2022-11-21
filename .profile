@@ -51,6 +51,18 @@ XDG_DATA_DIRS=/usr/local/share:/usr/share
 XDG_CONFIG_DIRS=/etc/xdg
 export XDG_DATA_DIRS XDG_CONFIG_DIRS
 
+GTK_IM_MODULE=ibus
+XMODIFIERS="@im=ibus"
+QT_IM_MODULE=ibus
+XIM_PROGRAM="/urs/bin/ibus-daemon -drx"
+export GTK_IM_MODULE XMODIFIERS QT_IM_MODULE XIM_PROGRAM
+
+XIM=ibus
+XIM_ARGS="-d"
+XIM_PROGRAM_SETS_ITSELF_AS_DAEMON=yes
+DEPENDS="ibus"
+export XIM XIM_ARGS XIM_PROGRAM_SETS_ITSELF_AS_DAEMON DEPENDS
+
 # Prefer UTF-8 English.
 if locale -a | grep -F -q -x "en_US.UTF-8"; then
     LC_ALL="en_US.UTF-8"
