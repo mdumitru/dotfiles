@@ -37,3 +37,5 @@
 [diff "zip"]
 	textconv = unzip -v
 	binary = true
+[pull]
+	rebase = true
