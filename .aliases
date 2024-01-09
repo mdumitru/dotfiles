@@ -42,8 +42,15 @@ remake() {
     fi
 }
 
+_current_city=$(curl ipinfo.io/city 2>/dev/null)
+
 weather() {
-    curl -4 "https://wttr.in/$1"
+    if [ $# = 0 ]; then
+        location="$_current_city"
+    else
+        location=$1
+    fi
+    curl -4 "https://wttr.in/${location}"
 }
 
 # Ideally, whenver an interactive python session is wanted, this should invoke
