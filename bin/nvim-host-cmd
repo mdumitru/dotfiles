@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # pylint: disable=invalid-name
 """Allows control of the neovim host from within a neovim terminal."""
 from __future__ import print_function
