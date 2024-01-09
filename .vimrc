@@ -236,6 +236,7 @@ command! -nargs=1 -range Tbpaste <line1>,<line2>!curl --silent termbin.com/<f-ar
 " Make it easy to close stuff (remember that 'hidden' is set).
 noremap <silent> <a-backspace> :lclose<cr>:Bdelete<cr>
 noremap <silent> <leader><backspace> :lclose<cr>:bdelete<cr>
+noremap <silent> <leader>o :windo diffoff \| bdelete<cr>
 " Note that :Bdelete is provided by a plugin.
 
 noremap <silent> <a-n> :tabedit<cr>

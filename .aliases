@@ -96,6 +96,14 @@ if test -n "$NVIM_LISTEN_ADDRESS" -a -w "$NVIM_LISTEN_ADDRESS" \
     alias bo='nvim-host-cmd botright'
     alias to='nvim-host-cmd topleft'
 
+    vd() {
+        if [ $# != 2 ]; then
+            echo "Usage: vd <file1> <file2>" >&2
+            return
+        fi
+        nvim-host-cmd "e $1 | vert diffsplit $2"
+    }
+
     # neovim messes with this and vim has issues because of it
     # monitor: https://github.com/neovim/neovim/issues/9960#issuecomment-488262473
     # (we shove this here because this file is sourced by all shells and we
