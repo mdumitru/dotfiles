@@ -149,18 +149,19 @@ bindsym $mod+q mode "resize"
 bar {
         status_command i3blocks
         mode hide
-        font pango:Hack 12
+        font pango:Hack 16
 }
 
 # Multi-screen screenshots with scrot
 bindsym --release Print exec "$HOME/bin/screenshot full"
+
 bindsym $mod+Ctrl+s sticky toggle
 
 # MS Windows-like area selection screenshots
 bindsym --release $mod+Shift+s exec "$HOME/bin/screenshot gui"
 
 # screenlock
-bindsym --release $mod+Ctrl+l exec $HOME/bin/lock
+bindsym --release $mod+Ctrl+l exec "$HOME/bin/lock"
 
 bindsym XF86MonBrightnessDown exec light -U 5
 bindsym XF86MonBrightnessUp exec light -A 5
