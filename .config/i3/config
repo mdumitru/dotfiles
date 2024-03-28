@@ -33,6 +33,9 @@ bindsym $mod+space exec rofi -show drun -sorting-method fzf -i
 # Window switcher (this comes from macOS's Spotlight)
 bindsym Mod1+space exec rofi -show window
 
+# Random movemenet of the mouse should not cause keyboard activity to suddenly
+# interact with some other window.
+focus_follows_mouse no
 
 # change focus
 bindsym $mod+j focus down
