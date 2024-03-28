@@ -3,13 +3,16 @@
 if test -z "$SCREENSHOTS_FOLDER"; then
     SCREENSHOTS_FOLDER="$HOME/pictures/screenshots"
 fi
-SCREENSHOT_NAME="screenshot_%Y%m%d_%H%M%S.png"
-SCREENSHOT_PATH="$SCREENSHOTS_FOLDER/screenshot_%Y%m%d_%H%M%S.png"
+TIMESTAMP="$(date "+%Y%m%d_%H%M%S")"
+SCREENSHOT_NAME="screenshot_${TIMESTAMP}.png"
+SCREENSHOT_PATH="$SCREENSHOTS_FOLDER/$SCREENSHOT_NAME"
 LATEST_PATH="$SCREENSHOTS_FOLDER/latest"
 
 mkdir -p "$SCREENSHOTS_FOLDER"
 
-scrot $@ "$SCREENSHOT_PATH" -e "ln -fs \$f \"$LATEST_PATH\""
+flameshot $@ -r > /tmp/"$SCREENSHOT_NAME" && \
+    mv /tmp/"$SCREENSHOT_NAME" "$SCREENSHOT_PATH" && \
+    ln -fs "$SCREENSHOT_PATH" "$LATEST_PATH"
 
 # Also put in clipboard
 xclip -selection clipboard -t image/png -i "$LATEST_PATH"
