@@ -37,7 +37,7 @@ zplug "mdumitru/git-aliases"
 zplug "mdumitru/last-working-dir"
 
 # Jump to custom directories in zsh
-zplug "mfaerevaag/wd", as:command, use:"wd.sh", hook-load:"wd() { . $HOME/gits/wd/wd.sh }"
+zplug "mfaerevaag/wd", as:command, use:"wd.sh", hook-load:"wd() { . $ZPLUG_REPOS/mfaerevaag/wd/wd.sh }"
 
 # ZSH completions for selected OS X commands.
 zplug "nilsonholger/osx-zsh-completions", if:"[[ $OSTYPE == *darwin* ]]"
