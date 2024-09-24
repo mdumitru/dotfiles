@@ -121,6 +121,9 @@ if typeset -f nvim_cd > /dev/null; then
     add-zsh-hook chpwd nvim_cd
 fi
 
+# Prevent conda from automatically activating.
+export CONDA_AUTO_ACTIVATE_BASE=false
+
 # Source 'after' file if any.
 if [[ -r "$HOME/.zshrc.after" ]]; then
     source "$HOME/.zshrc.after"
