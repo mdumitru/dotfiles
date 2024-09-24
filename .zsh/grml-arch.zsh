@@ -1151,6 +1151,17 @@ grml_vcs_coloured_formats=(
 
 typeset GRML_VCS_COLOUR_MODE=xxx
 
+# Function to display Conda environment
+function conda_prompt_info () {
+    if [ -n "${CONDA_DEFAULT_ENV}" ]; then
+        REPLY="(${CONDA_DEFAULT_ENV:t}) "
+    elif [ -n "${CONDA_ON+1}" ]; then
+        REPLY="(miniconda) "
+    else
+        REPLY=""
+    fi
+}
+
 grml_vcs_info_toggle_colour () {
     emulate -L zsh
     if [[ $GRML_VCS_COLOUR_MODE == plain ]]; then
@@ -1425,11 +1436,12 @@ function grml_prompt_addto () {
     done
 }
 
+grml_theme_add_token conda_env -f conda_prompt_info '%F{green}' '%f%b'
 function prompt_grml_precmd () {
     emulate -L zsh
     local grmltheme=grml
     local -a left_items right_items
-    left_items=(rc change-root user at host path vcs percent)
+    left_items=(conda_env rc change-root user at host path vcs percent)
     right_items=(sad-smiley)
 
     prompt_grml_precmd_worker
