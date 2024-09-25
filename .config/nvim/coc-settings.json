@@ -43,9 +43,9 @@
             "disableCompletion": true
         }
     },
-    "suggest.floatEnable": true,
-    "suggest.enablePreview": true,
-    "coc.preferences.colorSupport": true,
+    "suggest.enablePreselect": false,
+    "suggest.noselect": true,
+    "inlayHint.enable": false,
     "diagnostic.errorSign": ">>",
     "diagnostic.warningSign": "> ",
     "list.nextKeymap": "<c-n>",

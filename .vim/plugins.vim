@@ -42,7 +42,7 @@ Plug 'moll/vim-bbye', { 'on': 'Bdelete' }
 
 " Intellisense engine for vim8 & neovim, full language server protocol support as VSCode
 if has('nvim')
-    Plug 'neoclide/coc.nvim', {'branch': 'release', 'for': ['c', 'cpp', 'python', 'json', 'tex', 'latex', 'plaintex', 'context', 'bib']}
+    Plug 'neoclide/coc.nvim', {'branch': 'release', 'for': ['c', 'cpp', 'python', 'json', 'tex', 'java', 'latex', 'plaintex', 'context', 'bib', 'vim']}
 endif
 
 " Better whitespace highlighting for Vim
