@@ -18,8 +18,11 @@ exe 'source' s:manager_path
 
 call plug#begin('~/.vim/plugins/')
 
-" Precision colorscheme for the vim text editor
-Plug 'altercation/vim-colors-solarized'
+" Recommended (for coloured icons) (by bufferline)
+Plug 'nvim-tree/nvim-web-devicons'
+
+"  A snazzy bufferline for Neovim 
+Plug 'akinsho/bufferline.nvim', { 'tag': '*' }
 
 " Syntax highlighter for ANTLR files in vim
 Plug 'dylon/vim-antlr'
@@ -46,10 +49,15 @@ if has('nvim')
 endif
 
 " Better whitespace highlighting for Vim
-Plug 'ntpeters/vim-better-whitespace'
+"Plug 'ntpeters/vim-better-whitespace'
 
 " Rename a buffer within Vim and on disk
 Plug 'vim-scripts/Rename', { 'on': 'Rename' }
+
+if has('nvim')
+    " NeoVim dark colorscheme inspired by the colors of the famous painting by Katsushika Hokusai. 
+    Plug 'rebelot/kanagawa.nvim'
+endif
 
 " Pasting in Vim with indentation adjusted to destination context
 Plug 'sickill/vim-pasta'
@@ -74,14 +82,6 @@ Plug 'Valloric/ListToggle'
 
 " Allows one to edit a file with privileges from an unprivileged session.
 Plug 'vim-scripts/sudo.vim'
-
-" Lean & mean status/tabline for vim that's light as air
-" install the font Hack to make it work properly:
-" https://github.com/powerline/fonts/blob/master/Hack/
-Plug 'vim-airline/vim-airline'
-
-" A collection of themes for vim-airline
-Plug 'vim-airline/vim-airline-themes'
 
 " Vim plugin that provides additional text objects
 Plug 'wellle/targets.vim'

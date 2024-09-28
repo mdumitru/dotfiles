@@ -1,0 +1,5 @@
+set background=dark
+silent! colorscheme kanagawa
+
+" Avoid ugly display of tabs and trailing whitespaces.
+" highlight! SpecialKey ctermbg=NONE guibg=NONE
