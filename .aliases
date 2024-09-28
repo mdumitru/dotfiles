@@ -145,6 +145,11 @@ issolaris() {
     test $OSTYPE = "SunOS"
 }
 
+# Copies the "latest" screenshot to the current directory
+cpss() {
+    cp $(readlink -f "$HOME/pictures/screenshots/latest") "$1"
+}
+
 # Source 'after' file (if any).
 if test -f "$HOME/.aliases.after" -a -r "$HOME/.aliases.after"; then
     . "$HOME/.aliases.after"
