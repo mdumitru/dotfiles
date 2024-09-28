@@ -11,4 +11,3 @@ setlocal colorcolumn=81
 
 let s:plugins_dir = expand($HOME . "/.vim/plugins-local-config/")
 exe 'source ' s:plugins_dir . "coc.nvim"
-exe 'source ' s:plugins_dir . "vim-better-whitespace"

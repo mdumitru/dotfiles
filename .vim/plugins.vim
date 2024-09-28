@@ -48,9 +48,6 @@ if has('nvim')
     Plug 'neoclide/coc.nvim', {'branch': 'release', 'for': ['c', 'cpp', 'python', 'json', 'tex', 'java', 'latex', 'plaintex', 'context', 'bib', 'vim']}
 endif
 
-" Better whitespace highlighting for Vim
-"Plug 'ntpeters/vim-better-whitespace'
-
 " Rename a buffer within Vim and on disk
 Plug 'vim-scripts/Rename', { 'on': 'Rename' }
 
