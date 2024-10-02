@@ -37,7 +37,7 @@ Plug 'jlanzarotta/bufexplorer', { 'on': 'ToggleBufExplorer' }
 Plug 'justinmk/vim-syntax-extra'
 
 " A modern Vim and neovim filetype plugin for LaTeX files.
-Plug 'lervag/vimtex', {'for': ['tex', 'context', 'bib', 'latex', 'plaintex']}
+Plug 'lervag/vimtex'
 let g:tex_flavor='latex'
 
 " Delete buffers and close files in Vim without messing up your layout.
@@ -45,7 +45,7 @@ Plug 'moll/vim-bbye', { 'on': 'Bdelete' }
 
 " Intellisense engine for vim8 & neovim, full language server protocol support as VSCode
 if has('nvim')
-    Plug 'neoclide/coc.nvim', {'branch': 'release', 'for': ['c', 'cpp', 'python', 'json', 'tex', 'java', 'latex', 'plaintex', 'context', 'bib', 'vim']}
+    Plug 'neoclide/coc.nvim', {'branch': 'release'}
 endif
 
 " Rename a buffer within Vim and on disk
