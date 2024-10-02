@@ -220,7 +220,6 @@ install_nvim() {
     install_helper ".config/nvim" "bin/nvim-host-cmd" "bin/nvim-host-editor" \
         ".local/share/nvim"
     install_nvim_plugins
-    install_nvim_python
 }
 
 install_nvim_plugins() {
@@ -229,29 +228,8 @@ install_nvim_plugins() {
         return 0
     fi
 
-    if test $VIM_PLUGINS_INSTALLED -eq 1; then
-        return 0
-    fi
-
     echo "Installing nvim plugins ..."
     nvim "+PlugInstall | qa!"
-}
-
-install_nvim_python() {
-    echo "Installing neovim python package ..."
-
-    # Ensure this is installed in all possible pips.
-    if command -v pip2 > /dev/null; then
-        pip2 install --user --upgrade --no-warn-conflicts pynvim
-    fi
-
-    if command -v pip3 > /dev/null; then
-        pip3 install --user --upgrade --no-warn-conflicts pynvim
-    fi
-
-    if command -v pip > /dev/null; then
-        pip install --user --upgrade --no-warn-conflicts pynvim
-    fi
 }
 
 install_okular() {
@@ -275,11 +253,6 @@ install_xvim() {
 install_pgdb() {
     echo "Installing peda gdb ..."
     install_helper "gits/peda" ".gdbinit"
-}
-
-install_ycm() {
-    echo "Installing ycm files ..."
-    install_helper ".ycm_extra_conf.py"
 }
 
 install_search() {
@@ -344,7 +317,6 @@ install_all() {
     install_nvim
     install_okular
     install_pgdb
-    install_ycm
     install_search
     install_git
     install_x
