@@ -39,6 +39,7 @@ Arguments:
             git
             i3
             nvim
+            okular
             pgdb
             rofi
             search
@@ -253,6 +254,15 @@ install_nvim_python() {
     fi
 }
 
+install_okular() {
+    if command -v okular > /dev/null; then
+        echo "Installing okular pdf viewer ..."
+        install_helper ".config/okularpartrc"
+    else
+        echo "\"okular\" not found! Nothing to do here ..." >&2
+    fi
+}
+
 install_xvim() {
     if test $VIM_INSTALLED -eq 0; then
         install_vim
@@ -299,7 +309,7 @@ install_i3() {
     fi
 
     echo "Installing i3 files ..."
-    install_helper ".config/i3" "bin/lock"
+    install_helper ".config/i3" "bin/lock" ".config/i3blocks"
 }
 
 install_rofi() {
@@ -332,10 +342,12 @@ install_all() {
     install_zsh
     install_bash
     install_nvim
+    install_okular
     install_pgdb
     install_ycm
     install_search
     install_git
+    install_x
     install_alacritty
     install_i3
     install_rofi
