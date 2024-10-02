@@ -6,6 +6,7 @@ let g:coc_global_extensions = [
     \ 'coc-yank',
     \ 'coc-vimlsp',
     \ 'coc-markdownlint',
+    \ 'coc-vimtex',
     \ ]
 
 " Having longer updatetime (default is 4000 ms = 4s) leads to noticeable

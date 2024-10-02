@@ -36,11 +36,6 @@
                 ".hg/",
                 ".svn/"
             ]
-        },
-        "latex": {
-            "command": "texlab",
-            "filetypes": ["tex", "bib", "latex", "plaintex", "context"],
-            "disableCompletion": true
         }
     },
     "suggest.enablePreselect": false,
@@ -57,8 +52,5 @@
     "python.linting.flake8Enabled": true,
     "python.linting.banditEnabled": true,
     "python.linting.mypyEnabled": true,
-    "latex.build.args": ["-pdf", "-interaction=nonstopmode", "-synctex=1", "-pv"],
-    "latex.forwardSearch.executable": "okular",
-    "latex.forwardSearch.args": ["--unique", "file:%p#src:%l%f"],
     "list.source.grep.defaultArgs": ["--smart-case"]
 }
