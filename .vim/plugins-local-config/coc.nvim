@@ -93,10 +93,14 @@ nmap <buffer><leader>qf  <plug>(coc-fix-current)
 
 " Create mappings for function text object, requires document symbols feature
 " of languageserver.
-xmap <buffer> if <plug>(coc-funcobj-i)
-xmap <buffer> af <plug>(coc-funcobj-a)
-omap <buffer> if <plug>(coc-funcobj-i)
-omap <buffer> af <plug>(coc-funcobj-a)
+xmap if <Plug>(coc-funcobj-i)
+omap if <Plug>(coc-funcobj-i)
+xmap af <Plug>(coc-funcobj-a)
+omap af <Plug>(coc-funcobj-a)
+xmap ic <Plug>(coc-classobj-i)
+omap ic <Plug>(coc-classobj-i)
+xmap ac <Plug>(coc-classobj-a)
+omap ac <Plug>(coc-classobj-a)
 
 command! -nargs=0 Format :call CocAction('format')
 command! -nargs=? Fold :call CocAction('fold', <f-args>)
