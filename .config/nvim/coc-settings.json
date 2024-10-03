@@ -1,4 +1,6 @@
 {
+    "workspace.rootPatterns": [ ".git", ".svn", ".vscode", "compile_commands.json", ".hg", ".projections.json" ],
+
     "languageserver": {
         "ccls": {
             "command": "ccls",
@@ -49,8 +51,23 @@
         "--ignore-file",
         "~/.ignore"
     ],
+
+    "suggest.floatConfig": {
+        "border": true,
+        "borderhighlight": "FloatBoarder"
+    },
+
+    "list.source.mru.excludePatterns": [
+        "**/.git/*",
+        "**/.svn/*",
+        "**/bin/*",
+        "**/build/*",
+        "/tmp/*"
+    ],
+
     "python.linting.flake8Enabled": true,
     "python.linting.banditEnabled": true,
     "python.linting.mypyEnabled": true,
+    "diagnostic.virtualTextCurrentLineOnly": true,
     "list.source.grep.defaultArgs": ["--smart-case"]
 }
