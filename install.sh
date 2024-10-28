@@ -38,6 +38,7 @@ Arguments:
             bash
             git
             i3
+            latex
             nvim
             okular
             pgdb
@@ -232,6 +233,16 @@ install_nvim_plugins() {
     nvim "+PlugInstall | qa!"
 }
 
+install_latex() {
+    if command -v latexmk > /dev/null; then
+        echo "Installing latex files ..."
+        install_helper ".latexmkrc"
+    else
+        echo "\"latexmk\" not found! Nothing to do here ..." >&2
+        return 0
+    fi
+}
+
 install_okular() {
     if command -v okular > /dev/null; then
         echo "Installing okular pdf viewer ..."
@@ -315,6 +326,7 @@ install_all() {
     install_zsh
     install_bash
     install_nvim
+    install_latex
     install_okular
     install_pgdb
     install_search
