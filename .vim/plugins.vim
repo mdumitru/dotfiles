@@ -105,7 +105,7 @@ call plug#end()
 
 
 " load all plugin settings
-let s:settings = expand($HOME . "/.vim/plugins-global-config/")
+let s:settings = expand($HOME . "/.vim/plugins-config/")
 for fpath in split(globpath(s:settings, '*'), '\n')
     exe 'source ' fpath
 endfor
