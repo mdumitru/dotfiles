@@ -17,9 +17,6 @@ fi
 
 source ${ZDOTDIR:-${HOME}}/.zcomet/bin/zcomet.zsh
 
-# A command-line fuzzy finder
-zcomet load "junegunn/fzf"
-
 # Use Ctrl-Z to switch back to background task.
 zcomet load "mdumitru/fancy-ctrl-z"
 
