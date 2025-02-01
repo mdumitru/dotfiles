@@ -33,6 +33,13 @@ alias pyl='pylint --disable=RP0001 --disable=RP0002 --disable=RP0003 --disable=R
 # This comes up often enough to warrant the alias
 alias smi='sudo make install'
 
+# The purpose here is to set the shell up for sharing the screen in front of an
+# audience.
+present() {
+    # Disable fish-like autosuggestions.
+    _zsh_autosuggest_widget_toggle &>/dev/null || :
+}
+
 remake() {
     make clean || return $?
     if test $# -eq 0; then
