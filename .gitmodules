@@ -1,9 +1,6 @@
 [submodule ".vim/plugins/vim-plug"]
 	path = .vim/plugins/vim-plug
 	url = https://github.com/junegunn/vim-plug.git
-[submodule ".zsh/zplug"]
-	path = .zsh/zplug
-	url = https://github.com/zplug/zplug
 [submodule "sh-realpath"]
 	path = sh-realpath
 	url = https://github.com/mkropat/sh-realpath
