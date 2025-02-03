@@ -19,3 +19,4 @@ shell if test -f "$HOME/.gdbinit.after"; then \
             echo source "$HOME/.gdbinit.after"; \
       fi > /tmp/.gdbinit
 source /tmp/.gdbinit
+set debuginfod enabled on

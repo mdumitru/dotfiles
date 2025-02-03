@@ -180,5 +180,5 @@ bindsym XF86AudioMute exec amixer -q -D pulse sset Master toggle && pkill -RTMIN
 bindsym $mod+Ctrl+greater move workspace to output right
 bindsym $mod+Ctrl+less move workspace to output left
 
-no_focus [all]
+no_focus [class="^pop-up$"]
 focus_on_window_activation none
