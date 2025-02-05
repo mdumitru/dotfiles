@@ -42,3 +42,6 @@ size = 10.0
 [font.normal]
 family = "Hack"
 style = "Regular"
+
+[window]
+option_as_alt = "Both"
