@@ -30,7 +30,7 @@ zcomet load "mdumitru/last-working-dir"
 zcomet trigger wd "mfaerevaag/wd"
 
 # jump around
-zcomet trigger z "rupa/z"
+zcomet load "agkozak/zsh-z"
 
 # zsh anything.el-like widget.
 zcomet load "zsh-users/zaw"
