@@ -95,9 +95,6 @@ return {
     -- A vim plugin for toggling the display of the quickfix list and the location-list.
     "Valloric/ListToggle",
 
-    -- Allows one to edit a file with privileges from an unprivileged session.
-    "vim-scripts/sudo.vim",
-
     -- Vim plugin that provides additional text objects
     "wellle/targets.vim",
 
