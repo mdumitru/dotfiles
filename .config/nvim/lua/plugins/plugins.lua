@@ -1,6 +1,9 @@
 return {
     -- Recommended (for coloured icons) (by bufferline)
-    "nvim-tree/nvim-web-devicons",
+    {
+        "nvim-tree/nvim-web-devicons",
+        lazy = true,
+    },
 
     -- A snazzy bufferline for Neovim 
     {
