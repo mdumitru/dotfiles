@@ -183,7 +183,7 @@ install_bash() {
 
 install_vim() {
     echo "Installing vim files ..."
-    install_helper ".vimrc" ".gvimrc" ".vim"
+    install_helper ".vimcommon" ".vimrc" ".gvimrc" ".vim"
 
     # Maybe neovim is present, but not vim. We still need the above files, so we
     # check for vim's existance only after.
@@ -223,15 +223,6 @@ install_nvim() {
     install_nvim_plugins
 }
 
-install_nvim_plugins() {
-    if ! command -v nvim > /dev/null; then
-        echo "\"nvim\" not found! Nothing to do here ..." >&2
-        return 0
-    fi
-
-    echo "Installing nvim plugins ..."
-    nvim "+PlugInstall | qa!"
-}
 
 install_latex() {
     if command -v latexmk > /dev/null; then
@@ -319,7 +310,6 @@ setup() {
 install_in_home() {
     install_zsh_plugins
     install_vim_plugins
-    install_nvim_plugins
 }
 
 install_all() {
