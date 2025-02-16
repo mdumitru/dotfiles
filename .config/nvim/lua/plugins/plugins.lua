@@ -52,6 +52,18 @@ return {
     -- Vim plugin for intensely orgasmic commenting
     "scrooloose/nerdcommenter",
 
+    -- Neovim file explorer: edit your filesystem like a buffer
+    {
+      'stevearc/oil.nvim',
+      ---@module 'oil'
+      ---@type oil.SetupOpts
+      opts = {},
+      -- Optional dependencies
+      dependencies = { "nvim-tree/nvim-web-devicons" }, -- use if you prefer nvim-web-devicons
+      -- Lazy loading is not recommended because it is very tricky to make it work correctly in all situations.
+      lazy = false,
+    },
+
     -- a Git wrapper so awesome, it should be illegal
     "tpope/vim-fugitive",
 
