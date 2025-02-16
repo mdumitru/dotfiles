@@ -18,12 +18,6 @@ exe 'source' s:manager_path
 
 call plug#begin('~/.vim/plugins/')
 
-" Recommended (for coloured icons) (by bufferline)
-Plug 'nvim-tree/nvim-web-devicons'
-
-"  A snazzy bufferline for Neovim 
-Plug 'akinsho/bufferline.nvim', { 'tag': '*' }
-
 " Syntax highlighter for ANTLR files in vim
 Plug 'dylon/vim-antlr'
 
@@ -43,18 +37,8 @@ let g:tex_flavor='latex'
 " Delete buffers and close files in Vim without messing up your layout.
 Plug 'moll/vim-bbye', { 'on': 'Bdelete' }
 
-" Intellisense engine for vim8 & neovim, full language server protocol support as VSCode
-if has('nvim')
-    Plug 'neoclide/coc.nvim', {'branch': 'release'}
-endif
-
 " Rename a buffer within Vim and on disk
 Plug 'vim-scripts/Rename', { 'on': 'Rename' }
-
-if has('nvim')
-    " NeoVim dark colorscheme inspired by the colors of the famous painting by Katsushika Hokusai. 
-    Plug 'rebelot/kanagawa.nvim'
-endif
 
 " Pasting in Vim with indentation adjusted to destination context
 Plug 'sickill/vim-pasta'
@@ -105,6 +89,6 @@ call plug#end()
 
 " load all plugin settings
 let s:settings = expand($HOME . "/.vim/plugins-config/")
-for fpath in split(globpath(s:settings, '*'), '\n')
+for fpath in split(globpath(s:settings, '*.vim'), '\n')
     exe 'source ' fpath
 endfor
