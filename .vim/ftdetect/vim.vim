@@ -1,1 +1,1 @@
-autocmd BufNewFile,BufRead *.nvim setlocal filetype=vim
+autocmd BufNewFile,BufRead .vimcommon,*.nvim setlocal filetype=vim
