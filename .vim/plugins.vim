@@ -58,9 +58,6 @@ Plug 'tpope/vim-surround'
 " unimpaired.vim: pairs of handy bracket mappings
 Plug 'tpope/vim-unimpaired'
 
-" A vim plugin for toggling the display of the quickfix list and the location-list.
-Plug 'Valloric/ListToggle'
-
 " Allows one to edit a file with privileges from an unprivileged session.
 Plug 'vim-scripts/sudo.vim'
 

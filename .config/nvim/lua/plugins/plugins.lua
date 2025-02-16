@@ -7,8 +7,7 @@ return {
 
     -- A snazzy bufferline for Neovim 
     {
-        "akinsho/bufferline.nvim",
-        version = "*",
+        "akinsho/bufferline.nvim", version = "*",
         dependencies = "nvim-tree/nvim-web-devicons"
     },
 
@@ -91,9 +90,6 @@ return {
 
     -- unimpaired.vim: pairs of handy bracket mappings
     "tpope/vim-unimpaired",
-
-    -- A vim plugin for toggling the display of the quickfix list and the location-list.
-    "Valloric/ListToggle",
 
     -- Vim plugin that provides additional text objects
     "wellle/targets.vim",
