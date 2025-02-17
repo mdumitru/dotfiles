@@ -6,10 +6,8 @@
 !.vimrc
 !.vim/
 !.vim/plugins.vim
-!.vim/plugins-local-config/
-!.vim/plugins-local-config/*
-!.vim/plugins-global-config/
-!.vim/plugins-global-config/*
+!.vim/plugins-config/
+!.vim/plugins-config/*
 !.vim/ftdetect/
 !.vim/ftdetect/*
 !.vim/after/
