@@ -67,12 +67,6 @@ Plug 'wellle/targets.vim'
 " Swap your windows without ruining your layout
 Plug 'wesQ3/vim-windowswap'
 
-" Miscellaneous auto-load Vim scripts
-Plug 'xolox/vim-misc'
-
-" Extended session management for Vim
-Plug 'xolox/vim-session'
-
 
 " Source 'local_plugins' file (if any).
 " This file should contain only 'Plug' directives.
