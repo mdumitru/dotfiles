@@ -116,9 +116,6 @@ isutfenv() {
     esac
 }
 
-# check for user, if not running as root set $SUDO to sudo
-(( EUID != 0 )) && SUDO='sudo' || SUDO=''
-
 # check for zsh v3.1.7+
 if ! [[ ${ZSH_VERSION} == 3.1.<7->*      \
      || ${ZSH_VERSION} == 3.<2->.<->*    \
