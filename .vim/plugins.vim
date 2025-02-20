@@ -83,3 +83,9 @@ let s:settings = expand($HOME . "/.vim/plugins-config/")
 for fpath in split(globpath(s:settings, '*.vim'), '\n')
     exe 'source ' fpath
 endfor
+
+" load all plugin settings
+let s:local_settings = expand($HOME . "/.vim/local-plugins-config/")
+for fpath in split(globpath(s:local_settings, '*.vim'), '\n')
+    exe 'source ' fpath
+endfor

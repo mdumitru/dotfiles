@@ -32,3 +32,9 @@ local settings = vim.fn.expand(vim.env.HOME .. "/.vim/plugins-config/")
 for _, fpath in ipairs(vim.fn.split(vim.fn.globpath(settings, '*'), "\n")) do
   vim.cmd("source " .. fpath)
 end
+
+-- Load local plugin settings, if any
+local local_settings = vim.fn.expand(vim.env.HOME .. "/.vim/local-plugins-config/")
+for _, fpath in ipairs(vim.fn.split(vim.fn.globpath(local_settings, '*'), "\n")) do
+  vim.cmd("source " .. fpath)
+end
