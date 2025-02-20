@@ -714,37 +714,6 @@ inplaceMkDirs() {
 
 zle -N inplaceMkDirs
 
-## complete word from currently visible Screen or Tmux buffer.
-if check_com -c screen || check_com -c tmux; then
-    _complete_screen_display() {
-        [[ "$TERM" != "screen" ]] && return 1
-
-        local TMPFILE=$(mktemp)
-        local -U -a _screen_display_wordlist
-        trap "rm -f $TMPFILE" EXIT
-
-        # fill array with contents from screen hardcopy
-        if ((${+TMUX})); then
-            #works, but crashes tmux below version 1.4
-            #luckily tmux -V option to ask for version, was also added in 1.4
-            tmux -V &>/dev/null || return
-            tmux -q capture-pane \; save-buffer -b 0 $TMPFILE \; delete-buffer -b 0
-        else
-            screen -X hardcopy $TMPFILE
-            # screen sucks, it dumps in latin1, apparently always. so recode it
-            # to system charset
-            check_com recode && recode latin1 $TMPFILE
-        fi
-        _screen_display_wordlist=( ${(QQ)$(<$TMPFILE)} )
-        # remove PREFIX to be completed from that array
-        _screen_display_wordlist[${_screen_display_wordlist[(i)$PREFIX]}]=""
-        compadd -a _screen_display_wordlist
-    }
-    #m# k CTRL-x\,\,\,S Complete word from GNU screen buffer
-    bindkey -r "^xS"
-    compdef -k _complete_screen_display complete-word '^xS'
-fi
-
 # Load a few more functions and tie them to widgets, so they can be bound:
 
 function zrcautozle() {
@@ -1598,18 +1567,6 @@ iso2utf() {
     fi
 }
 
-# especially for roadwarriors using GNU screen and ssh:
-if ! check_com asc &>/dev/null ; then
-  asc() { autossh -t "$@" 'screen -RdU' }
-  compdef asc=ssh
-fi
-
-# sort installed Debian-packages by size
-if check_com -c dpkg-query ; then
-    #a3# List installed Debian-packages sorted by size
-    alias debs-by-size="dpkg-query -Wf 'x \${Installed-Size} \${Package} \${Status}\n' | sed -ne '/^x  /d' -e '/^x \(.*\) install ok installed$/s//\1/p' | sort -nr"
-fi
-
 # shell functions
 
 #f1# Reload an autoloadable function
@@ -1727,55 +1684,6 @@ edfunc() {
 }
 compdef _functions edfunc
 
-# use it e.g. via 'Restart apache2'
-#m# f6 Start() \kbd{service \em{process}}\quad\kbd{start}
-#m# f6 Restart() \kbd{service \em{process}}\quad\kbd{restart}
-#m# f6 Stop() \kbd{service \em{process}}\quad\kbd{stop}
-#m# f6 Reload() \kbd{service \em{process}}\quad\kbd{reload}
-#m# f6 Force-Reload() \kbd{service \em{process}}\quad\kbd{force-reload}
-#m# f6 Status() \kbd{service \em{process}}\quad\kbd{status}
-if [[ -d /etc/init.d || -d /etc/service ]] ; then
-    __start_stop() {
-        local action_="${1:l}"  # e.g Start/Stop/Restart
-        local service_="$2"
-        local param_="$3"
-
-        local service_target_="$(readlink /etc/init.d/$service_)"
-        if [[ $service_target_ == "/usr/bin/sv" ]]; then
-            # runit
-            case "${action_}" in
-                start) if [[ ! -e /etc/service/$service_ ]]; then
-                           $SUDO ln -s "/etc/sv/$service_" "/etc/service/"
-                       else
-                           $SUDO "/etc/init.d/$service_" "${action_}" "$param_"
-                       fi ;;
-                # there is no reload in runits sysv emulation
-                reload) $SUDO "/etc/init.d/$service_" "force-reload" "$param_" ;;
-                *) $SUDO "/etc/init.d/$service_" "${action_}" "$param_" ;;
-            esac
-        else
-            # sysv/sysvinit-utils, upstart
-            if check_com -c service ; then
-              $SUDO service "$service_" "${action_}" "$param_"
-            else
-              $SUDO "/etc/init.d/$service_" "${action_}" "$param_"
-            fi
-        fi
-    }
-
-    _grmlinitd() {
-        local -a scripts
-        scripts=( /etc/init.d/*(x:t) )
-        _describe "service startup script" scripts
-    }
-
-    for i in Start Restart Stop Force-Reload Reload Status ; do
-        eval "$i() { __start_stop $i \"\$1\" \"\$2\" ; }"
-        compdef _grmlinitd $i
-    done
-    builtin unset -v i
-fi
-
 # grep for running process, like: 'any vim'
 any() {
     emulate -L zsh
@@ -1811,28 +1719,6 @@ for sh in ${ssl_hashes}; do
     }'
 done; unset sh
 
-ssl-cert-fingerprints() {
-    emulate -L zsh
-    local i
-    if [[ -z $1 ]] ; then
-        printf 'usage: ssl-cert-fingerprints <file>\n'
-        return 1
-    fi
-    for i in ${ssl_hashes}
-        do ssl-cert-$i $1;
-    done
-}
-
-ssl-cert-info() {
-    emulate -L zsh
-    if [[ -z $1 ]] ; then
-        printf 'usage: ssl-cert-info <file>\n'
-        return 1
-    fi
-    openssl x509 -noout -text -in $1
-    ssl-cert-fingerprints $1
-}
-
 # make sure our environment is clean regarding colors
 for var in BLUE RED GREEN CYAN YELLOW MAGENTA WHITE ; unset $var
 builtin unset -v var
@@ -1846,10 +1732,6 @@ zrcautoload lookupinit && lookupinit
 export COLORTERM="yes"
 
 # aliases
-
-# general
-#a2# Execute \kbd{du -sch}
-alias da='du -sch'
 
 # some useful aliases
 #a2# Remove current empty directory. Execute \kbd{cd ..; rmdir \$OLDCWD}
@@ -2220,35 +2102,6 @@ whatwhen()  {
         ;;
     esac
 }
-
-# mercurial related stuff
-if check_com -c hg ; then
-    # gnu like diff for mercurial
-    # http://www.selenic.com/mercurial/wiki/index.cgi/TipsAndTricks
-    #f5# GNU like diff for mercurial
-    hgdi() {
-        emulate -L zsh
-        local i
-        for i in $(hg status -marn "$@") ; diff -ubwd <(hg cat "$i") "$i"
-    }
-
-    # build debian package
-    #a2# Alias for \kbd{hg-buildpackage}
-    alias hbp='hg-buildpackage'
-
-    # execute commands on the versioned patch-queue from the current repos
-    alias mq='hg -R $(readlink -f $(hg root)/.hg/patches)'
-
-    # diffstat for specific version of a mercurial repository
-    #   hgstat      => display diffstat between last revision and tip
-    #   hgstat 1234 => display diffstat between revision 1234 and tip
-    #f5# Diffstat for specific version of a mercurial repos
-    hgstat() {
-        emulate -L zsh
-        [[ -n "$1" ]] && hg diff -r $1 -r tip | diffstat || hg export tip | diffstat
-    }
-
-fi # end of check whether we have the 'hg'-executable
 
 # grml-small cleanups
 
