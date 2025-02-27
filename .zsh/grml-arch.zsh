@@ -648,10 +648,6 @@ zle -N zleiab
 insert-datestamp() { LBUFFER+=${(%):-'%D{%Y-%m-%d}'}; }
 zle -N insert-datestamp
 
-# press esc-m for inserting last typed word again (thanks to caphuso!)
-insert-last-typed-word() { zle insert-last-word -- 0 -1 };
-zle -N insert-last-typed-word;
-
 # run command line as user root via sudo:
 sudo-command-line() {
     [[ -z $BUFFER ]] && zle up-history
@@ -898,15 +894,6 @@ fi
 zrcautoload zmv
 zrcautoload zed
 
-# we don't want to quote/espace URLs on our own...
-# if autoload -U url-quote-magic ; then
-#    zle -N self-insert url-quote-magic
-#    zstyle ':url-quote-magic:*' url-metas '*?[]^()~#{}='
-# else
-#    print 'Notice: no url-quote-magic available :('
-# fi
-alias url-quote='autoload -U url-quote-magic ; zle -N self-insert url-quote-magic'
-
 #m# k ESC-h Call \kbd{run-help} for the 1st word on the command line
 alias run-help >&/dev/null && unalias run-help
 for rh in run-help{,-git,-svk,-svn}; do
@@ -916,13 +903,6 @@ done; unset rh
 # command not found handling
 
 (( ${COMMAND_NOT_FOUND} == 1 )) &&
-function command_not_found_handler() {
-    emulate -L zsh
-    if [[ -x ${GRML_ZSH_CNF_HANDLER} ]] ; then
-        ${GRML_ZSH_CNF_HANDLER} $1
-    fi
-    return 1
-}
 
 # history
 
@@ -1533,37 +1513,6 @@ fi
 alias mdstat='cat /proc/mdstat'
 alias ...='cd ../../'
 
-# generate alias named "$KERNELVERSION-reboot" so you can use boot with kexec:
-if [[ -x /sbin/kexec ]] && [[ -r /proc/cmdline ]] ; then
-    alias "$(uname -r)-reboot"="kexec -l --initrd=/boot/initrd.img-"$(uname -r)" --command-line=\"$(cat /proc/cmdline)\" /boot/vmlinuz-"$(uname -r)""
-fi
-
-# see http://www.cl.cam.ac.uk/~mgk25/unicode.html#term for details
-alias term2iso="echo 'Setting terminal to iso mode' ; print -n '\e%@'"
-alias term2utf="echo 'Setting terminal to utf-8 mode'; print -n '\e%G'"
-
-# make sure it is not assigned yet
-[[ -n ${aliases[utf2iso]} ]] && unalias utf2iso
-utf2iso() {
-    if isutfenv ; then
-        local ENV
-        for ENV in $(env | command grep -i '.utf') ; do
-            eval export "$(echo $ENV | sed 's/UTF-8/iso885915/ ; s/utf8/iso885915/')"
-        done
-    fi
-}
-
-# make sure it is not assigned yet
-[[ -n ${aliases[iso2utf]} ]] && unalias iso2utf
-iso2utf() {
-    if ! isutfenv ; then
-        local ENV
-        for ENV in $(env | command grep -i '\.iso') ; do
-            eval export "$(echo $ENV | sed 's/iso.*/UTF-8/ ; s/ISO.*/UTF-8/')"
-        done
-    fi
-}
-
 # shell functions
 
 #f1# Reload an autoloadable function
@@ -1668,18 +1617,6 @@ sll() {
 profile() {
     ZSH_PROFILE_RC=1 zsh "$@"
 }
-
-#f1# Edit an alias via zle
-edalias() {
-    [[ -z "$1" ]] && { echo "Usage: edalias <alias_to_edit>" ; return 1 } || vared aliases'[$1]' ;
-}
-compdef _aliases edalias
-
-#f1# Edit a function via zle
-edfunc() {
-    [[ -z "$1" ]] && { echo "Usage: edfunc <function_to_edit>" ; return 1 } || zed -f "$1" ;
-}
-compdef _functions edfunc
 
 # grep for running process, like: 'any vim'
 any() {
@@ -1870,26 +1807,6 @@ cdt() {
     builtin cd "$(mktemp -d)"
     builtin pwd
 }
-
-#f5# List files which have been accessed within the last {\it n} days, {\it n} defaults to 1
-accessed() {
-    emulate -L zsh
-    print -l -- *(a-${1:-1}) .*(m-${1:-1})
-}
-
-#f5# List files which have been changed within the last {\it n} days, {\it n} defaults to 1
-changed() {
-    emulate -L zsh
-    print -l -- *(c-${1:-1}) .*(m-${1:-1})
-}
-
-#f5# List files which have been modified within the last {\it n} days, {\it n} defaults to 1
-modified() {
-    emulate -L zsh
-    print -l -- *(m-${1:-1}) .*(m-${1:-1})
-}
-# modified() was named new() in earlier versions, add an alias for backwards compatibility
-check_com new || alias new=modified
 
 # Usage: simple-extract <file>
 # Using option -d deletes the original archive file.
