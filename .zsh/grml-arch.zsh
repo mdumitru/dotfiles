@@ -900,10 +900,6 @@ for rh in run-help{,-git,-svk,-svn}; do
     zrcautoload $rh
 done; unset rh
 
-# command not found handling
-
-(( ${COMMAND_NOT_FOUND} == 1 )) &&
-
 # history
 
 #v#
