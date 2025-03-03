@@ -41,6 +41,7 @@ separator=true
 # See the script for details.
 
 [volume]
+command=$SCRIPT_DIR/volume/volume
 LABEL=VOL 
 interval=10
 signal=10
