@@ -164,7 +164,9 @@ nnoremap gh <nop>
 vnoremap < <gv
 vnoremap > >gv
 
-set pastetoggle=<f2>
+if !has('nvim')
+    set pastetoggle=<f2>
+endif
 
 " Some stuff breaks if $MYVIMRC is a symlink, so follow it.
 command! Ev execute 'tabedit ' . resolve(expand($MYVIMRC))
