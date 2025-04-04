@@ -11,13 +11,96 @@ return {
         dependencies = "nvim-tree/nvim-web-devicons"
     },
 
-    "easymotion/vim-easymotion",
-
     -- BufExplorer Plugin for Vim
     {
         "jlanzarotta/bufexplorer",
         cmd = "ToggleBufExplorer",
     },
+
+    {
+        "ggandor/leap.nvim",
+        dependencies = { "tpope/vim-repeat" },
+        lazy = false,
+
+        -- init runs before plugin is loaded; use for basic keybindings
+        init = function()
+            vim.keymap.set('n', '<c-m>', '<Plug>(leap-anywhere)')
+            vim.keymap.set('x', '<c-m>', '<Plug>(leap)')
+            vim.keymap.set('o', '<c-m>', '<Plug>(leap-forward)')
+        end,
+
+        -- config runs after plugin is loaded; safe to call functions here
+        config = function()
+            local leap = require('leap')
+
+            -- Helper to jump to line starts in a given direction
+            local function leap_to_lines(direction)
+                local targets = {}
+                local current_line = vim.fn.line('.')
+                local total_lines = vim.fn.line('$')
+                local start_line = direction == 'down' and current_line + 1 or current_line - 1
+                local end_line = direction == 'down' and total_lines or 1
+                local step = direction == 'down' and 1 or -1
+
+                for line = start_line, end_line, step do
+                    local line_content = vim.fn.getline(line)
+                    local first_non_blank = vim.fn.match(line_content, [[\S]]) + 1 -- 1-indexed col
+                    if first_non_blank > 0 then
+                        table.insert(targets, {
+                            pos = { line, first_non_blank },
+                        })
+                    end
+                end
+
+                if #targets == 0 then return end
+
+                require('leap').leap {
+                    target_windows = { vim.fn.win_getid() },
+                    targets = targets,
+                }
+
+            end
+
+            -- Helper to jump to word starts in the current line
+            local function leap_to_words_in_line(direction)
+                local targets = {}
+                local line = vim.fn.line('.')
+                local line_content = vim.fn.getline(line)
+                local cursor_col = vim.fn.col('.')
+
+                for start_col in line_content:gmatch('()(%f[%w])') do
+                    if (direction == 'forward' and start_col > cursor_col) or
+                       (direction == 'backward' and start_col < cursor_col) then
+                        table.insert(targets, {
+                            pos = { line, start_col }
+                        })
+                    end
+                end
+
+                if #targets == 0 then return end
+
+                -- Reverse targets if going backward so leap prioritizes closest match
+                if direction == 'backward' then
+                    vim.fn.reverse(targets)
+                end
+
+                leap.leap {
+                    target_windows = { vim.fn.win_getid() },
+                    targets = targets,
+                }
+            end
+
+            -- Set your custom motions
+            vim.keymap.set({'n', 'x', 'o'}, '<leader>j', function() leap_to_lines('down') end)
+            vim.keymap.set({'n', 'x', 'o'}, '<leader>k', function() leap_to_lines('up') end)
+            vim.keymap.set({'n', 'x', 'o'}, '<leader>l', function() leap_to_words_in_line('forward') end)
+            vim.keymap.set({'n', 'x', 'o'}, '<leader>h', function() leap_to_words_in_line('backward') end)
+            require('leap').opts.labels = 'abcdefghijklmnopqrstuvwxyz'
+            require('leap').opts.safe_labels = {}
+            require('leap').opts.max_phase_one_targets = 25
+        end,
+    },
+
 
     -- A modern Vim and neovim filetype plugin for LaTeX files.
     {
