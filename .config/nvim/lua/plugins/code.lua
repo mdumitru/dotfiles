@@ -89,6 +89,8 @@ return {
                     "markdown_inline",
                     "bash",
                     "latex",
+                    "vim",
+                    "json",
                 },
                 highlight = {
                     enable = true,

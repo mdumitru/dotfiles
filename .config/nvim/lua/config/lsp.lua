@@ -80,6 +80,8 @@ local servers = {
     'cssls',
     'bashls',
     'texlab',
+    'vimls',
+    'jsonls',
 }
 
 for _, server in ipairs(servers) do
