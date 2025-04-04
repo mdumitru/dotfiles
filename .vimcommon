@@ -81,6 +81,10 @@ set cursorline
 set showcmd
 set noshowmode          " the *line plugin should take care of this
 
+" Always show the signcolumn, otherwise it would shift the text each time
+" diagnostics appear/become resolved
+set signcolumn=yes
+
 " A weird glitch happens in terminal buffers when exiting insert mode if
 " scrolloff > 0; ideally, we should set the local scrolloff to 0 for terminal
 " buffers but scrolloff is a global-only option (recent vim patched it to be
