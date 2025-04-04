@@ -7,22 +7,20 @@ endif
 let g:terminal_scrollback_buffer_size=100000  " legacy
 set scrollback=100000
 
-
-au TermEnter * setlocal scrolloff=0
-au TermLeave * if &buftype !~ "terminal" | setlocal scrolloff=8 | endif
-
 " Normal escape in terminal. Ctrl+Alt+e to send an Escape through.
 tnoremap <esc> <c-\><c-n>
 tnoremap <c-a-e> <esc>
 
-function! _PrepareTerminal()
-    startinsert
-    set nonumber
+function! s:UpdateMode()
+    if &buftype ==# 'terminal'
+        startinsert
+    else
+        " Only leave insert mode if we are currently in insert mode
+        if mode() ==# 'i'
+            stopinsert
+        endif
+    endif
 endfunction
-
-" Ensure we always end up in insert mode when going to a terminal buffer.
-autocmd TermOpen * if &buftype == 'terminal' | call _PrepareTerminal() | endif
-autocmd BufWinEnter,BufEnter,WinEnter * if &buftype == 'terminal' | call _PrepareTerminal() | endif
 
 command! Tsplit split | terminal
 command! Tvsplit vsplit | terminal
