@@ -37,6 +37,7 @@ set splitbelow
 set splitright
 
 set timeoutlen=500
+set updatetime=200
 
 " TODO cross-platform
 if has('persistent_undo')

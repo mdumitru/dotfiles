@@ -33,12 +33,6 @@ return {
         cmd = "Bdelete",
     },
 
-    -- Intellisense engine for vim8 & neovim, full language server protocol support as VSCode
-    {
-        "neoclide/coc.nvim",
-        branch = "release",
-    },
-
     -- Rename a buffer within Vim and on disk
     {
         "vim-scripts/Rename",
@@ -56,9 +50,9 @@ return {
         auto_restore = false,
         auto_create = false,
 
-        ---enables autocomplete for opts
-        ---@module "auto-session"
-        ---@type AutoSession.Config
+        -----enables autocomplete for opts
+        -----@module "auto-session"
+        -----@type AutoSession.Config
         opts = {
             suppressed_dirs = { '~/', '~/Projects', '~/Downloads', '/' },
         }
@@ -66,9 +60,6 @@ return {
 
     -- Pasting in Vim with indentation adjusted to destination context
     "sickill/vim-pasta",
-
-    -- Vim plugin for intensely orgasmic commenting
-    "scrooloose/nerdcommenter",
 
     -- Neovim file explorer: edit your filesystem like a buffer
     {
@@ -93,9 +84,6 @@ return {
 
     -- unimpaired.vim: pairs of handy bracket mappings
     "tpope/vim-unimpaired",
-
-    -- Vim plugin that provides additional text objects
-    "wellle/targets.vim",
 
     -- Swap your windows without ruining your layout
     "wesQ3/vim-windowswap",
