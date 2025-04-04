@@ -12,7 +12,7 @@ local on_attach = function(_, bufnr)
     buf_map('n', 'gd', vim.lsp.buf.definition, { desc = 'go to definition' })
     buf_map('n', 'gy', vim.lsp.buf.type_definition, { desc = 'go to type definition' })
     buf_map("n", "K", function()
-        vim.lsp.buf.hover({border = "rounded",})
+        vim.lsp.buf.hover({ border = "rounded", })
     end, { desc = 'Hover documentation' })
     buf_map('n', 'gi', vim.lsp.buf.implementation, { desc = 'go to implementation' })
     buf_map('n', 'gr', vim.lsp.buf.references, { desc = 'list references' })
@@ -21,6 +21,9 @@ local on_attach = function(_, bufnr)
     buf_map("n", "<space>ca", vim.lsp.buf.code_action, { desc = "LSP code action" })
     buf_map("n", "[g", vim.diagnostic.goto_prev, { desc = "previous diagnostic" })
     buf_map("n", "]g", vim.diagnostic.goto_next, { desc = "next diagnostic" })
+    buf_map({ "o", "x" }, "=", function()
+        vim.lsp.buf.format({ async = true })
+    end, { desc = "Format buffer with LSP" })
 end
 
 vim.diagnostic.config({
