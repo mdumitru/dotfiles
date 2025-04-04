@@ -11,12 +11,6 @@ return {
         dependencies = "nvim-tree/nvim-web-devicons"
     },
 
-    -- BufExplorer Plugin for Vim
-    {
-        "jlanzarotta/bufexplorer",
-        cmd = "ToggleBufExplorer",
-    },
-
     {
         "ggandor/leap.nvim",
         dependencies = { "tpope/vim-repeat" },
@@ -114,6 +108,36 @@ return {
     {
         "moll/vim-bbye",
         cmd = "Bdelete",
+    },
+
+    -- Find, Filter, Preview, Pick. All lua, all the time.
+    {
+        "nvim-telescope/telescope.nvim", tag = '0.1.8',
+        dependencies = { "nvim-lua/plenary.nvim" },
+        event = { 'VeryLazy' },
+        opts = {
+            defaults = {
+                cache_picker = {
+                    num_pickers = 100,
+                    limit_entries = 1000,
+                },
+            },
+        },
+        config = function(_, opts)
+            require('telescope').setup(opts)
+
+            local builtin = require('telescope.builtin')
+            vim.keymap.set('n', '<leader>ff', builtin.find_files, { desc = 'Telescope find files' })
+            vim.keymap.set('n', '<leader>fg', builtin.live_grep, { desc = 'Telescope live grep' })
+            vim.keymap.set('n', '<leader>fb', builtin.buffers, { desc = 'Telescope buffers' })
+            vim.keymap.set({'n', 't'}, '<a-e>', builtin.buffers, { desc = 'Telescope buffers' })
+            vim.keymap.set('n', '<leader>fh', builtin.command_history, { desc = "Telescope command history" })
+            vim.keymap.set('n', '<leader>fs', builtin.search_history, { desc = "Telescope search history" })
+            vim.keymap.set('n', '<leader>fr', builtin.registers, { desc = "Telescope registers" })
+            vim.keymap.set('n', '<leader>fq', builtin.quickfix, { desc = "Telescope quickfix" })
+            vim.keymap.set('n', '<leader>ft', builtin.man_pages, { desc = "Telescope man pages" })
+            vim.keymap.set('n', '<leader>fd', builtin.diagnostics, { desc = "Telescope diagnostics" })
+        end,
     },
 
     -- Rename a buffer within Vim and on disk
