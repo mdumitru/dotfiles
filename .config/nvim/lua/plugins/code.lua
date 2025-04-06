@@ -12,6 +12,7 @@ return {
         config = function()
             local cmp = require'cmp'
             local icons = require'config.icons'
+            local copilot_suggestion = require'copilot.suggestion'
             cmp.setup {
                 snippet = {
                     expand = function(args)
@@ -19,9 +20,18 @@ return {
                     end,
                 },
                 mapping = cmp.mapping.preset.insert({
-                    ['<Tab>'] = cmp.mapping.select_next_item(),
-                    ['<S-Tab>'] = cmp.mapping.select_prev_item(),
-                    ['<CR>'] = cmp.mapping.confirm({ select = true }),
+                    ['<tab>'] = cmp.mapping.select_next_item(),
+                    ['<s-tab>'] = cmp.mapping.select_prev_item(),
+                    ['<cr>'] = cmp.mapping.confirm({ select = true }),
+
+                    -- FIXME This should be somewhere else
+                    ['<c-e>'] = function(fallback)
+                        if copilot_suggestion.is_visible() then
+                            copilot_suggestion.accept()
+                        else
+                            fallback()
+                        end
+                    end,
                 }),
                 formatting = {
                     format = function(entry, vim_item)
