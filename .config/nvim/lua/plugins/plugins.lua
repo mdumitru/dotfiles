@@ -172,22 +172,6 @@ return {
     -- NeoVim dark colorscheme inspired by the colors of the famous painting by Katsushika Hokusai.
     "rebelot/kanagawa.nvim",
 
-    -- A small automated session manager for Neovim
-    {
-        "rmagatti/auto-session",
-        lazy = false,
-        auto_save = false,
-        auto_restore = false,
-        auto_create = false,
-
-        -----enables autocomplete for opts
-        -----@module "auto-session"
-        -----@type AutoSession.Config
-        opts = {
-            suppressed_dirs = { '~/', '~/Projects', '~/Downloads', '/' },
-        }
-    },
-
     -- Pasting in Vim with indentation adjusted to destination context
     "sickill/vim-pasta",
 
