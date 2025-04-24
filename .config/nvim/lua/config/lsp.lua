@@ -97,3 +97,8 @@ for _, server in ipairs(servers) do
 
     lspconfig[server].setup(opts)
 end
+
+return {
+    on_attach = on_attach,
+    capabilities = capabilities,
+}

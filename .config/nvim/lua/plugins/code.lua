@@ -187,6 +187,17 @@ return {
         end,
     },
 
+    -- null-ls.nvim reloaded / Use Neovim as a language server to inject LSP
+    -- diagnostics, code actions, and more via Lua.
+    {
+        "nvimtools/none-ls.nvim",
+        dependencies = { "nvim-lua/plenary.nvim" },
+        config = function()
+            local none_ls = require("config.none-ls")
+            none_ls.setup(require("config.lsp").on_attach)
+        end,
+    },
+
     -- Portable package manager for Neovim that runs everywhere Neovim runs.
     -- Easily install and manage LSP servers, DAP servers, linters, and
     -- formatters.
