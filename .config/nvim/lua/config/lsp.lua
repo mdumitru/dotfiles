@@ -45,25 +45,31 @@ vim.diagnostic.config({
     },
 })
 
-local function organize_imports()
-    local params = {
-        command = "_typescript.organizeImports",
-        arguments = {vim.api.nvim_buf_get_name(0)},
-        title = ""
-    }
-    vim.lsp.buf.execute_command(params)
-end
+vim.api.nvim_create_user_command("OR", function()
+    local ft = vim.bo.filetype
+    local clients = vim.lsp.get_active_clients({ bufnr = 0 })
 
-lspconfig.tsserver.setup {
-    on_attach = on_attach,
-    capabilities = capabilities,
-    commands = {
-        OrganizeImports = {
-            organize_imports,
-            description = "Organize Imports"
-        }
-    }
-}
+    for _, client in ipairs(clients) do
+        if client.name == "pyright" and ft == "python" then
+            vim.cmd("PyrightOrganizeImports")
+            return
+        elseif client.name == "tsserver" and (ft == "typescript" or ft == "javascript") then
+            -- tsserver organize imports
+            local params = {
+                command = "_typescript.organizeImports",
+                arguments = { vim.api.nvim_buf_get_name(0) },
+                title = ""
+            }
+            client.request("workspace/executeCommand", params, nil, 0)
+            return
+        elseif client.name == "lua_ls" and ft == "lua" then
+            vim.notify("No organize imports command for Lua", vim.log.levels.INFO)
+            return
+        end
+    end
+
+    vim.notify("No supported LSP client for organize imports", vim.log.levels.WARN)
+end, { desc = "Organize imports for the current filetype" })
 
 vim.api.nvim_create_autocmd("CursorHold", {
     callback = function()
