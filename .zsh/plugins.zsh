@@ -35,9 +35,6 @@ zcomet trigger wd "mfaerevaag/wd"
 # jump around
 zcomet trigger z agkozak/zsh-z
 
-# zsh anything.el-like widget.
-zcomet load "zsh-users/zaw"
-
 # In older zsh versions, this seems incompatible with the syntax highlighting
 # plugin.
 if is52; then
