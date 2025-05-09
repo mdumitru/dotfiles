@@ -400,7 +400,7 @@ fi
 # completion system
 COMPDUMPFILE=${COMPDUMPFILE:-${ZDOTDIR:-${HOME}}/.zcompdump}
 if zrcautoload compinit ; then
-    compinit -d ${COMPDUMPFILE} || print 'Notice: no compinit available :('
+    compinit -C -d ${COMPDUMPFILE} || print 'Notice: no compinit available :('
 else
     print 'Notice: no compinit available :('
     function compdef { }
