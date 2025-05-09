@@ -35,13 +35,6 @@ zcomet trigger wd "mfaerevaag/wd"
 # jump around
 zcomet trigger z agkozak/zsh-z
 
-# In older zsh versions, this seems incompatible with the syntax highlighting
-# plugin.
-if is52; then
-    # Fish-like autosuggestions for zsh
-    zcomet load "zsh-users/zsh-autosuggestions"
-fi
-
 # Additional completion definitions for Zsh.
 zcomet load "zsh-users/zsh-completions"
 
@@ -50,6 +43,13 @@ zcomet load "zsh-users/zsh-history-substring-search"
 
 # Fish shell like syntax highlighting for Zsh.
 zcomet load "zsh-users/zsh-syntax-highlighting"
+
+# In older zsh versions, this seems incompatible with the syntax highlighting
+# plugin.
+if is52; then
+    # Fish-like autosuggestions for zsh
+    zcomet load "zsh-users/zsh-autosuggestions"
+fi
 
 
 # Source 'local_plugins' file (if any).
