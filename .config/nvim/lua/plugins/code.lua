@@ -1,4 +1,11 @@
 return {
+    -- ✅ Highlight, list and search todo comments in your projects
+    {
+        "folke/todo-comments.nvim",
+        dependencies = { "nvim-lua/plenary.nvim" },
+        opts = {},
+    },
+
     -- Completion engine
     {
         'hrsh7th/nvim-cmp',
