@@ -17,14 +17,26 @@ local on_attach = function(_, bufnr)
     buf_map('n', 'gi', vim.lsp.buf.implementation, { desc = 'go to implementation' })
     buf_map('n', 'gr', vim.lsp.buf.references, { desc = 'list references' })
     buf_map("n", "<C-l>", vim.lsp.buf.signature_help)
-    buf_map("n", "<space>rn", vim.lsp.buf.rename, { desc = "rename identifier" })
     buf_map("n", "<space>ca", vim.lsp.buf.code_action, { desc = "LSP code action" })
     buf_map("n", "[g", vim.diagnostic.goto_prev, { desc = "previous diagnostic" })
     buf_map("n", "]g", vim.diagnostic.goto_next, { desc = "next diagnostic" })
     buf_map({ "o", "x" }, "=", function()
         vim.lsp.buf.format({ async = true })
     end, { desc = "Format buffer with LSP" })
+
+    vim.keymap.set("n", "<leader>rn", function()
+        local curr_name = vim.fn.expand("<cword>")
+        vim.ui.input({
+            prompt = "New Name: ",
+            default = curr_name,
+        }, function(input)
+            if input and #input > 0 and input ~= curr_name then
+                vim.lsp.buf.rename(input)
+            end
+        end)
+    end, { desc = "LSP Rename (floating input)" })
 end
+
 
 vim.diagnostic.config({
     virtual_text = false,
