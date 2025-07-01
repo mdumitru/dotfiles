@@ -17,9 +17,9 @@ return {
             'saadparwaiz1/cmp_luasnip'
         },
         config = function()
-            local cmp = require'cmp'
-            local icons = require'config.icons'
-            local copilot_suggestion = require'copilot.suggestion'
+            local cmp = require 'cmp'
+            local icons = require 'config.icons'
+            local copilot_suggestion = require 'copilot.suggestion'
             cmp.setup {
                 snippet = {
                     expand = function(args)
@@ -51,9 +51,9 @@ return {
                     { name = 'nvim_lsp' },
                     { name = 'luasnip' },
                 }, {
-                        { name = 'buffer' },
-                        { name = 'path' },
-                    })
+                    { name = 'buffer' },
+                    { name = 'path' },
+                })
             }
         end
     },
@@ -62,11 +62,11 @@ return {
     {
         "neovim/nvim-lspconfig",
         config = function()
-          require('config.lsp')
+            require('config.lsp')
         end
     },
 
-     -- 🧠 💪 // Smart and powerful comment plugin for neovim. Supports treesitter, dot repeat, left-right/up-down motions, hooks, and more 
+    -- 🧠 💪 // Smart and powerful comment plugin for neovim. Supports treesitter, dot repeat, left-right/up-down motions, hooks, and more
     {
         'numToStr/Comment.nvim',
         opts = {
@@ -92,7 +92,7 @@ return {
             end
         end,
         config = function()
-            require'nvim-treesitter.configs'.setup {
+            require 'nvim-treesitter.configs'.setup {
                 ensure_installed = {
                     "lua",
                     "c",
@@ -209,19 +209,19 @@ return {
     -- Easily install and manage LSP servers, DAP servers, linters, and
     -- formatters.
     {
-      'williamboman/mason.nvim',
-      build = ":MasonUpdate",
-      config = true,
+        'williamboman/mason.nvim',
+        build = ":MasonUpdate",
+        config = true,
     },
 
     -- Extension to mason.nvim that makes it easier to use lspconfig with
     -- mason.nvim.
     {
-      'williamboman/mason-lspconfig.nvim',
-      config = function()
-        require('mason-lspconfig').setup {
-          ensure_installed = { "lua_ls", "pyright", "ts_ls" },
-        }
-      end
+        'williamboman/mason-lspconfig.nvim',
+        config = function()
+            require('mason-lspconfig').setup {
+                ensure_installed = { "lua_ls", "pyright", "ts_ls" },
+            }
+        end
     },
 }
