@@ -59,12 +59,7 @@ return {
     },
 
     -- Quickstart configs for Nvim LSP
-    {
-        "neovim/nvim-lspconfig",
-        config = function()
-            require('config.lsp')
-        end
-    },
+    "neovim/nvim-lspconfig",
 
     -- 🧠 💪 // Smart and powerful comment plugin for neovim. Supports treesitter, dot repeat, left-right/up-down motions, hooks, and more
     {
