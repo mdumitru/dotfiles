@@ -1,1 +1,1 @@
-setlocal expandtab
+../../../.config/nvim/after/ftplugin/p4.vim

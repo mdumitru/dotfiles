@@ -1,5 +1,1 @@
-" NASM specific settings
-setlocal shiftwidth=2
-setlocal tabstop=2
-setlocal softtabstop=2
-setlocal expandtab
+../../../.config/nvim/after/ftplugin/nasm.vim
