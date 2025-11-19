@@ -122,7 +122,7 @@ if test -n "$NVIM_LISTEN_ADDRESS" -a -w "$NVIM_LISTEN_ADDRESS" \
     stty stop undef && stty start undef || true
 
     nvim_cd() {
-        nvim-host-cmd "execute \"lcd\" fnameescape(\"$(pwd)\") | file $$:$(pwd)/$(basename $SHELL)"
+        nvim-host-cmd "silent! lcd $(pwd)"
     }
 fi
 
