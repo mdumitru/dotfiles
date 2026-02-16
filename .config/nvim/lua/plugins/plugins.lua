@@ -41,9 +41,28 @@ return {
 
         -- init runs before plugin is loaded; use for basic keybindings
         init = function()
+            local function qf_enter()
+              local info = vim.fn.getwininfo(vim.api.nvim_get_current_win())[1]
+              local idx = vim.fn.line('.') -- entry under cursor
+
+              if info and info.loclist == 1 then
+                vim.cmd(('ll %d'):format(idx)) -- location list
+              else
+                vim.cmd(('cc %d'):format(idx)) -- quickfix
+              end
+            end
+
             vim.keymap.set('n', '<c-m>', '<Plug>(leap-anywhere)')
             vim.keymap.set('x', '<c-m>', '<Plug>(leap)')
             vim.keymap.set('o', '<c-m>', '<Plug>(leap-forward)')
+            vim.api.nvim_create_autocmd('FileType', {
+              pattern = 'qf',
+              callback = function(ev)
+                vim.keymap.set('n', '<C-m>', qf_enter, { buffer = ev.buf, silent = true })
+                -- optional: if you also use Enter in these modes inside qf
+                -- vim.keymap.set('x', '<C-m>', qf_enter, { buffer = ev.buf, silent = true })
+              end,
+            })
         end,
 
         -- config runs after plugin is loaded; safe to call functions here
