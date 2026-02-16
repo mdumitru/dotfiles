@@ -29,7 +29,6 @@ return {
                 mapping = cmp.mapping.preset.insert({
                     ['<tab>'] = cmp.mapping.select_next_item(),
                     ['<s-tab>'] = cmp.mapping.select_prev_item(),
-                    ['<cr>'] = cmp.mapping.confirm({ select = true }),
 
                     -- FIXME This should be somewhere else
                     ['<c-e>'] = function(fallback)
