@@ -35,7 +35,7 @@ return {
 
     --  Neovim's answer to the mouse 🦘
     {
-        "ggandor/leap.nvim",
+        url = "https://codeberg.org/andyg/leap.nvim",
         dependencies = { "tpope/vim-repeat" },
         lazy = false,
 
