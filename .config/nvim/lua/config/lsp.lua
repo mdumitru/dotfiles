@@ -1,4 +1,3 @@
-local lspconfig = require('lspconfig')
 local capabilities = require('cmp_nvim_lsp').default_capabilities()
 local icons = require("config.icons")
 
@@ -65,7 +64,7 @@ vim.api.nvim_create_user_command("OR", function()
         if client.name == "pyright" and ft == "python" then
             vim.cmd("PyrightOrganizeImports")
             return
-        elseif client.name == "tsserver" and (ft == "typescript" or ft == "javascript") then
+        elseif client.name == "ts_ls" and (ft == "typescript" or ft == "javascript") then
             -- tsserver organize imports
             local params = {
                 command = "_typescript.organizeImports",
@@ -108,13 +107,16 @@ for _, server in ipairs(servers) do
         on_attach = on_attach,
     }
 
-    local ok, server_opts = pcall(require, 'config.lsp.' .. server)
+    local ok, server_opts = pcall(require, "config.lsp." .. server)
     if ok then
-        opts = vim.tbl_deep_extend('force', opts, server_opts)
+        opts = vim.tbl_deep_extend("force", opts, server_opts)
     end
 
-    lspconfig[server].setup(opts)
+    -- Register/extend the server config
+    vim.lsp.config(server, opts)
 end
+
+vim.lsp.enable(servers)
 
 return {
     on_attach = on_attach,
