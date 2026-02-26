@@ -34,10 +34,7 @@ alias smi='sudo make install'
 
 # The purpose here is to set the shell up for sharing the screen in front of an
 # audience.
-present() {
-    # Disable fish-like autosuggestions.
-    _zsh_autosuggest_widget_toggle &>/dev/null || :
-}
+alias present='_zsh_autosuggest_widget_toggle &>/dev/null || :'
 
 remake() {
     make clean || return $?
