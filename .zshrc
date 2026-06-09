@@ -126,6 +126,9 @@ fi
 # Prevent conda from automatically activating.
 export CONDA_AUTO_ACTIVATE_BASE=false
 
+fpath=(/home/mihai/.local/share/zsh/site-functions $fpath)
+autoload -U compinit && compinit
+
 # Source 'after' file if any.
 if [[ -r "$HOME/.zshrc.after" ]]; then
     source "$HOME/.zshrc.after"
