@@ -2,3 +2,4 @@
 require("config.lazy")
 require("config.leap-highlights")
 require("config.term_insert")
+require("config.term_title")
