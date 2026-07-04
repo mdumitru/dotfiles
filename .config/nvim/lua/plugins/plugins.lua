@@ -154,7 +154,7 @@ return {
 
     -- Find, Filter, Preview, Pick. All lua, all the time.
     {
-        "nvim-telescope/telescope.nvim", tag = '0.1.8',
+        "nvim-telescope/telescope.nvim", branch = 'master',
         dependencies = { "nvim-lua/plenary.nvim" },
         event = { 'VeryLazy' },
         opts = {
