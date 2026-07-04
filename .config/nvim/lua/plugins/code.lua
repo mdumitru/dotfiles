@@ -68,72 +68,53 @@ return {
         }
     },
 
-    -- Nvim Treesitter configurations and abstraction layer
+    -- Nvim Treesitter (main branch — new install/highlight API)
     {
         'nvim-treesitter/nvim-treesitter',
-        build = function()
-            -- Update treesitter parsers
-            vim.cmd(':TSUpdate')
-
-            -- Try to install tree-sitter CLI globally if it's missing
-            local handle = io.popen("which tree-sitter")
-            local result = handle:read("*a")
-            handle:close()
-
-            if result == "" then
-                vim.notify("Installing tree-sitter CLI globally via npm...", vim.log.levels.INFO)
-                os.execute("npm install -g tree-sitter-cli")
-            end
-        end,
+        branch = 'main',
+        lazy = false,
+        build = ':TSUpdate',
         config = function()
-            require 'nvim-treesitter.configs'.setup {
-                ensure_installed = {
-                    "lua",
-                    "c",
-                    "cpp",
-                    "python",
-                    "javascript",
-                    "tsx",
-                    "html",
-                    "css",
-                    "markdown",
-                    "markdown_inline",
-                    "bash",
-                    "latex",
-                    "vim",
-                    "json",
-                },
-                highlight = {
-                    enable = true,
-                    additional_vim_regex_highlighting = false,
-                },
-                indent = {
-                    enable = true
-                },
+            -- Idempotent: already-installed parsers are skipped.
+            require('nvim-treesitter').install {
+                "lua",
+                "c",
+                "cpp",
+                "python",
+                "javascript",
+                "tsx",
+                "html",
+                "css",
+                "markdown",
+                "markdown_inline",
+                "bash",
+                "latex",
+                "vim",
+                "json",
             }
-        end
+
+            -- The main branch has no `highlight`/`indent` options; enable them
+            -- per-buffer for any filetype that has an installed parser.
+            vim.api.nvim_create_autocmd('FileType', {
+                callback = function(args)
+                    if pcall(vim.treesitter.start) then
+                        vim.bo[args.buf].indentexpr =
+                            "v:lua.require'nvim-treesitter'.indentexpr()"
+                    end
+                end,
+            })
+        end,
     },
 
-    -- textobjects powered selection / navigation
+    -- textobjects powered selection / navigation (main branch)
     {
         'nvim-treesitter/nvim-treesitter-textobjects',
-        opts = {
-            textobjects = {
-
-                -- select textobjects
+        branch = 'main',
+        dependencies = { 'nvim-treesitter/nvim-treesitter' },
+        config = function()
+            require('nvim-treesitter-textobjects').setup {
                 select = {
-                    enable = true,
                     lookahead = true,
-                    keymaps = {
-                        ['af'] = '@function.outer',
-                        ['if'] = '@function.inner',
-                        ['aa'] = '@parameter.outer', -- mnemonic Term
-                        ['ia'] = '@parameter.inner',
-                        ['ac'] = '@class.outer',
-                        ['ic'] = '@class.inner',
-                        ['al'] = '@loop.outer',
-                        ['il'] = '@loop.inner',
-                    },
                     selection_modes = {
                         ['@function.outer'] = 'V',
                         ['@function.inner'] = 'V',
@@ -141,50 +122,60 @@ return {
                         ['@class.inner'] = 'V',
                     },
                 },
-
-                -- swap textobjects
-                swap = {
-                    enable = true,
-                    swap_next = {
-                        ['mo'] = '@parameter.inner',
-                    },
-                    swap_previous = {
-                        ['mi'] = '@parameter.inner',
-                    },
-                },
-
-                -- move to textobjects (pairs of [, ])
                 move = {
-                    enable = true,
                     set_jumps = true,
-                    goto_next_start = {
-                        [']f'] = '@function.outer',
-                    },
-                    goto_previous_start = {
-                        ['[f'] = '@function.outer',
-                    },
-                    goto_next_end = {
-                        [']F'] = '@function.outer',
-                    },
-                    goto_previous_end = {
-                        ['[F'] = '@function.outer',
-                    },
                 },
+            }
 
-                -- lsp interoperability
-                lsp_interop = {
-                    enable = true,
-                    border = 'rounded',
-                    floating_preview_opts = {},
-                    peek_definition_code = {
-                        ['<c-k>'] = '@function.outer',
-                        ['<c-c>'] = '@class.outer', -- mnemonic See Class
-                    },
-                },
-            },
-        },
-        config = function(_, opts)
-            require('nvim-treesitter.configs').setup(opts)
+            local select = require('nvim-treesitter-textobjects.select')
+            local swap = require('nvim-treesitter-textobjects.swap')
+            local move = require('nvim-treesitter-textobjects.move')
+
+            -- select textobjects
+            local selections = {
+                ['af'] = '@function.outer',
+                ['if'] = '@function.inner',
+                ['aa'] = '@parameter.outer', -- mnemonic pArameter
+                ['ia'] = '@parameter.inner',
+                ['ac'] = '@class.outer',
+                ['ic'] = '@class.inner',
+                ['al'] = '@loop.outer',
+                ['il'] = '@loop.inner',
+            }
+            for lhs, obj in pairs(selections) do
+                vim.keymap.set({ 'x', 'o' }, lhs, function()
+                    select.select_textobject(obj, 'textobjects')
+                end, { desc = 'Select ' .. obj })
+            end
+
+            -- swap textobjects
+            vim.keymap.set('n', 'mo', function()
+                swap.swap_next('@parameter.inner')
+            end, { desc = 'Swap next parameter' })
+            vim.keymap.set('n', 'mi', function()
+                swap.swap_previous('@parameter.inner')
+            end, { desc = 'Swap previous parameter' })
+
+            -- move to textobjects (pairs of [, ])
+            vim.keymap.set({ 'n', 'x', 'o' }, ']f', function()
+                move.goto_next_start('@function.outer', 'textobjects')
+            end, { desc = 'Next function start' })
+            vim.keymap.set({ 'n', 'x', 'o' }, '[f', function()
+                move.goto_previous_start('@function.outer', 'textobjects')
+            end, { desc = 'Previous function start' })
+            vim.keymap.set({ 'n', 'x', 'o' }, ']F', function()
+                move.goto_next_end('@function.outer', 'textobjects')
+            end, { desc = 'Next function end' })
+            vim.keymap.set({ 'n', 'x', 'o' }, '[F', function()
+                move.goto_previous_end('@function.outer', 'textobjects')
+            end, { desc = 'Previous function end' })
+
+            -- lsp_interop / peek_definition_code was removed in the
+            -- main-branch rewrite; use native LSP as the closest equivalent.
+            vim.keymap.set('n', '<c-k>', vim.lsp.buf.hover,
+                { desc = 'Hover docs' })
+            vim.keymap.set('n', '<c-c>', vim.lsp.buf.definition,
+                { desc = 'Go to definition' })
         end,
     },
 
