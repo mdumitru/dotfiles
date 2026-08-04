@@ -36,6 +36,9 @@ alias smi='sudo make install'
 # audience.
 alias present='_zsh_autosuggest_widget_toggle &>/dev/null || :'
 
+# Change the current screen's session name.
+alias sname="screen -X sessionname"
+
 remake() {
     make clean || return $?
     if test $# -eq 0; then
