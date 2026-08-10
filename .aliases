@@ -156,6 +156,10 @@ cpss() {
     cp $(readlink -f "$HOME/pictures/screenshots/latest") "$1"
 }
 
+# Re-point DISPLAY/XAUTHORITY at the current SSH connection after a screen
+# reattach (values recorded on login by ~/.zshrc.after).
+refresh-display() { [ -r "$HOME/.screen-display" ] && source "$HOME/.screen-display"; }
+
 # Source 'after' file (if any).
 if test -f "$HOME/.aliases.after" -a -r "$HOME/.aliases.after"; then
     . "$HOME/.aliases.after"
