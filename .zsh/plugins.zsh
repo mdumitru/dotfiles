@@ -17,9 +17,6 @@ fi
 
 source ${ZDOTDIR:-${HOME}}/.zcomet/bin/zcomet.zsh
 
-# 🧠 GitHub Copilot for your command line
-zcomet load "loiccoyle/zsh-github-copilot"
-
 # Use Ctrl-Z to switch back to background task.
 zcomet load "mdumitru/fancy-ctrl-z"
 
