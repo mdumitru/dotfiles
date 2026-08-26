@@ -19,7 +19,6 @@ return {
         config = function()
             local cmp = require 'cmp'
             local icons = require 'config.icons'
-            local copilot_suggestion = require 'copilot.suggestion'
             cmp.setup {
                 snippet = {
                     expand = function(args)
@@ -29,15 +28,6 @@ return {
                 mapping = cmp.mapping.preset.insert({
                     ['<tab>'] = cmp.mapping.select_next_item(),
                     ['<s-tab>'] = cmp.mapping.select_prev_item(),
-
-                    -- FIXME This should be somewhere else
-                    ['<c-e>'] = function(fallback)
-                        if copilot_suggestion.is_visible() then
-                            copilot_suggestion.accept()
-                        else
-                            fallback()
-                        end
-                    end,
                 }),
                 formatting = {
                     format = function(entry, vim_item)
@@ -73,10 +63,34 @@ return {
         'nvim-treesitter/nvim-treesitter',
         branch = 'main',
         lazy = false,
-        build = ':TSUpdate',
+        build = function()
+            local min_version = { 0, 26, 1 }
+
+            if vim.fn.executable('tree-sitter') ~= 1 then
+                vim.notify('Skipping TSUpdate: tree-sitter-cli is not installed', vim.log.levels.WARN)
+                return
+            end
+
+            local out = vim.trim(vim.fn.system({ 'tree-sitter', '--version' }))
+            local version = vim.version.parse(out)
+            if not version or not vim.version.ge(version, min_version) then
+                vim.notify('Skipping TSUpdate: nvim-treesitter main requires tree-sitter-cli >= 0.26.1', vim.log.levels.WARN)
+                return
+            end
+
+            vim.cmd.TSUpdate()
+        end,
         config = function()
-            -- Idempotent: already-installed parsers are skipped.
-            require('nvim-treesitter').install {
+            local min_version = { 0, 26, 1 }
+            local can_install = false
+
+            if vim.fn.executable('tree-sitter') == 1 then
+                local out = vim.trim(vim.fn.system({ 'tree-sitter', '--version' }))
+                local version = vim.version.parse(out)
+                can_install = version and vim.version.ge(version, min_version)
+            end
+
+            local parsers = {
                 "lua",
                 "c",
                 "cpp",
@@ -92,6 +106,13 @@ return {
                 "vim",
                 "json",
             }
+
+            -- Idempotent: already-installed parsers are skipped.
+            if can_install then
+                require('nvim-treesitter').install(parsers)
+            else
+                vim.notify('nvim-treesitter parser install skipped: tree-sitter-cli >= 0.26.1 is required', vim.log.levels.WARN)
+            end
 
             -- The main branch has no `highlight`/`indent` options; enable them
             -- per-buffer for any filetype that has an installed parser.
