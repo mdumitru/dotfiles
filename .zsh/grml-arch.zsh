@@ -929,7 +929,7 @@ if zstyle -T ':grml:chpwd:dirstack' enable; then
     }
 
     chpwd() {
-        (( $DIRSTACKSIZE <= 0 )) && return
+        (( DIRSTACKSIZE <= 0 )) && return
         [[ -z $DIRSTACKFILE ]] && return
         grml_dirstack_filter $PWD && return
         GRML_PERSISTENT_DIRSTACK=(
